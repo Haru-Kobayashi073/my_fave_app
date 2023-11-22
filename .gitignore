@@ -43,8 +43,21 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Created by https://www.toptal.com/developers/gitignore/api/flutter
-# Edit at https://www.toptal.com/developers/gitignore?templates=flutter
+# Created by https://www.toptal.com/developers/gitignore/api/flutter,firebase
+# Edit at https://www.toptal.com/developers/gitignore?templates=flutter,firebase
+
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+android/**/google-services.json
+ios/**/GoogleService-Info.plist
+**/.env
+lib/firebase_options.dart
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
 
 ### Flutter ###
 # Flutter/Dart/Pub related
@@ -110,4 +123,4 @@ lib/generated_plugin_registrant.dart
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
-# End of https://www.toptal.com/developers/gitignore/api/flutter
+# End of https://www.toptal.com/developers/gitignore/api/flutter,firebase
