@@ -1,45 +1,53 @@
-name: check
+# ワークフロー名を定義(任意の名称)
+name: flutter analyze
 
+# トリガーを定義
 on:
-  push:
-    branches:
-          - main
-    paths-ignore:
-      - '**.md'
+  # プルリク作成がトリガー(GitHub Actionsが実行される)となる
   pull_request:
+    # プルリク作成時とプルリクにコミットが行われた時
+    types: [opened, synchronize]
+    # 対象ブランチを指定
     branches:
-        - develop
-    paths-ignore:
-      - '**.md'
+      - develop
+
+  # GitHubページから手動で実行できる
   workflow_dispatch:
 
-permissions:
-  contents: read
-  issues: write
-  pull-requests: write
-
+# 実行するジョブを定義
 jobs:
-  analyze:
+  # ジョブ名を設定
+  flutter_analyze:
+
+    # ジョブを実行する仮想ホストマシンタイプ
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+
+    # タイムアウト時間を設定
+    timeout-minutes: 5
+
+    # steps配下に実行したいアクションを定義します。(usesもしくはrunを使用することになると思います)
+    # uses ・・・ GitHubやサードパーティで用意されているactionを使用できます
+    # run ・・・ 実行コマンド
     steps:
-      - name: Checkout
+    # 該当リポジトリにチェックアウト
+      - name: checkout
         uses: actions/checkout@v4
 
-      - name: Run pre-process script
-        shell: bash
-        env:
-          PREPROCESS_SCRIPT_BASE64: ${{ secrets.PREPROCESS_SCRIPT_BASE64 }}
-        run: |
-          if [ -n "$PREPROCESS_SCRIPT_BASE64" ]; then
-            echo $PREPROCESS_SCRIPT_BASE64 | base64 --decode > ./pre-process.sh && bash ./pre-process.sh
-          fi
-
-      - name: Install Flutter
+      # flutterインストール（キャッシュする）
+      - name: flutter cache
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          flutter-version: "3.16.0"
+          channel: "stable"
           cache: true
+          cache-key: flutter
+          cache-path: ${{ runner.tool_cache }}/flutter
+
+      - name: install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.0"
+          channel: "stable"
 
       - name: Run flutter version
         run: flutter --version
@@ -74,45 +82,3 @@ jobs:
           install_path: 'vendor/bundle'
           danger_file: 'Dangerfile'
           danger_id: 'danger-pr'
-        env:
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  # test:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 30
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-
-  #     - name: Run pre-process script
-  #       shell: bash
-  #       env:
-  #         PREPROCESS_SCRIPT_BASE64: ${{ secrets.PREPROCESS_SCRIPT_BASE64 }}
-  #       run: |
-  #         if [ -n "$PREPROCESS_SCRIPT_BASE64" ]; then
-  #           echo $PREPROCESS_SCRIPT_BASE64 | base64 --decode > ./pre-process.sh && bash ./pre-process.sh
-  #         fi
-
-  #     - name: Install Flutter
-  #       uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: 'stable'
-  #         cache: true
-
-  #     - name: set .env
-  #       run: |
-  #         touch .env
-  #         echo "GOOGLE_MAPS_API_KEY_FOR_IOS=${{ secrets.GOOGLE_MAPS_API_KEY_FOR_IOS }}" >> .env
-  #         echo "GOOGLE_MAPS_API_KEY_FOR_ANDROID=${{ secrets.GOOGLE_MAPS_API_KEY_FOR_ANDROID }}" >> .env
-  #         echo "FIREBASE_IOS_API_KEY=${{ secrets.FIREBASE_IOS_API_KEY }}" >> .env
-  #         echo "FIREBASE_AONDROID_API_KEY=${{ secrets.FIREBASE_AONDROID_API_KEY }}" >> .env
-  #         cat -e .env
-
-  #     - name: Run flutter version
-  #       run: flutter --version
-
-  #     - name: Run flutter pub get
-  #       run: flutter pub get
-
-  #     - name: Run flutter test
-  #       run: flutter test
