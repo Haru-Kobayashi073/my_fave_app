@@ -1,84 +1,123 @@
-# ワークフロー名を定義(任意の名称)
-name: flutter analyze
+# # ワークフロー名を定義(任意の名称)
+# name: check
 
-# トリガーを定義
+# # トリガーを定義
+# on:
+#   # プルリク作成がトリガー(GitHub Actionsが実行される)となる
+#   pull_request:
+#     # プルリク作成時とプルリクにコミットが行われた時
+#     types: [opened, synchronize]
+#     # 対象ブランチを指定
+#     branches:
+#       - develop
+
+#   # GitHubページから手動で実行できる
+#   workflow_dispatch:
+
+# # 実行するジョブを定義
+# jobs:
+#   # ジョブ名を設定
+#   flutter_analyze:
+
+#     # ジョブを実行する仮想ホストマシンタイプ
+#     runs-on: ubuntu-latest
+
+#     # タイムアウト時間を設定
+#     timeout-minutes: 5
+
+#     # steps配下に実行したいアクションを定義します。(usesもしくはrunを使用することになると思います)
+#     # uses ・・・ GitHubやサードパーティで用意されているactionを使用できます
+#     # run ・・・ 実行コマンド
+#     steps:
+#     # 該当リポジトリにチェックアウト
+#       - name: checkout
+#         uses: actions/checkout@v4
+
+#       # flutterインストール（キャッシュする）
+#       - name: flutter cache
+#         uses: subosito/flutter-action@v2
+#         with:
+#           flutter-version: "3.16.0"
+#           channel: "stable"
+#           cache: true
+#           cache-key: flutter
+#           cache-path: ${{ runner.tool_cache }}/flutter
+
+#       - name: install Flutter
+#         uses: subosito/flutter-action@v2
+#         with:
+#           flutter-version: "3.16.0"
+#           channel: "stable"
+
+#       - name: Run flutter version
+#         run: flutter --version
+
+#       - name: Run flutter pub get
+#         run: flutter pub get
+
+#       - name: Install matcher
+#         run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
+
+#       - name: Run flutter analyze
+#         shell: bash
+#         run: |
+#           flutter analyze | tee ./flutter_analyze_report.txt
+
+#       - name: Remove matcher
+#         if: always()
+#         run: echo "::remove-matcher owner=dart-analyzer::"
+
+#       - name: Setup Ruby
+#         uses: ruby/setup-ruby@v1
+#         if: always()
+#         with:
+#           ruby-version: '3.2'
+#           bundler-cache: true
+
+#       - name: Danger
+#         uses: MeilCli/danger-action@1996610a4c089e3a79bf3131a70c3c1b311e32f9
+#         if: always()
+#         with:
+#           plugins_file: 'Gemfile'
+#           install_path: 'vendor/bundle'
+#           danger_file: 'Dangerfile'
+#           danger_id: 'danger-pr'
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: check
+
 on:
-  # プルリク作成がトリガー(GitHub Actionsが実行される)となる
+  push:
+    branches: [ "develop" ]
   pull_request:
-    # プルリク作成時とプルリクにコミットが行われた時
-    types: [opened, synchronize]
-    # 対象ブランチを指定
-    branches:
-      - develop
-
-  # GitHubページから手動で実行できる
+    branches: [ "develop" ]
   workflow_dispatch:
 
-# 実行するジョブを定義
 jobs:
-  # ジョブ名を設定
-  flutter_analyze:
-
-    # ジョブを実行する仮想ホストマシンタイプ
+  build:
     runs-on: ubuntu-latest
-
-    # タイムアウト時間を設定
     timeout-minutes: 5
 
-    # steps配下に実行したいアクションを定義します。(usesもしくはrunを使用することになると思います)
-    # uses ・・・ GitHubやサードパーティで用意されているactionを使用できます
-    # run ・・・ 実行コマンド
     steps:
-    # 該当リポジトリにチェックアウト
-      - name: checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      # flutterインストール（キャッシュする）
-      - name: flutter cache
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.16.0"
-          channel: "stable"
-          cache: true
-          cache-key: flutter
-          cache-path: ${{ runner.tool_cache }}/flutter
+      # Note: This workflow uses the latest stable version of the Dart SDK.
+      # You can specify other versions if desired, see documentation here:
+      # https://github.com/dart-lang/setup-dart/blob/main/README.md
+      # - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
 
-      - name: install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.16.0"
-          channel: "stable"
+      - name: Install dependencies
+        run: dart pub get
 
-      - name: Run flutter version
-        run: flutter --version
+      # Uncomment this step to verify the use of 'dart format' on each commit.
+      # - name: Verify formatting
+      #   run: dart format --output=none --set-exit-if-changed .
 
-      - name: Run flutter pub get
-        run: flutter pub get
-
-      - name: Install matcher
-        run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
-
-      - name: Run flutter analyze
-        shell: bash
-        run: |
-          flutter analyze | tee ./flutter_analyze_report.txt
-
-      - name: Remove matcher
-        if: always()
-        run: echo "::remove-matcher owner=dart-analyzer::"
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        if: always()
-        with:
-          ruby-version: '3.2'
-          bundler-cache: true
-
-      - name: Danger
-        uses: MeilCli/danger-action@1996610a4c089e3a79bf3131a70c3c1b311e32f9
-        if: always()
-        with:
-          plugins_file: 'Gemfile'
-          install_path: 'vendor/bundle'
-          danger_file: 'Dangerfile'
-          danger_id: 'danger-pr'
+      # Consider passing '--fatal-infos' for slightly stricter analysis.
+      - name: Analyze project source
+        run: dart analyze
