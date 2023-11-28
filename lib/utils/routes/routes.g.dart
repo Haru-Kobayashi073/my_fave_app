@@ -15,8 +15,8 @@ RouteBase get $authenticationPageRoute => GoRouteData.$route(
       factory: $AuthenticationPageRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'home',
-          factory: $MyHomePageRouteExtension._fromState,
+          path: 'login',
+          factory: $LoginPageRouteExtension._fromState,
         ),
       ],
     );
@@ -39,12 +39,12 @@ extension $AuthenticationPageRouteExtension on AuthenticationPageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $MyHomePageRouteExtension on MyHomePageRoute {
-  static MyHomePageRoute _fromState(GoRouterState state) =>
-      const MyHomePageRoute();
+extension $LoginPageRouteExtension on LoginPageRoute {
+  static LoginPageRoute _fromState(GoRouterState state) =>
+      const LoginPageRoute();
 
   String get location => GoRouteData.$location(
-        '/authentication/home',
+        '/authentication/login',
       );
 
   void go(BuildContext context) => context.go(location);

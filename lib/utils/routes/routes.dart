@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
-import 'package:my_fave_app/pages/home/home_page.dart';
+import 'package:my_fave_app/pages/login/login_page.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 // ...略
@@ -18,7 +18,7 @@ part 'routes.g.dart';
 // ********************************************************
 class AppRoutes {
   static const authentication = '/authentication';
-  static const home = 'home';
+  static const login = 'login';
 }
 
 @Riverpod(keepAlive: true)
@@ -38,7 +38,7 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
 @TypedGoRoute<AuthenticationPageRoute>(
   path: AppRoutes.authentication,
   routes: [
-    TypedGoRoute<MyHomePageRoute>(path: AppRoutes.home),
+    TypedGoRoute<LoginPageRoute>(path: AppRoutes.login),
   ],
 )
 class AuthenticationPageRoute extends GoRouteData {
@@ -48,10 +48,10 @@ class AuthenticationPageRoute extends GoRouteData {
 }
 
 @immutable
-class MyHomePageRoute extends GoRouteData {
-  const MyHomePageRoute();
+class LoginPageRoute extends GoRouteData {
+  const LoginPageRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const MyHomePage(title: 'My Fave App');
+      const LoginPage();
 }
