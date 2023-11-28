@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/pages/authentication/components/authetication_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
@@ -21,7 +23,8 @@ class AuthenticationPage extends HookConsumerWidget {
             Column(
               children: [
                 CommonButton(
-                  onPressed: () {},
+                  onPressed: () =>
+                      context.push(const LoginPageRoute().location),
                   text: 'ログイン',
                 ),
                 CommonButton(

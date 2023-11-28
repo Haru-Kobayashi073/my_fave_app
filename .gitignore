@@ -53,7 +53,7 @@ app.*.map.json
 android/**/google-services.json
 ios/**/GoogleService-Info.plist
 **/.env
-lib/firebase_options.dart
+lib/utils/firebase/firebase_options.dart
 
 ### Firebase Patch ###
 .runtimeconfig.json
