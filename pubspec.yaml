@@ -14,7 +14,6 @@ dependencies:
   firebase_core: ^2.23.0
   flutter:
     sdk: flutter
-  flutter_dotenv: ^5.1.0
   flutter_hooks: ^0.20.3
   flutter_svg: ^2.0.9
   freezed: ^2.4.5
@@ -45,7 +44,6 @@ flutter:
   assets:
       - assets/icons/
       - assets/images/
-      - .env
 
 flutter_gen:
   output: lib/utils/gen/

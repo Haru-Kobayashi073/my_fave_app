@@ -36,10 +36,9 @@ class SocialLoginButton extends StatelessWidget {
             SvgPicture.asset(icon),
             Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColor.white,
               ),
             ),
             const SizedBox(width: 24),

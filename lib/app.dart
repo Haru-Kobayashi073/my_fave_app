@@ -16,8 +16,9 @@ class App extends HookConsumerWidget {
       routeInformationParser: router.routeInformationParser,
       scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         scaffoldBackgroundColor: AppColor.black00,
+        primaryTextTheme: Typography(platform: TargetPlatform.iOS).white,
+        textTheme: Typography(platform: TargetPlatform.iOS).white,
         useMaterial3: false,
       ),
       builder: (BuildContext context, Widget? child) {
