@@ -15,7 +15,7 @@ class StatusBar extends StatelessWidget {
         children: [
           Container(
             height: 3,
-            width: contentWidth / 8 * phaseIndex,
+            width: contentWidth / 6 * phaseIndex,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               color: AppColor.white,
