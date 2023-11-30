@@ -4,3 +4,4 @@ export 'gen/assets.gen.dart';
 export 'hooks/hooks.dart';
 export 'routes/routes.dart';
 export 'scaffold_messanger_service.dart';
+export 'validator.dart';

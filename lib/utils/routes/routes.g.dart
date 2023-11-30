@@ -17,6 +17,12 @@ RouteBase get $authenticationPageRoute => GoRouteData.$route(
         GoRouteData.$route(
           path: 'login',
           factory: $LoginPageRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'registerMail',
+              factory: $RegisterMailPageRouteExtension._fromState,
+            ),
+          ],
         ),
       ],
     );
@@ -45,6 +51,24 @@ extension $LoginPageRouteExtension on LoginPageRoute {
 
   String get location => GoRouteData.$location(
         '/authentication/login',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $RegisterMailPageRouteExtension on RegisterMailPageRoute {
+  static RegisterMailPageRoute _fromState(GoRouterState state) =>
+      const RegisterMailPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/authentication/login/registerMail',
       );
 
   void go(BuildContext context) => context.go(location);

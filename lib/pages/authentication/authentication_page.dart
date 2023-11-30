@@ -28,7 +28,8 @@ class AuthenticationPage extends HookConsumerWidget {
                   text: 'ログイン',
                 ),
                 CommonButton(
-                  onPressed: () {},
+                  onPressed: () =>
+                      context.push(const RegisterMailPageRoute().location),
                   text: 'メールアドレスで登録',
                   isWhite: false,
                 ),

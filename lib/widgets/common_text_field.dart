@@ -6,9 +6,17 @@ class CommonTextField extends StatelessWidget {
     super.key,
     required this.labelText,
     required this.controller,
+    this.keyboardType = TextInputType.text,
+    this.validator,
+    this.onChanged,
+    this.icon = const SizedBox(),
   });
   final String labelText;
   final TextEditingController controller;
+  final TextInputType keyboardType;
+  final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
+  final Widget icon;
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +34,15 @@ class CommonTextField extends StatelessWidget {
           height: 48,
           child: TextFormField(
             controller: controller,
+            keyboardType: keyboardType,
+            validator: validator,
+            onChanged: onChanged,
             cursorColor: AppColor.white,
             style: const TextStyle(
               fontSize: 16,
             ),
             decoration: InputDecoration(
+              suffixIcon: icon,
               fillColor: AppColor.black15,
               filled: true,
               hintText: '入力してください',
