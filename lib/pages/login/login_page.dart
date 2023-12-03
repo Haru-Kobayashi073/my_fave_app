@@ -10,6 +10,7 @@ class LoginPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
+    final obscureText = useToggle(true);
     final formKey = useFormStateKey();
     final validateMode = useState<AutovalidateMode>(AutovalidateMode.disabled);
 
@@ -47,7 +48,18 @@ class LoginPage extends HookConsumerWidget {
                   controller: passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   validator: Validator.password,
+                  obscureText: obscureText.value,
                   autovalidateMode: validateMode.value,
+                  icon: IconButton(
+                    icon: Icon(
+                      obscureText.value
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: AppColor.white,
+                    ),
+                    splashRadius: 1,
+                    onPressed: obscureText.toggle,
+                  ),
                 ),
                 CommonButton(
                   onPressed: () {
