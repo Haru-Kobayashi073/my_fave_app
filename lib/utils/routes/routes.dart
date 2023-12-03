@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
 import 'package:my_fave_app/pages/login/login_page.dart';
 import 'package:my_fave_app/pages/register_mail/register_mail_page.dart';
+import 'package:my_fave_app/pages/register_password/register_password_page.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 // ...略
@@ -21,6 +22,7 @@ class AppRoutes {
   static const authentication = '/authentication';
   static const login = 'login';
   static const registerMail = 'registerMail';
+  static const registerPassword = 'registerPassword';
 }
 
 @Riverpod(keepAlive: true)
@@ -42,9 +44,12 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
   routes: [
     TypedGoRoute<LoginPageRoute>(
       path: AppRoutes.login,
+    ),
+    TypedGoRoute<RegisterMailPageRoute>(
+      path: AppRoutes.registerMail,
       routes: [
-        TypedGoRoute<RegisterMailPageRoute>(
-          path: AppRoutes.registerMail,
+        TypedGoRoute<RegisterPasswordPageRoute>(
+          path: AppRoutes.registerPassword,
         ),
       ],
     ),
@@ -71,4 +76,14 @@ class RegisterMailPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const RegisterMailPage();
+}
+
+@immutable
+class RegisterPasswordPageRoute extends GoRouteData {
+  const RegisterPasswordPageRoute({required this.email});
+  final String email;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      RegisterPasswordPage(email: email);
 }
