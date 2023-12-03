@@ -31,7 +31,6 @@ class CommonTextField extends StatelessWidget {
           labelText,
           style: const TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.bold,
           ),
         ),
         Padding(
