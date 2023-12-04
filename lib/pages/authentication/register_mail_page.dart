@@ -42,6 +42,7 @@ class RegisterMailPage extends HookWidget {
                   onChanged: (value) {
                     isValidMail.value = Validator.email(value) == null;
                   },
+                  textInputAction: TextInputAction.done,
                   autovalidateMode: validateMode.value,
                   icon: Icon(
                     Icons.check,
