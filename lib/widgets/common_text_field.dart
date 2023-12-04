@@ -9,6 +9,8 @@ class CommonTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.validator,
     this.onChanged,
+    this.obscureText = false,
+    this.autovalidateMode,
     this.icon = const SizedBox(),
   });
   final String labelText;
@@ -16,6 +18,8 @@ class CommonTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
+  final bool obscureText;
+  final AutovalidateMode? autovalidateMode;
   final Widget icon;
 
   @override
@@ -29,19 +33,21 @@ class CommonTextField extends StatelessWidget {
             fontSize: 14,
           ),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          height: 48,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
             controller: controller,
             keyboardType: keyboardType,
             validator: validator,
             onChanged: onChanged,
+            obscureText: obscureText,
             cursorColor: AppColor.white,
+            autovalidateMode: autovalidateMode,
             style: const TextStyle(
               fontSize: 16,
             ),
             decoration: InputDecoration(
+              errorMaxLines: 5,
               suffixIcon: icon,
               fillColor: AppColor.black15,
               filled: true,
@@ -63,6 +69,14 @@ class CommonTextField extends StatelessWidget {
                   color: AppColor.grey88,
                 ),
               ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(
+                  color: Colors.red,
+          
+                  /// ここは後で変更する
+                ),
+              ),
               disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide(
@@ -73,7 +87,7 @@ class CommonTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 borderSide: const BorderSide(
                   color: Colors.red,
-
+          
                   /// ここは後で変更する
                 ),
               ),

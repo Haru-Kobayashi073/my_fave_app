@@ -1,15 +1,22 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
-class LoginPage extends HookConsumerWidget {
-  const LoginPage({super.key});
+class RegisterPasswordPage extends HookConsumerWidget {
+  const RegisterPasswordPage({
+    super.key,
+    required this.email,
+  });
+  final String email;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
+    final confirmPasswordController = useTextEditingController();
     final obscureText = useToggle(true);
     final formKey = useFormStateKey();
     final validateMode = useState<AutovalidateMode>(AutovalidateMode.disabled);
@@ -22,27 +29,19 @@ class LoginPage extends HookConsumerWidget {
           child: Form(
             key: formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
+                const StatusBar(phaseIndex: 2),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24),
                   child: Text(
-                    'ログイン',
+                    '新規のパスワードを設定しよう！',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 32,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
-                CommonTextField(
-                  labelText: 'メールアドレス',
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: Validator.email,
-                  autovalidateMode: validateMode.value,
-                ),
-                const SizedBox(height: 8),
                 CommonTextField(
                   labelText: 'パスワード',
                   controller: passwordController,
@@ -61,27 +60,44 @@ class LoginPage extends HookConsumerWidget {
                     onPressed: obscureText.toggle,
                   ),
                 ),
+                CommonTextField(
+                  labelText: 'パスワード(確認用)',
+                  controller: confirmPasswordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  validator: (value) => Validator.passwordConfirmation(
+                    value,
+                    passwordController.text,
+                  ),
+                  obscureText: obscureText.value,
+                  autovalidateMode: validateMode.value,
+                  icon: IconButton(
+                    icon: Icon(
+                      obscureText.value
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: AppColor.white,
+                    ),
+                    splashRadius: 1,
+                    onPressed: obscureText.toggle,
+                  ),
+                ),
+                Text(
+                  '※パスワードは少なくとも8文字以上である必要があります。\n ※大文字、小文字、数字、および特殊文字を含めてください。例: !@#\$%^&*()',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColor.grey88,
+                  ),
+                ),
+                const SizedBox(height: 24),
                 CommonButton(
+                  text: '次へ',
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                     } else {
                       validateMode.value = AutovalidateMode.onUserInteraction;
                     }
                   },
-                  text: 'ログイン',
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'パスワードを忘れた方はこちら',
-                    style: TextStyle(
-                      color: AppColor.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 184),
               ],
             ),
           ),
