@@ -5,9 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
-import 'package:my_fave_app/pages/login/login_page.dart';
-import 'package:my_fave_app/pages/register_mail/register_mail_page.dart';
-import 'package:my_fave_app/pages/register_password/register_password_page.dart';
+import 'package:my_fave_app/pages/authentication/login_page.dart';
+import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
+import 'package:my_fave_app/pages/authentication/register_password_page.dart';
+import 'package:my_fave_app/pages/register_user_information/register_user_name_page.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 // ...略
@@ -23,6 +24,7 @@ class AppRoutes {
   static const login = 'login';
   static const registerMail = 'registerMail';
   static const registerPassword = 'registerPassword';
+  static const registerUserName = 'registerUserName';
 }
 
 @Riverpod(keepAlive: true)
@@ -50,6 +52,11 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
       routes: [
         TypedGoRoute<RegisterPasswordPageRoute>(
           path: AppRoutes.registerPassword,
+          routes: [
+            TypedGoRoute<RegisterUserNamePageRoute>(
+              path: AppRoutes.registerUserName,
+            ),
+          ],
         ),
       ],
     ),
@@ -86,4 +93,21 @@ class RegisterPasswordPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       RegisterPasswordPage(email: email);
+}
+
+@immutable
+class RegisterUserNamePageRoute extends GoRouteData {
+  const RegisterUserNamePageRoute({
+    required this.email,
+    required this.password,
+  });
+  final String email;
+  final String password;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      RegisterUserNamePage(
+        email: email,
+        password: password,
+      );
 }

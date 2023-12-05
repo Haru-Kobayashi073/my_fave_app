@@ -10,6 +10,9 @@ class CommonTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.obscureText = false,
+    this.textInputAction,
+    this.focusNode,
+    this.onFieldSubmitted,
     this.autovalidateMode,
     this.icon = const SizedBox(),
   });
@@ -19,6 +22,9 @@ class CommonTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final bool obscureText;
+  final TextInputAction? textInputAction;
+  final FocusNode? focusNode;
+  final void Function(String)? onFieldSubmitted;
   final AutovalidateMode? autovalidateMode;
   final Widget icon;
 
@@ -41,6 +47,9 @@ class CommonTextField extends StatelessWidget {
             validator: validator,
             onChanged: onChanged,
             obscureText: obscureText,
+            textInputAction: textInputAction,
+            focusNode: focusNode,
+            onFieldSubmitted: onFieldSubmitted,
             cursorColor: AppColor.white,
             autovalidateMode: autovalidateMode,
             style: const TextStyle(
@@ -73,7 +82,7 @@ class CommonTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 borderSide: const BorderSide(
                   color: Colors.red,
-          
+
                   /// ここは後で変更する
                 ),
               ),
@@ -87,7 +96,7 @@ class CommonTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 borderSide: const BorderSide(
                   color: Colors.red,
-          
+
                   /// ここは後で変更する
                 ),
               ),

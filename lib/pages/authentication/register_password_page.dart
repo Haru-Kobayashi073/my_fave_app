@@ -1,7 +1,6 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -17,6 +16,7 @@ class RegisterPasswordPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final passwordController = useTextEditingController();
     final confirmPasswordController = useTextEditingController();
+    final passwordFocusNode = useFocusNode();
     final obscureText = useToggle(true);
     final formKey = useFormStateKey();
     final validateMode = useState<AutovalidateMode>(AutovalidateMode.disabled);
@@ -48,6 +48,9 @@ class RegisterPasswordPage extends HookConsumerWidget {
                   keyboardType: TextInputType.visiblePassword,
                   validator: Validator.password,
                   obscureText: obscureText.value,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) =>
+                      FocusScope.of(context).requestFocus(passwordFocusNode),
                   autovalidateMode: validateMode.value,
                   icon: IconButton(
                     icon: Icon(
@@ -69,6 +72,8 @@ class RegisterPasswordPage extends HookConsumerWidget {
                     passwordController.text,
                   ),
                   obscureText: obscureText.value,
+                  textInputAction: TextInputAction.done,
+                  focusNode: passwordFocusNode,
                   autovalidateMode: validateMode.value,
                   icon: IconButton(
                     icon: Icon(
@@ -82,7 +87,7 @@ class RegisterPasswordPage extends HookConsumerWidget {
                   ),
                 ),
                 Text(
-                  '※パスワードは少なくとも8文字以上である必要があります。\n ※大文字、小文字、数字、および特殊文字を含めてください。例: !@#\$%^&*()',
+                  passwordRules,
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColor.grey88,
@@ -93,6 +98,12 @@ class RegisterPasswordPage extends HookConsumerWidget {
                   text: '次へ',
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+                      context.push(
+                        RegisterUserNamePageRoute(
+                          email: email,
+                          password: passwordController.text,
+                        ).location,
+                      );
                     } else {
                       validateMode.value = AutovalidateMode.onUserInteraction;
                     }
