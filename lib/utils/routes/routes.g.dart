@@ -29,6 +29,12 @@ RouteBase get $authenticationPageRoute => GoRouteData.$route(
                 GoRouteData.$route(
                   path: 'registerUserName',
                   factory: $RegisterUserNamePageRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'registerBirthday',
+                      factory: $RegisterBirthdayPageRouteExtension._fromState,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -126,6 +132,33 @@ extension $RegisterUserNamePageRouteExtension on RegisterUserNamePageRoute {
         queryParams: {
           'email': email,
           'password': password,
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $RegisterBirthdayPageRouteExtension on RegisterBirthdayPageRoute {
+  static RegisterBirthdayPageRoute _fromState(GoRouterState state) =>
+      RegisterBirthdayPageRoute(
+        email: state.uri.queryParameters['email']!,
+        password: state.uri.queryParameters['password']!,
+        userName: state.uri.queryParameters['user-name']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/authentication/registerMail/registerPassword/registerUserName/registerBirthday',
+        queryParams: {
+          'email': email,
+          'password': password,
+          'user-name': userName,
         },
       );
 

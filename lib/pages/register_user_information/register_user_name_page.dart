@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/pages/register_user_information/components/register_user_information_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
@@ -55,6 +56,13 @@ class RegisterUserNamePage extends HookConsumerWidget {
                   text: '次へ',
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+                      context.push(
+                        RegisterBirthdayPageRoute(
+                          email: email,
+                          password: password,
+                          userName: userNameController.text,
+                        ).location,
+                      );
                     } else {
                       validateMode.value = AutovalidateMode.onUserInteraction;
                     }
