@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -19,8 +21,25 @@ class App extends HookConsumerWidget {
         scaffoldBackgroundColor: AppColor.black00,
         primaryTextTheme: Typography(platform: TargetPlatform.iOS).white,
         textTheme: Typography(platform: TargetPlatform.iOS).white,
+        cupertinoOverrideTheme: NoDefaultCupertinoThemeData(
+          textTheme: CupertinoTextThemeData(
+            dateTimePickerTextStyle: TextStyle(
+              fontSize: 20,
+              color: AppColor.white,
+            ),
+          ),
+        ),
         useMaterial3: false,
       ),
+      localizationsDelegates: const [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ja'),
+      ],
+      locale: const Locale('ja'),
       builder: (BuildContext context, Widget? child) {
         return GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
