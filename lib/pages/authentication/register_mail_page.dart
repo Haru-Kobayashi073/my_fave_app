@@ -62,7 +62,7 @@ class RegisterMailPage extends HookWidget {
                 CommonButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      context.go(
+                      context.push(
                         RegisterPasswordPageRoute(email: emailController.text)
                             .location,
                       );
