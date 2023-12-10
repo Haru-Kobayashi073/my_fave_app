@@ -7,7 +7,7 @@ class PopUpButton extends StatelessWidget {
     required this.labelText,
     required this.child,
     required this.onPressed,
-    this.visibleError = false,
+    required this.visibleError,
   });
   final String labelText;
   final Widget child;
@@ -60,7 +60,7 @@ class PopUpButton extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             child: const Text(
-              '生年月日を選択してください',
+              '選択してください',
               style: TextStyle(
                 color: Colors.red,
                 fontSize: 12,
