@@ -9,6 +9,7 @@ import 'package:my_fave_app/pages/authentication/login_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_birthday_page.dart';
+import 'package:my_fave_app/pages/register_user_information/register_gender_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_user_name_page.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,6 +28,7 @@ class AppRoutes {
   static const registerPassword = 'registerPassword';
   static const registerUserName = 'registerUserName';
   static const registerBirthday = 'registerBirthday';
+  static const registerGender = 'registerGender';
 }
 
 @Riverpod(keepAlive: true)
@@ -60,6 +62,11 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
               routes: [
                 TypedGoRoute<RegisterBirthdayPageRoute>(
                   path: AppRoutes.registerBirthday,
+                  routes: [
+                    TypedGoRoute<RegisterGenderPageRoute>(
+                      path: AppRoutes.registerGender,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -136,5 +143,27 @@ class RegisterBirthdayPageRoute extends GoRouteData {
         email: email,
         password: password,
         userName: userName,
+      );
+}
+
+@immutable
+class RegisterGenderPageRoute extends GoRouteData {
+  const RegisterGenderPageRoute({
+    required this.email,
+    required this.password,
+    required this.userName,
+    required this.birthDay,
+  });
+  final String email;
+  final String password;
+  final String userName;
+  final DateTime birthDay;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => RegisterGenderPage(
+        email: email,
+        password: password,
+        userName: userName,
+        birthDay: birthDay,
       );
 }

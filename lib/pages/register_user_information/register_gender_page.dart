@@ -1,27 +1,27 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/pages/register_user_information/components/register_user_information_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
-class RegisterBirthDayPage extends HookWidget {
-  const RegisterBirthDayPage({
+class RegisterGenderPage extends HookConsumerWidget {
+  const RegisterGenderPage({
     super.key,
     required this.email,
     required this.password,
     required this.userName,
+    required this.birthDay,
   });
   final String email;
   final String password;
   final String userName;
+  final DateTime birthDay;
 
   @override
-  Widget build(BuildContext context) {
-    final selectDate = useState<DateTime?>(null);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectGender = useState<String?>(null);
     final pressed = useState<bool?>(false);
 
     return Scaffold(
@@ -31,12 +31,13 @@ class RegisterBirthDayPage extends HookWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const StatusBar(phaseIndex: 4),
+            const StatusBar(phaseIndex: 5),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 24),
               child: Text(
-                '生年月日を追加しよう！',
+                '性別を教えて！',
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
@@ -44,14 +45,12 @@ class RegisterBirthDayPage extends HookWidget {
               ),
             ),
             PopUpButton(
-              labelText: '生年月日',
-              visibleError: pressed.value ?? selectDate.value == null,
+              labelText: '性別',
+              visibleError: pressed.value ?? selectGender.value == null,
               child: Text(
-                selectDate.value == null
-                    ? '選択してください'
-                    : '${selectDate.value!.year}年${selectDate.value!.month}月${selectDate.value!.day}日',
+                selectGender.value == null ? '選択してください' : selectGender.value!,
                 style: TextStyle(
-                  color: selectDate.value == null
+                  color: selectGender.value == null
                       ? AppColor.grey88
                       : AppColor.white,
                   fontSize: 16,
@@ -61,14 +60,22 @@ class RegisterBirthDayPage extends HookWidget {
                 await showCupertinoModalPopup<void>(
                   context: context,
                   builder: (_) => DatePickerWrapper(
-                    child: CupertinoDatePicker(
-                      initialDateTime: selectDate.value,
-                      mode: CupertinoDatePickerMode.date,
-                      onDateTimeChanged: (dateTime) {
-                        selectDate.value = dateTime;
+                    child: CupertinoPicker(
+                      itemExtent: 32,
+                      onSelectedItemChanged: (gender) {
+                        selectGender.value = genderList[gender];
                       },
-                      maximumYear: DateTime.now().year,
-                      backgroundColor: AppColor.black15,
+                      children: genderList
+                          .map(
+                            (gender) => Text(
+                              gender,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: AppColor.white,
+                              ),
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
                 );
@@ -77,16 +84,8 @@ class RegisterBirthDayPage extends HookWidget {
             const SizedBox(height: 16),
             CommonButton(
               onPressed: () {
-                if (selectDate.value != null) {
+                if (selectGender.value != null) {
                   pressed.value = false;
-                  context.push(
-                    RegisterGenderPageRoute(
-                      email: email,
-                      password: password,
-                      userName: userName,
-                      birthDay: selectDate.value!,
-                    ).location,
-                  );
                 } else {
                   pressed.value = null;
                 }
