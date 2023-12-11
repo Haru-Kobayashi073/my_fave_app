@@ -8,6 +8,7 @@ import 'package:my_fave_app/pages/authentication/authentication_page.dart';
 import 'package:my_fave_app/pages/authentication/login_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
+import 'package:my_fave_app/pages/register_user_information/complete_registration_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_birthday_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_gender_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_user_name_page.dart';
@@ -29,6 +30,7 @@ class AppRoutes {
   static const registerUserName = 'registerUserName';
   static const registerBirthday = 'registerBirthday';
   static const registerGender = 'registerGender';
+  static const completeRegistration = '/completeRegistration';
 }
 
 @Riverpod(keepAlive: true)
@@ -166,4 +168,15 @@ class RegisterGenderPageRoute extends GoRouteData {
         userName: userName,
         birthDay: birthDay,
       );
+}
+
+@TypedGoRoute<CompleteRegistrationPageRoute>(
+  path: AppRoutes.completeRegistration,
+)
+class CompleteRegistrationPageRoute extends GoRouteData {
+  const CompleteRegistrationPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const CompleteRegistrationPage();
 }

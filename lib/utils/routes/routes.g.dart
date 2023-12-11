@@ -8,6 +8,7 @@ part of 'routes.dart';
 
 List<RouteBase> get $appRoutes => [
       $authenticationPageRoute,
+      $completeRegistrationPageRoute,
     ];
 
 RouteBase get $authenticationPageRoute => GoRouteData.$route(
@@ -195,6 +196,30 @@ extension $RegisterGenderPageRouteExtension on RegisterGenderPageRoute {
           'user-name': userName,
           'birth-day': birthDay.toString(),
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $completeRegistrationPageRoute => GoRouteData.$route(
+      path: '/completeRegistration',
+      factory: $CompleteRegistrationPageRouteExtension._fromState,
+    );
+
+extension $CompleteRegistrationPageRouteExtension
+    on CompleteRegistrationPageRoute {
+  static CompleteRegistrationPageRoute _fromState(GoRouterState state) =>
+      const CompleteRegistrationPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/completeRegistration',
       );
 
   void go(BuildContext context) => context.go(location);
