@@ -8,6 +8,7 @@ part of 'routes.dart';
 
 List<RouteBase> get $appRoutes => [
       $authenticationPageRoute,
+      $reconfigurationMailPageRoute,
     ];
 
 RouteBase get $authenticationPageRoute => GoRouteData.$route(
@@ -160,6 +161,30 @@ extension $RegisterBirthdayPageRouteExtension on RegisterBirthdayPageRoute {
           'password': password,
           'user-name': userName,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $reconfigurationMailPageRoute => GoRouteData.$route(
+      path: '/reconfigurationMail',
+      factory: $ReconfigurationMailPageRouteExtension._fromState,
+    );
+
+extension $ReconfigurationMailPageRouteExtension
+    on ReconfigurationMailPageRoute {
+  static ReconfigurationMailPageRoute _fromState(GoRouterState state) =>
+      const ReconfigurationMailPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/reconfigurationMail',
       );
 
   void go(BuildContext context) => context.go(location);

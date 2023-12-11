@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
 import 'package:my_fave_app/pages/authentication/login_page.dart';
+import 'package:my_fave_app/pages/authentication/reconfiguration_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_birthday_page.dart';
@@ -27,6 +28,7 @@ class AppRoutes {
   static const registerPassword = 'registerPassword';
   static const registerUserName = 'registerUserName';
   static const registerBirthday = 'registerBirthday';
+  static const reconfigurationMail ='/reconfigurationMail';
 }
 
 @Riverpod(keepAlive: true)
@@ -137,4 +139,14 @@ class RegisterBirthdayPageRoute extends GoRouteData {
         password: password,
         userName: userName,
       );
+}
+
+@TypedGoRoute<ReconfigurationMailPageRoute>(
+  path: AppRoutes.reconfigurationMail,
+)
+class ReconfigurationMailPageRoute extends GoRouteData {
+  const ReconfigurationMailPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const ReconfigurationMailPage();
 }
