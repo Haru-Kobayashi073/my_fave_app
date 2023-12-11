@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/pages/register_user_information/components/register_user_information_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
@@ -86,6 +87,9 @@ class RegisterGenderPage extends HookConsumerWidget {
               onPressed: () {
                 if (selectGender.value != null) {
                   pressed.value = false;
+                  context.push(
+                    const CompleteRegistrationPageRoute().location,
+                  );
                 } else {
                   pressed.value = null;
                 }
