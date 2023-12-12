@@ -8,6 +8,7 @@ import 'package:my_fave_app/pages/authentication/authentication_page.dart';
 import 'package:my_fave_app/pages/authentication/login_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
+import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
 import 'package:my_fave_app/pages/register_user_information/complete_registration_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_birthday_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_gender_page.dart';
@@ -31,6 +32,7 @@ class AppRoutes {
   static const registerBirthday = 'registerBirthday';
   static const registerGender = 'registerGender';
   static const completeRegistration = '/completeRegistration';
+  static const onBoardingIntroduction = '/onBoardingIntroduction';
 }
 
 @Riverpod(keepAlive: true)
@@ -179,4 +181,15 @@ class CompleteRegistrationPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const CompleteRegistrationPage();
+}
+
+@TypedGoRoute<OnBoardingIntroductionPageRoute>(
+  path: AppRoutes.onBoardingIntroduction,
+)
+class OnBoardingIntroductionPageRoute extends GoRouteData {
+  const OnBoardingIntroductionPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const OnBoardignIntroductionPage();
 }
