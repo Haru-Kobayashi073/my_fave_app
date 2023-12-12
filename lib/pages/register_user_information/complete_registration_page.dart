@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/utils/routes/routes.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class CompleteRegistrationPage extends HookConsumerWidget {
@@ -40,7 +42,11 @@ class CompleteRegistrationPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 48),
               child: CommonButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push(
+                    const OnBoardingIntroductionPageRoute().location,
+                  );
+                },
                 text: '次へ',
               ),
             ),
