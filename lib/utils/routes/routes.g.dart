@@ -9,6 +9,7 @@ part of 'routes.dart';
 List<RouteBase> get $appRoutes => [
       $authenticationPageRoute,
       $completeRegistrationPageRoute,
+      $onBoardingIntroductionPageRoute,
     ];
 
 RouteBase get $authenticationPageRoute => GoRouteData.$route(
@@ -220,6 +221,30 @@ extension $CompleteRegistrationPageRouteExtension
 
   String get location => GoRouteData.$location(
         '/completeRegistration',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $onBoardingIntroductionPageRoute => GoRouteData.$route(
+      path: '/onBoardingIntroduction',
+      factory: $OnBoardingIntroductionPageRouteExtension._fromState,
+    );
+
+extension $OnBoardingIntroductionPageRouteExtension
+    on OnBoardingIntroductionPageRoute {
+  static OnBoardingIntroductionPageRoute _fromState(GoRouterState state) =>
+      const OnBoardingIntroductionPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/onBoardingIntroduction',
       );
 
   void go(BuildContext context) => context.go(location);
