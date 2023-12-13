@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
+import 'package:my_fave_app/pages/authentication/confirmation_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/login_page.dart';
 import 'package:my_fave_app/pages/authentication/reconfiguration_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
@@ -29,6 +30,7 @@ class AppRoutes {
   static const registerUserName = 'registerUserName';
   static const registerBirthday = 'registerBirthday';
   static const reconfigurationMail ='/reconfigurationMail';
+  static const confirmationMail = 'confirmationMail';
 }
 
 @Riverpod(keepAlive: true)
@@ -143,10 +145,22 @@ class RegisterBirthdayPageRoute extends GoRouteData {
 
 @TypedGoRoute<ReconfigurationMailPageRoute>(
   path: AppRoutes.reconfigurationMail,
+  routes:[
+    TypedGoRoute<ConfirmationMailPageRoute>(
+      path: AppRoutes.confirmationMail
+      ),
+  ]
 )
 class ReconfigurationMailPageRoute extends GoRouteData {
   const ReconfigurationMailPageRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const ReconfigurationMailPage();
+}
+@immutable
+class ConfirmationMailPageRoute extends GoRouteData {
+  const ConfirmationMailPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const ConfirmationMailPage();
 }

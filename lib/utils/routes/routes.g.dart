@@ -176,6 +176,12 @@ extension $RegisterBirthdayPageRouteExtension on RegisterBirthdayPageRoute {
 RouteBase get $reconfigurationMailPageRoute => GoRouteData.$route(
       path: '/reconfigurationMail',
       factory: $ReconfigurationMailPageRouteExtension._fromState,
+      routes: [
+        GoRouteData.$route(
+          path: 'confirmationMail',
+          factory: $ConfirmationMailPageRouteExtension._fromState,
+        ),
+      ],
     );
 
 extension $ReconfigurationMailPageRouteExtension
@@ -185,6 +191,24 @@ extension $ReconfigurationMailPageRouteExtension
 
   String get location => GoRouteData.$location(
         '/reconfigurationMail',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ConfirmationMailPageRouteExtension on ConfirmationMailPageRoute {
+  static ConfirmationMailPageRoute _fromState(GoRouterState state) =>
+      const ConfirmationMailPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/reconfigurationMail/confirmationMail',
       );
 
   void go(BuildContext context) => context.go(location);
