@@ -29,7 +29,7 @@ class AppRoutes {
   static const registerPassword = 'registerPassword';
   static const registerUserName = 'registerUserName';
   static const registerBirthday = 'registerBirthday';
-  static const reconfigurationMail ='/reconfigurationMail';
+  static const reconfigurationMail = '/reconfigurationMail';
   static const confirmationMail = 'confirmationMail';
 }
 
@@ -144,23 +144,24 @@ class RegisterBirthdayPageRoute extends GoRouteData {
 }
 
 @TypedGoRoute<ReconfigurationMailPageRoute>(
-  path: AppRoutes.reconfigurationMail,
-  routes:[
-    TypedGoRoute<ConfirmationMailPageRoute>(
-      path: AppRoutes.confirmationMail
-      ),
-  ]
-)
+    path: AppRoutes.reconfigurationMail,
+    routes: [
+      TypedGoRoute<ConfirmationMailPageRoute>(path: AppRoutes.confirmationMail),
+    ])
 class ReconfigurationMailPageRoute extends GoRouteData {
   const ReconfigurationMailPageRoute();
-
   @override
-  Widget build(BuildContext context, GoRouterState state) => const ReconfigurationMailPage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ReconfigurationMailPage();
 }
+
 @immutable
 class ConfirmationMailPageRoute extends GoRouteData {
-  const ConfirmationMailPageRoute();
+  const ConfirmationMailPageRoute({required this.email});
+
+  final String email;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const ConfirmationMailPage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      ConfirmationMailPage(email: email);
 }

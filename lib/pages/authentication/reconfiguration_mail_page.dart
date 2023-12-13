@@ -55,7 +55,7 @@ class ReconfigurationMailPage extends HookConsumerWidget {
                 const SizedBox(height: 24),
                 CommonButton(
                   onPressed: () {
-                    context.push(const ConfirmationMailPageRoute().location);
+                    context.push(ConfirmationMailPageRoute(email: emailController.text).location);
                   },
                   text: '送信',
                 ),

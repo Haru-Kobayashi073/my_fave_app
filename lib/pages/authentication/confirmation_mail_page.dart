@@ -6,8 +6,12 @@ import 'package:my_fave_app/widgets/common_app_bar.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class ConfirmationMailPage extends HookConsumerWidget {
-  const ConfirmationMailPage({super.key});
+  const ConfirmationMailPage({
+    super.key, required this.email
+    });
 
+  final String email;
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -37,7 +41,7 @@ class ConfirmationMailPage extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'shimanoyuuki@yahoo.co.jpにパスワードをリセットするためのリンクを送信しました。パスワードをリセットし、再度ログインしてください。',
+                '${email}にパスワードをリセットするためのリンクを送信しました。パスワードをリセットし、再度ログインしてください。',
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColor.grey88,
@@ -47,7 +51,6 @@ class ConfirmationMailPage extends HookConsumerWidget {
             const SizedBox(height: 24),
             CommonButton(
                   onPressed: () {
-                    context.push(const ConfirmationMailPageRoute().location);
                   },
                   text: '完了',
                 ),

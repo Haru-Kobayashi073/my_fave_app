@@ -205,10 +205,15 @@ extension $ReconfigurationMailPageRouteExtension
 
 extension $ConfirmationMailPageRouteExtension on ConfirmationMailPageRoute {
   static ConfirmationMailPageRoute _fromState(GoRouterState state) =>
-      const ConfirmationMailPageRoute();
+      ConfirmationMailPageRoute(
+        email: state.uri.queryParameters['email']!,
+      );
 
   String get location => GoRouteData.$location(
         '/reconfigurationMail/confirmationMail',
+        queryParams: {
+          'email': email,
+        },
       );
 
   void go(BuildContext context) => context.go(location);
