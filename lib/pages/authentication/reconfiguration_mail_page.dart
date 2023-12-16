@@ -44,7 +44,7 @@ class ReconfigurationMailPage extends HookConsumerWidget {
                     validator: Validator.email,
                     autovalidateMode: validateMode.value,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 8),
                   Text(
                   'こちらのメールアドレスにパスワードの再設定メールを送信します。',
                   style: TextStyle(
@@ -55,7 +55,11 @@ class ReconfigurationMailPage extends HookConsumerWidget {
                 const SizedBox(height: 24),
                 CommonButton(
                   onPressed: () {
-                    context.push(ConfirmationMailPageRoute(email: emailController.text).location);
+                    if (formKey.currentState!.validate()) {
+                      context.push(ConfirmationMailPageRoute(email: emailController.text).location);
+                    } else {
+                      validateMode.value = AutovalidateMode.onUserInteraction;
+                    }
                   },
                   text: '送信',
                 ),
