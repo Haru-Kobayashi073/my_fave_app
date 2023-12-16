@@ -9,6 +9,8 @@ part of 'routes.dart';
 List<RouteBase> get $appRoutes => [
       $authenticationPageRoute,
       $reconfigurationMailPageRoute,
+      $completeRegistrationPageRoute,
+      $onBoardingIntroductionPageRoute,
     ];
 
 RouteBase get $authenticationPageRoute => GoRouteData.$route(
@@ -34,6 +36,12 @@ RouteBase get $authenticationPageRoute => GoRouteData.$route(
                     GoRouteData.$route(
                       path: 'registerBirthday',
                       factory: $RegisterBirthdayPageRouteExtension._fromState,
+                      routes: [
+                        GoRouteData.$route(
+                          path: 'registerGender',
+                          factory: $RegisterGenderPageRouteExtension._fromState,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -191,6 +199,47 @@ extension $ReconfigurationMailPageRouteExtension
 
   String get location => GoRouteData.$location(
         '/reconfigurationMail',
+extension $RegisterGenderPageRouteExtension on RegisterGenderPageRoute {
+  static RegisterGenderPageRoute _fromState(GoRouterState state) =>
+      RegisterGenderPageRoute(
+        email: state.uri.queryParameters['email']!,
+        password: state.uri.queryParameters['password']!,
+        userName: state.uri.queryParameters['user-name']!,
+        birthDay: DateTime.parse(state.uri.queryParameters['birth-day']!),
+      );
+
+  String get location => GoRouteData.$location(
+        '/authentication/registerMail/registerPassword/registerUserName/registerBirthday/registerGender',
+        queryParams: {
+          'email': email,
+          'password': password,
+          'user-name': userName,
+          'birth-day': birthDay.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $completeRegistrationPageRoute => GoRouteData.$route(
+      path: '/completeRegistration',
+      factory: $CompleteRegistrationPageRouteExtension._fromState,
+    );
+
+extension $CompleteRegistrationPageRouteExtension
+    on CompleteRegistrationPageRoute {
+  static CompleteRegistrationPageRoute _fromState(GoRouterState state) =>
+      const CompleteRegistrationPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/completeRegistration',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -214,6 +263,19 @@ extension $ConfirmationMailPageRouteExtension on ConfirmationMailPageRoute {
         queryParams: {
           'email': email,
         },
+
+RouteBase get $onBoardingIntroductionPageRoute => GoRouteData.$route(
+      path: '/onBoardingIntroduction',
+      factory: $OnBoardingIntroductionPageRouteExtension._fromState,
+    );
+
+extension $OnBoardingIntroductionPageRouteExtension
+    on OnBoardingIntroductionPageRoute {
+  static OnBoardingIntroductionPageRoute _fromState(GoRouterState state) =>
+      const OnBoardingIntroductionPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/onBoardingIntroduction',
       );
 
   void go(BuildContext context) => context.go(location);
