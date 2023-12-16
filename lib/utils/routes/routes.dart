@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
+import 'package:my_fave_app/pages/authentication/confirmation_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/login_page.dart';
+import 'package:my_fave_app/pages/authentication/reconfiguration_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
@@ -30,6 +32,8 @@ class AppRoutes {
   static const registerPassword = 'registerPassword';
   static const registerUserName = 'registerUserName';
   static const registerBirthday = 'registerBirthday';
+  static const reconfigurationMail = '/reconfigurationMail';
+  static const confirmationMail = 'confirmationMail';
   static const registerGender = 'registerGender';
   static const completeRegistration = '/completeRegistration';
   static const onBoardingIntroduction = '/onBoardingIntroduction';
@@ -149,6 +153,30 @@ class RegisterBirthdayPageRoute extends GoRouteData {
         userName: userName,
       );
 }
+
+
+@TypedGoRoute<ReconfigurationMailPageRoute>(
+  path: AppRoutes.reconfigurationMail,
+  routes: [
+    TypedGoRoute<ConfirmationMailPageRoute>(path: AppRoutes.confirmationMail),
+  ],
+)
+class ReconfigurationMailPageRoute extends GoRouteData {
+  const ReconfigurationMailPageRoute();
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ReconfigurationMailPage();
+}
+
+@immutable
+class ConfirmationMailPageRoute extends GoRouteData {
+  const ConfirmationMailPageRoute({required this.email});
+
+  final String email;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      ConfirmationMailPage(email: email);
 
 @immutable
 class RegisterGenderPageRoute extends GoRouteData {

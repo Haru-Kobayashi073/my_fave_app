@@ -8,6 +8,7 @@ part of 'routes.dart';
 
 List<RouteBase> get $appRoutes => [
       $authenticationPageRoute,
+      $reconfigurationMailPageRoute,
       $completeRegistrationPageRoute,
       $onBoardingIntroductionPageRoute,
     ];
@@ -180,6 +181,24 @@ extension $RegisterBirthdayPageRouteExtension on RegisterBirthdayPageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $reconfigurationMailPageRoute => GoRouteData.$route(
+      path: '/reconfigurationMail',
+      factory: $ReconfigurationMailPageRouteExtension._fromState,
+      routes: [
+        GoRouteData.$route(
+          path: 'confirmationMail',
+          factory: $ConfirmationMailPageRouteExtension._fromState,
+        ),
+      ],
+    );
+
+extension $ReconfigurationMailPageRouteExtension
+    on ReconfigurationMailPageRoute {
+  static ReconfigurationMailPageRoute _fromState(GoRouterState state) =>
+      const ReconfigurationMailPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/reconfigurationMail',
 extension $RegisterGenderPageRouteExtension on RegisterGenderPageRoute {
   static RegisterGenderPageRoute _fromState(GoRouterState state) =>
       RegisterGenderPageRoute(
@@ -232,6 +251,18 @@ extension $CompleteRegistrationPageRouteExtension
 
   void replace(BuildContext context) => context.replace(location);
 }
+
+extension $ConfirmationMailPageRouteExtension on ConfirmationMailPageRoute {
+  static ConfirmationMailPageRoute _fromState(GoRouterState state) =>
+      ConfirmationMailPageRoute(
+        email: state.uri.queryParameters['email']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/reconfigurationMail/confirmationMail',
+        queryParams: {
+          'email': email,
+        },
 
 RouteBase get $onBoardingIntroductionPageRoute => GoRouteData.$route(
       path: '/onBoardingIntroduction',
