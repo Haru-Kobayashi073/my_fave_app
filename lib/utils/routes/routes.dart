@@ -144,10 +144,11 @@ class RegisterBirthdayPageRoute extends GoRouteData {
 }
 
 @TypedGoRoute<ReconfigurationMailPageRoute>(
-    path: AppRoutes.reconfigurationMail,
-    routes: [
-      TypedGoRoute<ConfirmationMailPageRoute>(path: AppRoutes.confirmationMail),
-    ])
+  path: AppRoutes.reconfigurationMail,
+  routes: [
+    TypedGoRoute<ConfirmationMailPageRoute>(path: AppRoutes.confirmationMail),
+  ],
+)
 class ReconfigurationMailPageRoute extends GoRouteData {
   const ReconfigurationMailPageRoute();
   @override
