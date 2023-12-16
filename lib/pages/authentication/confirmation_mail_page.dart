@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -48,7 +49,9 @@ class ConfirmationMailPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 24),
             CommonButton(
-              onPressed: () {},
+              onPressed: () {
+                context.go(const LoginPageRoute().location);
+              },
               text: '完了',
             ),
           ],
