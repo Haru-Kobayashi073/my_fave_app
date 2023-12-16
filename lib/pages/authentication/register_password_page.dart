@@ -86,12 +86,19 @@ class RegisterPasswordPage extends HookConsumerWidget {
                     onPressed: obscureText.toggle,
                   ),
                 ),
-                Text(
-                  passwordRules,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColor.grey88,
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: passwordRules
+                      .map(
+                        (rule) => Text(
+                          rule,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: AppColor.grey88,
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
                 const SizedBox(height: 24),
                 CommonButton(
