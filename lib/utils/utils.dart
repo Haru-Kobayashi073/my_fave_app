@@ -1,5 +1,8 @@
+export 'connectivity.dart';
 export 'constants/constants.dart';
+export 'exceptions/exceptions.dart';
 export 'extensions/extensions.dart';
+export 'firebase/firebase.dart';
 export 'gen/assets.gen.dart';
 export 'hooks/hooks.dart';
 export 'routes/routes.dart';
