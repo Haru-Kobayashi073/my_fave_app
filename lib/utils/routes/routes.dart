@@ -10,11 +10,13 @@ import 'package:my_fave_app/pages/authentication/login_page.dart';
 import 'package:my_fave_app/pages/authentication/reconfiguration_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
+import 'package:my_fave_app/pages/home/home_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
 import 'package:my_fave_app/pages/register_user_information/complete_registration_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_birthday_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_gender_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_user_name_page.dart';
+import 'package:my_fave_app/start_up_page.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 // ...略
@@ -26,6 +28,7 @@ part 'routes.g.dart';
 // * パスは定数にしてまとめておく
 // ********************************************************
 class AppRoutes {
+  static const root = '/';
   static const authentication = '/authentication';
   static const login = 'login';
   static const registerMail = 'registerMail';
@@ -37,13 +40,14 @@ class AppRoutes {
   static const registerGender = 'registerGender';
   static const completeRegistration = '/completeRegistration';
   static const onBoardingIntroduction = '/onBoardingIntroduction';
+  static const home = '/home';
 }
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) => GoRouter(
       routes: $appRoutes,
       navigatorKey: ref.read(navigatorKeyProvider),
-      initialLocation: AppRoutes.authentication,
+      initialLocation: AppRoutes.root,
       debugLogDiagnostics: kDebugMode,
     );
 
@@ -53,6 +57,17 @@ GoRouter goRouter(GoRouterRef ref) => GoRouter(
 // ********************************************************
 
 // TOPレベルのパスには、@TypedGoRouteをつける
+@TypedGoRoute<StartUpPageRoute>(
+  path: AppRoutes.root,
+)
+class StartUpPageRoute extends GoRouteData {
+  const StartUpPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const StartUpPage();
+}
+
 @TypedGoRoute<AuthenticationPageRoute>(
   path: AppRoutes.authentication,
   routes: [
@@ -220,4 +235,15 @@ class OnBoardingIntroductionPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const OnBoardignIntroductionPage();
+}
+
+@TypedGoRoute<HomePageRoute>(
+  path: AppRoutes.home,
+)
+class HomePageRoute extends GoRouteData {
+  const HomePageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const MyHomePage(title: '');
 }

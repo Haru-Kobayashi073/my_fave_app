@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/utils/constants/constants.dart';
 
 /// アプリ全体に二度押し防止のローディングを重ねるかどうかを管理するStateProvider
 final overlayLoadingWidgetProvider = StateProvider.autoDispose<bool>(
@@ -36,8 +37,10 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return Center(
+      child: CircularProgressIndicator(
+        color: AppColor.white,
+      ),
     );
   }
 }

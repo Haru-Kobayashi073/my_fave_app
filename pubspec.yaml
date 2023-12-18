@@ -10,8 +10,10 @@ environment:
 
 dependencies:
   cached_network_image: ^3.3.0
+  connectivity_plus: ^5.0.2
   cupertino_icons: ^1.0.2
   email_validator: ^2.1.17
+  firebase_auth: ^4.15.3
   firebase_core: ^2.23.0
   flutter:
     sdk: flutter
