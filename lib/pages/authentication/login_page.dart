@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/authentication/sign_in.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
@@ -10,6 +12,7 @@ class LoginPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
+    final passwordFocusNode = useFocusNode();
     final obscureText = useToggle(true);
     final formKey = useFormStateKey();
     final validateMode = useState<AutovalidateMode>(AutovalidateMode.disabled);
@@ -40,6 +43,9 @@ class LoginPage extends HookConsumerWidget {
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   validator: Validator.email,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) =>
+                      FocusScope.of(context).requestFocus(passwordFocusNode),
                   autovalidateMode: validateMode.value,
                 ),
                 const SizedBox(height: 8),
@@ -49,6 +55,8 @@ class LoginPage extends HookConsumerWidget {
                   keyboardType: TextInputType.visiblePassword,
                   validator: Validator.password,
                   obscureText: obscureText.value,
+                  textInputAction: TextInputAction.done,
+                  focusNode: passwordFocusNode,
                   autovalidateMode: validateMode.value,
                   icon: IconButton(
                     icon: Icon(
@@ -64,6 +72,15 @@ class LoginPage extends HookConsumerWidget {
                 CommonButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+                      ref.read(
+                        signInProvider(
+                          emailController.text,
+                          passwordController.text,
+                          () => context.go(
+                            AppRoutes.home,
+                          ),
+                        ),
+                      );
                     } else {
                       validateMode.value = AutovalidateMode.onUserInteraction;
                     }
