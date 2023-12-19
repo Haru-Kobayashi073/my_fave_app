@@ -7,13 +7,7 @@ import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class RegisterUserNamePage extends HookConsumerWidget {
-  const RegisterUserNamePage({
-    super.key,
-    required this.email,
-    required this.password,
-  });
-  final String email;
-  final String password;
+  const RegisterUserNamePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,8 +52,6 @@ class RegisterUserNamePage extends HookConsumerWidget {
                     if (formKey.currentState!.validate()) {
                       context.push(
                         RegisterBirthdayPageRoute(
-                          email: email,
-                          password: password,
                           userName: userNameController.text,
                         ).location,
                       );

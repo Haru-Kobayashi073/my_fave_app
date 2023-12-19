@@ -33,7 +33,7 @@ class AppRoutes {
   static const login = 'login';
   static const registerMail = 'registerMail';
   static const registerPassword = 'registerPassword';
-  static const registerUserName = 'registerUserName';
+  static const registerUserName = '/registerUserName';
   static const registerBirthday = 'registerBirthday';
   static const reconfigurationMail = '/reconfigurationMail';
   static const confirmationMail = 'confirmationMail';
@@ -79,21 +79,6 @@ class StartUpPageRoute extends GoRouteData {
       routes: [
         TypedGoRoute<RegisterPasswordPageRoute>(
           path: AppRoutes.registerPassword,
-          routes: [
-            TypedGoRoute<RegisterUserNamePageRoute>(
-              path: AppRoutes.registerUserName,
-              routes: [
-                TypedGoRoute<RegisterBirthdayPageRoute>(
-                  path: AppRoutes.registerBirthday,
-                  routes: [
-                    TypedGoRoute<RegisterGenderPageRoute>(
-                      path: AppRoutes.registerGender,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
         ),
       ],
     ),
@@ -132,41 +117,37 @@ class RegisterPasswordPageRoute extends GoRouteData {
       RegisterPasswordPage(email: email);
 }
 
-@immutable
+@TypedGoRoute<RegisterUserNamePageRoute>(
+  path: AppRoutes.registerUserName,
+  routes: [
+    TypedGoRoute<RegisterBirthdayPageRoute>(
+      path: AppRoutes.registerBirthday,
+      routes: [
+        TypedGoRoute<RegisterGenderPageRoute>(
+          path: AppRoutes.registerGender,
+        ),
+      ],
+    ),
+  ],
+)
 class RegisterUserNamePageRoute extends GoRouteData {
-  const RegisterUserNamePageRoute({
-    required this.email,
-    required this.password,
-  });
-  final String email;
-  final String password;
+  const RegisterUserNamePageRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      RegisterUserNamePage(
-        email: email,
-        password: password,
-      );
+      const RegisterUserNamePage();
 }
 
 @immutable
 class RegisterBirthdayPageRoute extends GoRouteData {
   const RegisterBirthdayPageRoute({
-    required this.email,
-    required this.password,
     required this.userName,
   });
-  final String email;
-  final String password;
   final String userName;
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      RegisterBirthDayPage(
-        email: email,
-        password: password,
-        userName: userName,
-      );
+      RegisterBirthDayPage(userName: userName);
 }
 
 @TypedGoRoute<ReconfigurationMailPageRoute>(
@@ -196,20 +177,14 @@ class ConfirmationMailPageRoute extends GoRouteData {
 @immutable
 class RegisterGenderPageRoute extends GoRouteData {
   const RegisterGenderPageRoute({
-    required this.email,
-    required this.password,
     required this.userName,
     required this.birthDay,
   });
-  final String email;
-  final String password;
   final String userName;
   final DateTime birthDay;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => RegisterGenderPage(
-        email: email,
-        password: password,
         userName: userName,
         birthDay: birthDay,
       );
