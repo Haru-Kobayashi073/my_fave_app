@@ -9,6 +9,7 @@ part of 'routes.dart';
 List<RouteBase> get $appRoutes => [
       $startUpPageRoute,
       $authenticationPageRoute,
+      $registerUserNamePageRoute,
       $reconfigurationMailPageRoute,
       $completeRegistrationPageRoute,
       $onBoardingIntroductionPageRoute,
@@ -53,24 +54,6 @@ RouteBase get $authenticationPageRoute => GoRouteData.$route(
             GoRouteData.$route(
               path: 'registerPassword',
               factory: $RegisterPasswordPageRouteExtension._fromState,
-              routes: [
-                GoRouteData.$route(
-                  path: 'registerUserName',
-                  factory: $RegisterUserNamePageRouteExtension._fromState,
-                  routes: [
-                    GoRouteData.$route(
-                      path: 'registerBirthday',
-                      factory: $RegisterBirthdayPageRouteExtension._fromState,
-                      routes: [
-                        GoRouteData.$route(
-                          path: 'registerGender',
-                          factory: $RegisterGenderPageRouteExtension._fromState,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
             ),
           ],
         ),
@@ -154,19 +137,29 @@ extension $RegisterPasswordPageRouteExtension on RegisterPasswordPageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $registerUserNamePageRoute => GoRouteData.$route(
+      path: '/registerUserName',
+      factory: $RegisterUserNamePageRouteExtension._fromState,
+      routes: [
+        GoRouteData.$route(
+          path: 'registerBirthday',
+          factory: $RegisterBirthdayPageRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'registerGender',
+              factory: $RegisterGenderPageRouteExtension._fromState,
+            ),
+          ],
+        ),
+      ],
+    );
+
 extension $RegisterUserNamePageRouteExtension on RegisterUserNamePageRoute {
   static RegisterUserNamePageRoute _fromState(GoRouterState state) =>
-      RegisterUserNamePageRoute(
-        email: state.uri.queryParameters['email']!,
-        password: state.uri.queryParameters['password']!,
-      );
+      const RegisterUserNamePageRoute();
 
   String get location => GoRouteData.$location(
-        '/authentication/registerMail/registerPassword/registerUserName',
-        queryParams: {
-          'email': email,
-          'password': password,
-        },
+        '/registerUserName',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -182,17 +175,38 @@ extension $RegisterUserNamePageRouteExtension on RegisterUserNamePageRoute {
 extension $RegisterBirthdayPageRouteExtension on RegisterBirthdayPageRoute {
   static RegisterBirthdayPageRoute _fromState(GoRouterState state) =>
       RegisterBirthdayPageRoute(
-        email: state.uri.queryParameters['email']!,
-        password: state.uri.queryParameters['password']!,
         userName: state.uri.queryParameters['user-name']!,
       );
 
   String get location => GoRouteData.$location(
-        '/authentication/registerMail/registerPassword/registerUserName/registerBirthday',
+        '/registerUserName/registerBirthday',
         queryParams: {
-          'email': email,
-          'password': password,
           'user-name': userName,
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $RegisterGenderPageRouteExtension on RegisterGenderPageRoute {
+  static RegisterGenderPageRoute _fromState(GoRouterState state) =>
+      RegisterGenderPageRoute(
+        userName: state.uri.queryParameters['user-name']!,
+        birthDay: DateTime.parse(state.uri.queryParameters['birth-day']!),
+      );
+
+  String get location => GoRouteData.$location(
+        '/registerUserName/registerBirthday/registerGender',
+        queryParams: {
+          'user-name': userName,
+          'birth-day': birthDay.toString(),
         },
       );
 
@@ -224,22 +238,28 @@ extension $ReconfigurationMailPageRouteExtension
 
   String get location => GoRouteData.$location(
         '/reconfigurationMail',
-extension $RegisterGenderPageRouteExtension on RegisterGenderPageRoute {
-  static RegisterGenderPageRoute _fromState(GoRouterState state) =>
-      RegisterGenderPageRoute(
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ConfirmationMailPageRouteExtension on ConfirmationMailPageRoute {
+  static ConfirmationMailPageRoute _fromState(GoRouterState state) =>
+      ConfirmationMailPageRoute(
         email: state.uri.queryParameters['email']!,
-        password: state.uri.queryParameters['password']!,
-        userName: state.uri.queryParameters['user-name']!,
-        birthDay: DateTime.parse(state.uri.queryParameters['birth-day']!),
       );
 
   String get location => GoRouteData.$location(
-        '/authentication/registerMail/registerPassword/registerUserName/registerBirthday/registerGender',
+        '/reconfigurationMail/confirmationMail',
         queryParams: {
           'email': email,
-          'password': password,
-          'user-name': userName,
-          'birth-day': birthDay.toString(),
         },
       );
 
@@ -276,18 +296,6 @@ extension $CompleteRegistrationPageRouteExtension
 
   void replace(BuildContext context) => context.replace(location);
 }
-
-extension $ConfirmationMailPageRouteExtension on ConfirmationMailPageRoute {
-  static ConfirmationMailPageRoute _fromState(GoRouterState state) =>
-      ConfirmationMailPageRoute(
-        email: state.uri.queryParameters['email']!,
-      );
-
-  String get location => GoRouteData.$location(
-        '/reconfigurationMail/confirmationMail',
-        queryParams: {
-          'email': email,
-        },
 
 RouteBase get $onBoardingIntroductionPageRoute => GoRouteData.$route(
       path: '/onBoardingIntroduction',

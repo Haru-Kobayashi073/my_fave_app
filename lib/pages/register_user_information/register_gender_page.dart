@@ -10,13 +10,9 @@ import 'package:my_fave_app/widgets/widget.dart';
 class RegisterGenderPage extends HookConsumerWidget {
   const RegisterGenderPage({
     super.key,
-    required this.email,
-    required this.password,
     required this.userName,
     required this.birthDay,
   });
-  final String email;
-  final String password;
   final String userName;
   final DateTime birthDay;
 

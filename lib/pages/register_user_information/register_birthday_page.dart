@@ -11,12 +11,8 @@ import 'package:my_fave_app/widgets/widget.dart';
 class RegisterBirthDayPage extends HookWidget {
   const RegisterBirthDayPage({
     super.key,
-    required this.email,
-    required this.password,
     required this.userName,
   });
-  final String email;
-  final String password;
   final String userName;
 
   @override
@@ -81,8 +77,6 @@ class RegisterBirthDayPage extends HookWidget {
                   pressed.value = false;
                   context.push(
                     RegisterGenderPageRoute(
-                      email: email,
-                      password: password,
                       userName: userName,
                       birthDay: selectDate.value!,
                     ).location,
