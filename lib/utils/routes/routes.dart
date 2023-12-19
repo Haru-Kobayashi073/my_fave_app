@@ -169,7 +169,6 @@ class RegisterBirthdayPageRoute extends GoRouteData {
       );
 }
 
-
 @TypedGoRoute<ReconfigurationMailPageRoute>(
   path: AppRoutes.reconfigurationMail,
   routes: [
@@ -192,6 +191,7 @@ class ConfirmationMailPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       ConfirmationMailPage(email: email);
+}
 
 @immutable
 class RegisterGenderPageRoute extends GoRouteData {
