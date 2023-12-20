@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:my_fave_app/utils/utils.dart';
 
 class SkipButton extends StatelessWidget {
-  const SkipButton({super.key});
+  const SkipButton({super.key, this.onPressed});
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ButtonStyle(
         overlayColor: MaterialStateColor.resolveWith(
           (states) => Colors.white.withOpacity(0.1),
