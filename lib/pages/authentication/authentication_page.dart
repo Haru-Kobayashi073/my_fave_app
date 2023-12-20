@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/authentication/sign_in_with_google.dart';
 import 'package:my_fave_app/pages/authentication/components/authetication_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -63,7 +64,11 @@ class AuthenticationPage extends HookConsumerWidget {
                   text: 'Appleでログイン',
                 ),
                 SocialLoginButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ref.read(
+                      signInWithGoogleProvider(() {}),
+                    );
+                  },
                   icon: Assets.icons.googleIcon,
                   text: 'Googleでログイン',
                 ),
