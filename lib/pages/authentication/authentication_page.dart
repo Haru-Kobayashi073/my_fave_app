@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/authentication/sign_in_with_apple.dart';
 import 'package:my_fave_app/features/authentication/sign_in_with_google.dart';
 import 'package:my_fave_app/pages/authentication/components/authetication_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
@@ -58,11 +59,16 @@ class AuthenticationPage extends HookConsumerWidget {
                     ],
                   ),
                 ),
-                SocialLoginButton(
-                  onPressed: () {},
-                  icon: Assets.icons.appleIcon,
-                  text: 'Appleでログイン',
-                ),
+                if (context.isIOS)
+                  SocialLoginButton(
+                    onPressed: () {
+                      ref.read(
+                        signInWithAppleProvider(() {}),
+                      );
+                    },
+                    icon: Assets.icons.appleIcon,
+                    text: 'Appleでログイン',
+                  ),
                 SocialLoginButton(
                   onPressed: () {
                     ref.read(
