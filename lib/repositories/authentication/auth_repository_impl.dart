@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_fave_app/repositories/authentication/auth_repository.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -53,5 +54,22 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  @override
+  Future<UserCredential> signInWithGoogle() async {
+    // 認証フローのトリガー
+    final googleUser = await GoogleSignIn(
+      scopes: [
+        'email',
+      ],
+    ).signIn();
+    // リクエストから、認証情報を取得
+    final googleAuth = await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    return FirebaseAuth.instance.signInWithCredential(credential);
   }
 }
