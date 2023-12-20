@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/user/create_user.dart';
 import 'package:my_fave_app/pages/register_user_information/components/register_user_information_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -22,8 +23,23 @@ class RegisterGenderPage extends HookConsumerWidget {
     final pressed = useState<bool?>(false);
 
     return Scaffold(
-      appBar: const CommonAppBar(
-        icon: SkipButton(),
+      appBar: CommonAppBar(
+        icon: SkipButton(
+          onPressed: () {
+            ref.read(
+              createUserProvider(
+                userName: userName,
+                birthDay: birthDay,
+                onSuccess: () {
+                  pressed.value = false;
+                  context.go(
+                    const CompleteRegistrationPageRoute().location,
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
@@ -82,9 +98,18 @@ class RegisterGenderPage extends HookConsumerWidget {
             CommonButton(
               onPressed: () {
                 if (selectGender.value != null) {
-                  pressed.value = false;
-                  context.push(
-                    const CompleteRegistrationPageRoute().location,
+                  ref.read(
+                    createUserProvider(
+                      userName: userName,
+                      birthDay: birthDay,
+                      gender: selectGender.value,
+                      onSuccess: () {
+                        pressed.value = false;
+                        context.go(
+                          const CompleteRegistrationPageRoute().location,
+                        );
+                      },
+                    ),
                   );
                 } else {
                   pressed.value = null;

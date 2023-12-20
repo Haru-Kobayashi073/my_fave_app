@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/user/create_user.dart';
 import 'package:my_fave_app/pages/register_user_information/components/register_user_information_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
-class RegisterBirthDayPage extends HookWidget {
+class RegisterBirthDayPage extends HookConsumerWidget {
   const RegisterBirthDayPage({
     super.key,
     required this.userName,
@@ -16,13 +18,27 @@ class RegisterBirthDayPage extends HookWidget {
   final String userName;
 
   @override
-  Widget build(BuildContext context) {
-    final selectDate = useState<DateTime?>(null);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final birthDay = useState<DateTime?>(null);
     final pressed = useState<bool?>(false);
 
     return Scaffold(
-      appBar: const CommonAppBar(
-        icon: SkipButton(),
+      appBar: CommonAppBar(
+        icon: SkipButton(
+          onPressed: () {
+            ref.read(
+              createUserProvider(
+                userName: userName,
+                onSuccess:  () {
+                  pressed.value = false;
+                  context.go(
+                    const CompleteRegistrationPageRoute().location,
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
@@ -41,13 +57,13 @@ class RegisterBirthDayPage extends HookWidget {
             ),
             PopUpButton(
               labelText: '生年月日',
-              visibleError: pressed.value ?? selectDate.value == null,
+              visibleError: pressed.value ?? birthDay.value == null,
               child: Text(
-                selectDate.value == null
+                birthDay.value == null
                     ? '選択してください'
-                    : '${selectDate.value!.year}年${selectDate.value!.month}月${selectDate.value!.day}日',
+                    : '${birthDay.value!.year}年${birthDay.value!.month}月${birthDay.value!.day}日',
                 style: TextStyle(
-                  color: selectDate.value == null
+                  color: birthDay.value == null
                       ? AppColor.grey88
                       : AppColor.white,
                   fontSize: 16,
@@ -58,10 +74,10 @@ class RegisterBirthDayPage extends HookWidget {
                   context: context,
                   builder: (_) => DatePickerWrapper(
                     child: CupertinoDatePicker(
-                      initialDateTime: selectDate.value,
+                      initialDateTime: birthDay.value,
                       mode: CupertinoDatePickerMode.date,
                       onDateTimeChanged: (dateTime) {
-                        selectDate.value = dateTime;
+                        birthDay.value = dateTime;
                       },
                       maximumYear: DateTime.now().year,
                       backgroundColor: AppColor.black15,
@@ -73,12 +89,12 @@ class RegisterBirthDayPage extends HookWidget {
             const SizedBox(height: 16),
             CommonButton(
               onPressed: () {
-                if (selectDate.value != null) {
+                if (birthDay.value != null) {
                   pressed.value = false;
                   context.push(
                     RegisterGenderPageRoute(
                       userName: userName,
-                      birthDay: selectDate.value!,
+                      birthDay: birthDay.value!,
                     ).location,
                   );
                 } else {
