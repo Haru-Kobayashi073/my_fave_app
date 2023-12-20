@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/user/create_user.dart';
 import 'package:my_fave_app/pages/register_user_information/components/register_user_information_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -16,8 +17,20 @@ class RegisterUserNamePage extends HookConsumerWidget {
     final validateMode = useState<AutovalidateMode>(AutovalidateMode.disabled);
 
     return Scaffold(
-      appBar: const CommonAppBar(
-        icon: SkipButton(),
+      appBar: CommonAppBar(
+        icon: SkipButton(
+          onPressed: () {
+            ref.read(
+              createUserProvider(
+                onSuccess: () {
+                  context.go(
+                    const CompleteRegistrationPageRoute().location,
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
