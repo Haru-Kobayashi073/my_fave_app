@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/authentication/send_password_reset_email.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
@@ -56,10 +57,17 @@ class ReconfigurationMailPage extends HookConsumerWidget {
                 CommonButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      context.push(
-                        ConfirmationMailPageRoute(
+                      ref.read(
+                        sendPasswordResetEmailProvider(
                           email: emailController.text,
-                        ).location,
+                          onSuccess: () {
+                            context.push(
+                              ConfirmationMailPageRoute(
+                                email: emailController.text,
+                              ).location,
+                            );
+                          },
+                        ),
                       );
                     } else {
                       validateMode.value = AutovalidateMode.onUserInteraction;
