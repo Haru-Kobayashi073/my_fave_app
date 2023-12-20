@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_fave_app/repositories/authentication/auth_repository.dart';
 import 'package:my_fave_app/utils/utils.dart';
@@ -71,5 +72,15 @@ class AuthRepositoryImpl implements AuthRepository {
       idToken: googleAuth?.idToken,
     );
     return FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  @override
+  Future<UserCredential> signInWithApple() async {
+    final appleProvider = AppleAuthProvider();
+    if (kIsWeb) {
+      return FirebaseAuth.instance.signInWithPopup(appleProvider);
+    } else {
+      return FirebaseAuth.instance.signInWithProvider(appleProvider);
+    }
   }
 }
