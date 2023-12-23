@@ -350,13 +350,13 @@ class FavoriteMainDetailCard extends StatelessWidget {
                       child: Row(
                         children: [
                           FaIcon(
-                            FontAwesomeIcons.tiktok,
+                            FontAwesomeIcons.spotify,
                             size: 26,
                             color: AppColor.white,
                           ),
                           const SizedBox(width: 14),
                           const Text(
-                            'tiktok',
+                            'Spotify',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

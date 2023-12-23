@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/features/gradation/gradation.dart';
 import 'package:my_fave_app/pages/favorite_detail/components/favorite_detail_components.dart';
+import 'package:my_fave_app/pages/favorite_detail/components/favorite_photos.dart';
+import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class FavoriteDetailPage extends HookConsumerWidget {
@@ -34,6 +36,47 @@ class FavoriteDetailPage extends HookConsumerWidget {
                     ),
                   ),
                   FavoriteMainDetailCard(image: imageAndGradient.image),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      width: double.infinity,
+                      height: context.deviceHeight * 0.1,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.transparent,
+                            AppColor.black00,
+                          ],
+                          stops: const [
+                            0.1,
+                            1.0,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const FavoritePhotos(),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      width: double.infinity,
+                      height: context.deviceHeight * 0.1,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.transparent,
+                            AppColor.black00,
+                          ],
+                          stops: const [
+                            0.0,
+                            0.9,
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
