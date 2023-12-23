@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -42,6 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 await FirebaseAuth.instance.signOut();
               },
               text: 'サインアウト',
+            ),
+            CommonButton(
+              onPressed: () {
+                context.push(const FavoriteDetailPageRoute().location);
+              },
+              text: '詳細',
             ),
           ],
         ),

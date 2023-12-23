@@ -9,11 +9,6 @@ class SkipButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
-      style: ButtonStyle(
-        overlayColor: MaterialStateColor.resolveWith(
-          (states) => Colors.white.withOpacity(0.1),
-        ),
-      ),
       child: Text(
         'スキップ',
         style: TextStyle(

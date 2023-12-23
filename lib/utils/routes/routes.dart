@@ -10,6 +10,7 @@ import 'package:my_fave_app/pages/authentication/login_page.dart';
 import 'package:my_fave_app/pages/authentication/reconfiguration_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
+import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
 import 'package:my_fave_app/pages/home/home_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
 import 'package:my_fave_app/pages/register_user_information/complete_registration_page.dart';
@@ -41,6 +42,7 @@ class AppRoutes {
   static const completeRegistration = '/completeRegistration';
   static const onBoardingIntroduction = '/onBoardingIntroduction';
   static const home = '/home';
+  static const favoriteDetail = '/favoriteDetail';
 }
 
 @Riverpod(keepAlive: true)
@@ -221,4 +223,15 @@ class HomePageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const MyHomePage(title: '');
+}
+
+@TypedGoRoute<FavoriteDetailPageRoute>(
+  path: AppRoutes.favoriteDetail,
+)
+class FavoriteDetailPageRoute extends GoRouteData {
+  const FavoriteDetailPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const FavoriteDetailPage();
 }

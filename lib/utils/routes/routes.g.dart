@@ -14,6 +14,7 @@ List<RouteBase> get $appRoutes => [
       $completeRegistrationPageRoute,
       $onBoardingIntroductionPageRoute,
       $homePageRoute,
+      $favoriteDetailPageRoute,
     ];
 
 RouteBase get $startUpPageRoute => GoRouteData.$route(
@@ -331,6 +332,29 @@ extension $HomePageRouteExtension on HomePageRoute {
 
   String get location => GoRouteData.$location(
         '/home',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $favoriteDetailPageRoute => GoRouteData.$route(
+      path: '/favoriteDetail',
+      factory: $FavoriteDetailPageRouteExtension._fromState,
+    );
+
+extension $FavoriteDetailPageRouteExtension on FavoriteDetailPageRoute {
+  static FavoriteDetailPageRoute _fromState(GoRouterState state) =>
+      const FavoriteDetailPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/favoriteDetail',
       );
 
   void go(BuildContext context) => context.go(location);

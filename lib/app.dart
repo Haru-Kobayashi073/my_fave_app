@@ -30,6 +30,18 @@ class App extends HookConsumerWidget {
           ),
         ),
         useMaterial3: false,
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            overlayColor: MaterialStateColor.resolveWith(
+              (states) => Colors.white.withOpacity(0.1),
+            ),
+            shape: MaterialStateProperty.resolveWith(
+              (states) => RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ),
+        ),
       ),
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
