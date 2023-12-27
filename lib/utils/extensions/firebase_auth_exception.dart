@@ -16,7 +16,7 @@ extension FirebaseAuthExceptionEx on FirebaseAuthException {
       case 'email-already-in-use':
         return 'メールアドレスがすでに使用されています。ログインするか別のメールアドレスで作成してください';
       default: // 想定外
-        return 'エラー発生しました。通信環境がいい所で再度やり直してください。';
+        return 'エラーが発生しました。通信環境がいい所で再度やり直してください。';
     }
   }
 

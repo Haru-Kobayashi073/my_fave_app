@@ -1,24 +1,28 @@
-// routes.dart
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_fave_app/features/authentication/get_auth_state.dart';
+import 'package:my_fave_app/pages/activity/activity_page.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
 import 'package:my_fave_app/pages/authentication/confirmation_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/login_page.dart';
 import 'package:my_fave_app/pages/authentication/reconfiguration_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
+import 'package:my_fave_app/pages/calendar/calendar_page.dart';
 import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
 import 'package:my_fave_app/pages/home/home_page.dart';
+import 'package:my_fave_app/pages/map/map_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
+import 'package:my_fave_app/pages/profile/profile_page.dart';
 import 'package:my_fave_app/pages/register_user_information/complete_registration_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_birthday_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_gender_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_user_name_page.dart';
 import 'package:my_fave_app/start_up_page.dart';
-import 'package:my_fave_app/utils/utils.dart';
+import 'package:my_fave_app/widgets/widget.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 // ...略
 
@@ -42,21 +46,124 @@ class AppRoutes {
   static const completeRegistration = '/completeRegistration';
   static const onBoardingIntroduction = '/onBoardingIntroduction';
   static const home = '/home';
+  static const calendar = '/calendar';
+  static const activity = '/activity';
+  static const map = '/map';
+  static const profile = '/profile';
   static const favoriteDetail = '/favoriteDetail';
 }
 
-@Riverpod(keepAlive: true)
-GoRouter goRouter(GoRouterRef ref) => GoRouter(
-      routes: $appRoutes,
-      navigatorKey: ref.read(navigatorKeyProvider),
-      initialLocation: AppRoutes.root,
-      debugLogDiagnostics: kDebugMode,
-    );
+final rootNavigatorKey = GlobalKey<NavigatorState>();
+final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
+final calendarNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'calendar');
+final activityNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'activity');
+final mapNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'map');
+final profileNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
+
+@riverpod
+GoRouter goRouter(GoRouterRef ref) {
+  final user = ref.watch(getAuthStateProvider).value;
+  return GoRouter(
+    routes: $appRoutes,
+    navigatorKey: rootNavigatorKey,
+    initialLocation: user != null ? AppRoutes.home : AppRoutes.authentication,
+    debugLogDiagnostics: kDebugMode,
+    redirect: (context, state) {
+      return null;
+    },
+  );
+}
 
 // ********************************************************
 // * RouteData
 // * GoRouteDataをそれぞれ設定
 // ********************************************************
+
+@TypedStatefulShellRoute<AppShellRouteData>(
+  branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
+    TypedStatefulShellBranch<HomeBranch>(
+      routes: [
+        TypedGoRoute<HomePageRoute>(
+          path: AppRoutes.home,
+        ),
+      ],
+    ),
+    TypedStatefulShellBranch<CalendarBranch>(
+      routes: [
+        TypedGoRoute<CalendarPageRoute>(
+          path: AppRoutes.calendar,
+        ),
+      ],
+    ),
+    TypedStatefulShellBranch<ActivityBranch>(
+      routes: [
+        TypedGoRoute<ActivityPageRoute>(
+          path: AppRoutes.activity,
+        ),
+      ],
+    ),
+    TypedStatefulShellBranch<MapBranch>(
+      routes: [
+        TypedGoRoute<MapPageRoute>(
+          path: AppRoutes.map,
+        ),
+      ],
+    ),
+    TypedStatefulShellBranch<ProfileBranch>(
+      routes: [
+        TypedGoRoute<ProfilePageRoute>(
+          path: AppRoutes.profile,
+        ),
+      ],
+    ),
+  ],
+)
+class AppShellRouteData extends StatefulShellRouteData {
+  const AppShellRouteData();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = rootNavigatorKey;
+
+  @override
+  Widget builder(
+    BuildContext context,
+    GoRouterState state,
+    StatefulNavigationShell navigationShell,
+  ) {
+    return CommonNavigationBar(
+      navigationShell: navigationShell,
+    );
+  }
+}
+
+class HomeBranch extends StatefulShellBranchData {
+  const HomeBranch();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = homeNavigatorKey;
+}
+
+class CalendarBranch extends StatefulShellBranchData {
+  const CalendarBranch();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = calendarNavigatorKey;
+}
+
+class ActivityBranch extends StatefulShellBranchData {
+  const ActivityBranch();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = activityNavigatorKey;
+}
+
+class MapBranch extends StatefulShellBranchData {
+  const MapBranch();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = mapNavigatorKey;
+}
+
+class ProfileBranch extends StatefulShellBranchData {
+  const ProfileBranch();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = profileNavigatorKey;
+}
 
 // TOPレベルのパスには、@TypedGoRouteをつける
 @TypedGoRoute<StartUpPageRoute>(
@@ -223,6 +330,49 @@ class HomePageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const MyHomePage(title: '');
+}
+
+@TypedGoRoute<CalendarPageRoute>(
+  path: AppRoutes.calendar,
+)
+class CalendarPageRoute extends GoRouteData {
+  const CalendarPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const CalendarPage();
+}
+
+@TypedGoRoute<ActivityPageRoute>(
+  path: AppRoutes.activity,
+)
+class ActivityPageRoute extends GoRouteData {
+  const ActivityPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ActivityPage();
+}
+
+@TypedGoRoute<MapPageRoute>(
+  path: AppRoutes.map,
+)
+class MapPageRoute extends GoRouteData {
+  const MapPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const MapPage();
+}
+
+@TypedGoRoute<ProfilePageRoute>(
+  path: AppRoutes.profile,
+)
+class ProfilePageRoute extends GoRouteData {
+  const ProfilePageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ProfilePage();
 }
 
 @TypedGoRoute<FavoriteDetailPageRoute>(
