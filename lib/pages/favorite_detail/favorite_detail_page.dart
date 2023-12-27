@@ -8,11 +8,12 @@ import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class FavoriteDetailPage extends HookConsumerWidget {
-  const FavoriteDetailPage({super.key});
+  const FavoriteDetailPage({super.key, required this.imgUrl});
+  final String imgUrl;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(gradationProvider).when(
+    return ref.watch(gradationProvider(imgUrl)).when(
           data: (imageAndGradient) => DecoratedBox(
             decoration: BoxDecoration(gradient: imageAndGradient.gradient),
             child: Scaffold(

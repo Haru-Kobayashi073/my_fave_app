@@ -15,7 +15,7 @@ class StartUpPage extends ConsumerWidget {
     return Scaffold(
       body: user.when(
         data: (user) => user != null
-            ? const MyHomePage(title: '')
+            ? const HomePage()
             : const AuthenticationPage(),
         error: (_, stackTrace) => const SizedBox(),
         loading: () => const Loading(),
