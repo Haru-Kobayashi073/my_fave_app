@@ -6,7 +6,7 @@ part of 'gradation.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$gradationHash() => r'ce4febd933e4993e49d44e4428265ef7e92c775b';
+String _$gradationHash() => r'728dbc977e3cfee6f4be44381360101c8acf81f0';
 
 /// See also [Gradation].
 @ProviderFor(Gradation)
