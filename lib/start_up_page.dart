@@ -14,12 +14,36 @@ class StartUpPage extends ConsumerWidget {
 
     return Scaffold(
       body: user.when(
-        data: (user) => user == null
-            ? const AuthenticationPage()
-            : const MyHomePage(title: ''),
+        data: (user) => user != null
+            ? const MyHomePage(title: '')
+            : const AuthenticationPage(),
         error: (_, stackTrace) => const SizedBox(),
         loading: () => const Loading(),
       ),
     );
   }
+
+  // Future<void> switchPage(WidgetRef ref, BuildContext context) async {
+  //   // ignore: deprecated_member_use
+  //   final user = ref.watch(getAuthStateProvider.stream).next();
+  //   await user.then((user) async {
+  //     if (user != null) {
+  //       if (!context.mounted) {
+  //         return;
+  //       }
+  //       await NoAnimationRoute.pushReplacement<void>(
+  //         context,
+  //         const MyHomePage(title: ''),
+  //       );
+  //     } else {
+  //       if (!context.mounted) {
+  //         return;
+  //       }
+  //       await NoAnimationRoute.pushReplacement<void>(
+  //         context,
+  //         const AuthenticationPage(),
+  //       );
+  //     }
+  //   });
+  // }
 }
