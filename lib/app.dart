@@ -42,6 +42,15 @@ class App extends HookConsumerWidget {
             ),
           ),
         ),
+        navigationBarTheme: NavigationBarThemeData(
+          labelTextStyle: MaterialStateProperty.resolveWith(
+            (states) => TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: AppColor.white,
+            ),
+          ),
+        ),
       ),
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
