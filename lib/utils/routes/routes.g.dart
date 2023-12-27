@@ -503,10 +503,15 @@ RouteBase get $favoriteDetailPageRoute => GoRouteData.$route(
 
 extension $FavoriteDetailPageRouteExtension on FavoriteDetailPageRoute {
   static FavoriteDetailPageRoute _fromState(GoRouterState state) =>
-      const FavoriteDetailPageRoute();
+      FavoriteDetailPageRoute(
+        imgUrl: state.uri.queryParameters['img-url']!,
+      );
 
   String get location => GoRouteData.$location(
         '/favoriteDetail',
+        queryParams: {
+          'img-url': imgUrl,
+        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -523,7 +528,7 @@ extension $FavoriteDetailPageRouteExtension on FavoriteDetailPageRoute {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$goRouterHash() => r'f2043b4baf3c6c3abea6deddcdcf7530e3bfd3cc';
+String _$goRouterHash() => r'c782cc810769618456c46c4673124463808c601b';
 
 /// See also [goRouter].
 @ProviderFor(goRouter)

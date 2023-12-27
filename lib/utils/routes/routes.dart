@@ -328,8 +328,7 @@ class HomePageRoute extends GoRouteData {
   const HomePageRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const MyHomePage(title: '');
+  Widget build(BuildContext context, GoRouterState state) => const HomePage();
 }
 
 @TypedGoRoute<CalendarPageRoute>(
@@ -379,9 +378,11 @@ class ProfilePageRoute extends GoRouteData {
   path: AppRoutes.favoriteDetail,
 )
 class FavoriteDetailPageRoute extends GoRouteData {
-  const FavoriteDetailPageRoute();
+  const FavoriteDetailPageRoute({required this.imgUrl});
+  final String imgUrl;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const FavoriteDetailPage();
+  Widget build(BuildContext context, GoRouterState state) => FavoriteDetailPage(
+        imgUrl: imgUrl,
+      );
 }
