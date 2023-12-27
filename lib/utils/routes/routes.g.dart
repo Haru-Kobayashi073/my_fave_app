@@ -7,6 +7,7 @@ part of 'routes.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
+      $appShellRouteData,
       $startUpPageRoute,
       $authenticationPageRoute,
       $registerUserNamePageRoute,
@@ -14,8 +15,156 @@ List<RouteBase> get $appRoutes => [
       $completeRegistrationPageRoute,
       $onBoardingIntroductionPageRoute,
       $homePageRoute,
+      $calendarPageRoute,
+      $activityPageRoute,
+      $mapPageRoute,
+      $profilePageRoute,
       $favoriteDetailPageRoute,
     ];
+
+RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
+      factory: $AppShellRouteDataExtension._fromState,
+      branches: [
+        StatefulShellBranchData.$branch(
+          navigatorKey: HomeBranch.$navigatorKey,
+          routes: [
+            GoRouteData.$route(
+              path: '/home',
+              factory: $HomePageRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          navigatorKey: CalendarBranch.$navigatorKey,
+          routes: [
+            GoRouteData.$route(
+              path: '/calendar',
+              factory: $CalendarPageRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          navigatorKey: ActivityBranch.$navigatorKey,
+          routes: [
+            GoRouteData.$route(
+              path: '/activity',
+              factory: $ActivityPageRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          navigatorKey: MapBranch.$navigatorKey,
+          routes: [
+            GoRouteData.$route(
+              path: '/map',
+              factory: $MapPageRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          navigatorKey: ProfileBranch.$navigatorKey,
+          routes: [
+            GoRouteData.$route(
+              path: '/profile',
+              factory: $ProfilePageRouteExtension._fromState,
+            ),
+          ],
+        ),
+      ],
+    );
+
+extension $AppShellRouteDataExtension on AppShellRouteData {
+  static AppShellRouteData _fromState(GoRouterState state) =>
+      const AppShellRouteData();
+}
+
+extension $HomePageRouteExtension on HomePageRoute {
+  static HomePageRoute _fromState(GoRouterState state) => const HomePageRoute();
+
+  String get location => GoRouteData.$location(
+        '/home',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CalendarPageRouteExtension on CalendarPageRoute {
+  static CalendarPageRoute _fromState(GoRouterState state) =>
+      const CalendarPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/calendar',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ActivityPageRouteExtension on ActivityPageRoute {
+  static ActivityPageRoute _fromState(GoRouterState state) =>
+      const ActivityPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/activity',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $MapPageRouteExtension on MapPageRoute {
+  static MapPageRoute _fromState(GoRouterState state) => const MapPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/map',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ProfilePageRouteExtension on ProfilePageRoute {
+  static ProfilePageRoute _fromState(GoRouterState state) =>
+      const ProfilePageRoute();
+
+  String get location => GoRouteData.$location(
+        '/profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
 
 RouteBase get $startUpPageRoute => GoRouteData.$route(
       path: '/',
@@ -327,22 +476,25 @@ RouteBase get $homePageRoute => GoRouteData.$route(
       factory: $HomePageRouteExtension._fromState,
     );
 
-extension $HomePageRouteExtension on HomePageRoute {
-  static HomePageRoute _fromState(GoRouterState state) => const HomePageRoute();
+RouteBase get $calendarPageRoute => GoRouteData.$route(
+      path: '/calendar',
+      factory: $CalendarPageRouteExtension._fromState,
+    );
 
-  String get location => GoRouteData.$location(
-        '/home',
-      );
+RouteBase get $activityPageRoute => GoRouteData.$route(
+      path: '/activity',
+      factory: $ActivityPageRouteExtension._fromState,
+    );
 
-  void go(BuildContext context) => context.go(location);
+RouteBase get $mapPageRoute => GoRouteData.$route(
+      path: '/map',
+      factory: $MapPageRouteExtension._fromState,
+    );
 
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
+RouteBase get $profilePageRoute => GoRouteData.$route(
+      path: '/profile',
+      factory: $ProfilePageRouteExtension._fromState,
+    );
 
 RouteBase get $favoriteDetailPageRoute => GoRouteData.$route(
       path: '/favoriteDetail',
@@ -371,11 +523,11 @@ extension $FavoriteDetailPageRouteExtension on FavoriteDetailPageRoute {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$goRouterHash() => r'c5a1ed47220dd66e50d5f63742a57a8c9e737cfe';
+String _$goRouterHash() => r'f2043b4baf3c6c3abea6deddcdcf7530e3bfd3cc';
 
 /// See also [goRouter].
 @ProviderFor(goRouter)
-final goRouterProvider = Provider<GoRouter>.internal(
+final goRouterProvider = AutoDisposeProvider<GoRouter>.internal(
   goRouter,
   name: r'goRouterProvider',
   debugGetCreateSourceHash:
@@ -384,6 +536,6 @@ final goRouterProvider = Provider<GoRouter>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef GoRouterRef = ProviderRef<GoRouter>;
+typedef GoRouterRef = AutoDisposeProviderRef<GoRouter>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
