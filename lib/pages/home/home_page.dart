@@ -28,6 +28,7 @@ class HomePage extends HookConsumerWidget {
         child: CustomScrollView(
           slivers: [
             FavoritesView(imgUrlList: imgUrlList),
+            const CalendarView(),
           ],
         ),
       ),
