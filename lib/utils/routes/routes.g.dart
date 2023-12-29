@@ -528,7 +528,7 @@ extension $FavoriteDetailPageRouteExtension on FavoriteDetailPageRoute {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$goRouterHash() => r'c782cc810769618456c46c4673124463808c601b';
+String _$goRouterHash() => r'57b5697cf92b5fe77a78370a2eae0dc5a5b0b325';
 
 /// See also [goRouter].
 @ProviderFor(goRouter)

@@ -3,7 +3,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_fave_app/features/authentication/get_auth_state.dart';
 import 'package:my_fave_app/pages/activity/activity_page.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
 import 'package:my_fave_app/pages/authentication/confirmation_mail_page.dart';
@@ -62,11 +61,10 @@ final profileNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
-  final user = ref.watch(getAuthStateProvider).value;
   return GoRouter(
     routes: $appRoutes,
     navigatorKey: rootNavigatorKey,
-    initialLocation: user != null ? AppRoutes.home : AppRoutes.authentication,
+    initialLocation: AppRoutes.root,
     debugLogDiagnostics: kDebugMode,
     redirect: (context, state) {
       return null;
