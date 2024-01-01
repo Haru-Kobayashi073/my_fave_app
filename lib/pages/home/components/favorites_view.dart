@@ -28,7 +28,11 @@ class FavoritesView extends HookConsumerWidget {
                 width: 120,
                 height: 56,
                 child: CommonButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push(
+                      const AddFavoritePageRoute().location,
+                    );
+                  },
                   text: '追加',
                 ),
               ),

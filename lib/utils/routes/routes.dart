@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_fave_app/pages/activity/activity_page.dart';
+import 'package:my_fave_app/pages/add_favorite/add_favorite_page.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
 import 'package:my_fave_app/pages/authentication/confirmation_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/login_page.dart';
@@ -50,6 +51,7 @@ class AppRoutes {
   static const map = '/map';
   static const profile = '/profile';
   static const favoriteDetail = '/favoriteDetail';
+  static const addFavorite = '/addFavorite';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -383,4 +385,15 @@ class FavoriteDetailPageRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => FavoriteDetailPage(
         imgUrl: imgUrl,
       );
+}
+
+@TypedGoRoute<AddFavoritePageRoute>(
+  path: AppRoutes.addFavorite,
+)
+class AddFavoritePageRoute extends GoRouteData {
+  const AddFavoritePageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const AddFavoritePage();
 }
