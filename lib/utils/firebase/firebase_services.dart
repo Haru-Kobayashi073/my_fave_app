@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'firebase_services.g.dart';
@@ -12,4 +13,9 @@ FirebaseAuth getFirebaseAuth(GetFirebaseAuthRef ref) {
 @riverpod
 FirebaseFirestore getFirebaseFirestore(GetFirebaseFirestoreRef ref) {
   return FirebaseFirestore.instance;
+}
+
+@riverpod
+FirebaseStorage getFirebaseStorage(GetFirebaseStorageRef ref) {
+  return FirebaseStorage.instance;
 }

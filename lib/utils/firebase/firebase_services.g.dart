@@ -38,5 +38,22 @@ final getFirebaseFirestoreProvider =
 );
 
 typedef GetFirebaseFirestoreRef = AutoDisposeProviderRef<FirebaseFirestore>;
+String _$getFirebaseStorageHash() =>
+    r'3bfa9cf1d7ae4013cf5e375beeabafa99e5caa3e';
+
+/// See also [getFirebaseStorage].
+@ProviderFor(getFirebaseStorage)
+final getFirebaseStorageProvider =
+    AutoDisposeProvider<FirebaseStorage>.internal(
+  getFirebaseStorage,
+  name: r'getFirebaseStorageProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getFirebaseStorageHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef GetFirebaseStorageRef = AutoDisposeProviderRef<FirebaseStorage>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

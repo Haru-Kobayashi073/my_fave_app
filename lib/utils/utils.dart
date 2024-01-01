@@ -4,6 +4,7 @@ export 'exceptions/exceptions.dart';
 export 'extensions/extensions.dart';
 export 'firebase/firebase.dart';
 export 'gen/assets.gen.dart';
+export 'helpers/helpers.dart';
 export 'hooks/hooks.dart';
 export 'routes/routes.dart';
 export 'scaffold_messanger_service.dart';
