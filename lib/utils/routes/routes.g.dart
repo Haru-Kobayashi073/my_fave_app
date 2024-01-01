@@ -20,6 +20,7 @@ List<RouteBase> get $appRoutes => [
       $mapPageRoute,
       $profilePageRoute,
       $favoriteDetailPageRoute,
+      $addFavoritePageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -512,6 +513,29 @@ extension $FavoriteDetailPageRouteExtension on FavoriteDetailPageRoute {
         queryParams: {
           'img-url': imgUrl,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addFavoritePageRoute => GoRouteData.$route(
+      path: '/addFavorite',
+      factory: $AddFavoritePageRouteExtension._fromState,
+    );
+
+extension $AddFavoritePageRouteExtension on AddFavoritePageRoute {
+  static AddFavoritePageRoute _fromState(GoRouterState state) =>
+      const AddFavoritePageRoute();
+
+  String get location => GoRouteData.$location(
+        '/addFavorite',
       );
 
   void go(BuildContext context) => context.go(location);
