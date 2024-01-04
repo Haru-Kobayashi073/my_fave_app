@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_fave_app/pages/on_boarding/components/on_boarding_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
-class OnBoardignIntroductionPage extends StatelessWidget {
-  const OnBoardignIntroductionPage({super.key});
+class OnBoardingIntroductionPage extends StatelessWidget {
+  const OnBoardingIntroductionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,9 @@ class OnBoardignIntroductionPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 40),
               child: CommonButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.go(const OnBoardingPageRoute().location);
+                },
                 text: '次へ',
               ),
             ),
