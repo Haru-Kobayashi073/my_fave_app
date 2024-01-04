@@ -9,9 +9,33 @@ part 'favorite.g.dart';
 
 @riverpod
 class Favorite extends _$Favorite {
+  Future<List<FavoriteData>> fetchFavoriteList() async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => true);
+      final response =
+          await ref.read(favoriteRepositoryImplProvider).fetchFavoriteList();
+      return response;
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        const exception = AppException(
+          message: 'Maybe your network is disconnected. Please check yours.',
+        );
+        throw exception;
+      }
+      debugPrint('推し取得エラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('推しの取得に失敗しました');
+      return [];
+    } finally {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
+    }
+  }
+
   @override
-  FutureOr<void> build() {
-    return null;
+  FutureOr<List<FavoriteData>> build() async {
+    return await fetchFavoriteList();
   }
 
   Future<void> create(
