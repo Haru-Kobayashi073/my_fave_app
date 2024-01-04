@@ -55,6 +55,10 @@ class AppRoutes {
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
+
+final navigatorKeyProvider = Provider(
+  (_) => GlobalKey<NavigatorState>(),
+);
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final calendarNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'calendar');
 final activityNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'activity');
@@ -65,7 +69,7 @@ final profileNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
     routes: $appRoutes,
-    navigatorKey: rootNavigatorKey,
+    navigatorKey: ref.read(navigatorKeyProvider),
     initialLocation: AppRoutes.root,
     debugLogDiagnostics: kDebugMode,
     redirect: (context, state) {
