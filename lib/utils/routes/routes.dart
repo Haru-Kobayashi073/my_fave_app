@@ -16,6 +16,8 @@ import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
 import 'package:my_fave_app/pages/home/home_page.dart';
 import 'package:my_fave_app/pages/map/map_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
+import 'package:my_fave_app/pages/on_boarding/on_boarding_page.dart';
+
 import 'package:my_fave_app/pages/profile/profile_page.dart';
 import 'package:my_fave_app/pages/register_user_information/complete_registration_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_birthday_page.dart';
@@ -52,6 +54,7 @@ class AppRoutes {
   static const profile = '/profile';
   static const favoriteDetail = '/favoriteDetail';
   static const addFavorite = '/addFavorite';
+  static const onBoarding = '/onBoarding';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -322,7 +325,7 @@ class OnBoardingIntroductionPageRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const OnBoardignIntroductionPage();
+      const OnBoardingIntroductionPage();
 }
 
 @TypedGoRoute<HomePageRoute>(
@@ -400,4 +403,15 @@ class AddFavoritePageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const AddFavoritePage();
+}
+
+@TypedGoRoute<OnBoardingPageRoute>(
+  path: AppRoutes.onBoarding,
+)
+class OnBoardingPageRoute extends GoRouteData {
+  const OnBoardingPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const OnBoardingPage();
 }
