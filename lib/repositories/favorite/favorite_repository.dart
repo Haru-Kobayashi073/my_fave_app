@@ -5,4 +5,6 @@ abstract class FavoriteRepository {
   User? get currentUser;
 
   Future<void> createFavorite(FavoriteData favoriteData);
+
+  Future<List<FavoriteData>> fetchFavoriteList();
 }
