@@ -21,6 +21,7 @@ List<RouteBase> get $appRoutes => [
       $profilePageRoute,
       $favoriteDetailPageRoute,
       $addFavoritePageRoute,
+      $onBoardingPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -536,6 +537,29 @@ extension $AddFavoritePageRouteExtension on AddFavoritePageRoute {
 
   String get location => GoRouteData.$location(
         '/addFavorite',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $onBoardingPageRoute => GoRouteData.$route(
+      path: '/onBoarding',
+      factory: $OnBoardingPageRouteExtension._fromState,
+    );
+
+extension $OnBoardingPageRouteExtension on OnBoardingPageRoute {
+  static OnBoardingPageRoute _fromState(GoRouterState state) =>
+      const OnBoardingPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/onBoarding',
       );
 
   void go(BuildContext context) => context.go(location);
