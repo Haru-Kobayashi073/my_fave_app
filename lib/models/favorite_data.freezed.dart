@@ -26,7 +26,7 @@ mixin _$FavoriteData {
   @DateTimeConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   int? get likingLevel => throw _privateConstructorUsedError;
-  int? get numberOfLiveParticipation => throw _privateConstructorUsedError;
+  int get numberOfLiveParticipation => throw _privateConstructorUsedError;
   int? get postCount => throw _privateConstructorUsedError;
   @DateTimeConverter()
   DateTime get startedLikingDate => throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ mixin _$FavoriteData {
   @DateTimeConverter()
   DateTime? get contractRenewalDateForFanClub =>
       throw _privateConstructorUsedError;
-  int? get amountUsed => throw _privateConstructorUsedError;
+  int get amountUsed => throw _privateConstructorUsedError;
   @DateTimeConverter()
   DateTime? get favoriteBirthDay => throw _privateConstructorUsedError;
   String? get link => throw _privateConstructorUsedError;
@@ -62,12 +62,12 @@ abstract class $FavoriteDataCopyWith<$Res> {
       String name,
       @DateTimeConverter() DateTime? createdAt,
       int? likingLevel,
-      int? numberOfLiveParticipation,
+      int numberOfLiveParticipation,
       int? postCount,
       @DateTimeConverter() DateTime startedLikingDate,
       String? fanClubId,
       @DateTimeConverter() DateTime? contractRenewalDateForFanClub,
-      int? amountUsed,
+      int amountUsed,
       @DateTimeConverter() DateTime? favoriteBirthDay,
       String? link,
       String? instagramLink,
@@ -95,12 +95,12 @@ class _$FavoriteDataCopyWithImpl<$Res, $Val extends FavoriteData>
     Object? name = null,
     Object? createdAt = freezed,
     Object? likingLevel = freezed,
-    Object? numberOfLiveParticipation = freezed,
+    Object? numberOfLiveParticipation = null,
     Object? postCount = freezed,
     Object? startedLikingDate = null,
     Object? fanClubId = freezed,
     Object? contractRenewalDateForFanClub = freezed,
-    Object? amountUsed = freezed,
+    Object? amountUsed = null,
     Object? favoriteBirthDay = freezed,
     Object? link = freezed,
     Object? instagramLink = freezed,
@@ -130,10 +130,10 @@ class _$FavoriteDataCopyWithImpl<$Res, $Val extends FavoriteData>
           ? _value.likingLevel
           : likingLevel // ignore: cast_nullable_to_non_nullable
               as int?,
-      numberOfLiveParticipation: freezed == numberOfLiveParticipation
+      numberOfLiveParticipation: null == numberOfLiveParticipation
           ? _value.numberOfLiveParticipation
           : numberOfLiveParticipation // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       postCount: freezed == postCount
           ? _value.postCount
           : postCount // ignore: cast_nullable_to_non_nullable
@@ -150,10 +150,10 @@ class _$FavoriteDataCopyWithImpl<$Res, $Val extends FavoriteData>
           ? _value.contractRenewalDateForFanClub
           : contractRenewalDateForFanClub // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      amountUsed: freezed == amountUsed
+      amountUsed: null == amountUsed
           ? _value.amountUsed
           : amountUsed // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       favoriteBirthDay: freezed == favoriteBirthDay
           ? _value.favoriteBirthDay
           : favoriteBirthDay // ignore: cast_nullable_to_non_nullable
@@ -200,12 +200,12 @@ abstract class _$$FavoriteDataImplCopyWith<$Res>
       String name,
       @DateTimeConverter() DateTime? createdAt,
       int? likingLevel,
-      int? numberOfLiveParticipation,
+      int numberOfLiveParticipation,
       int? postCount,
       @DateTimeConverter() DateTime startedLikingDate,
       String? fanClubId,
       @DateTimeConverter() DateTime? contractRenewalDateForFanClub,
-      int? amountUsed,
+      int amountUsed,
       @DateTimeConverter() DateTime? favoriteBirthDay,
       String? link,
       String? instagramLink,
@@ -231,12 +231,12 @@ class __$$FavoriteDataImplCopyWithImpl<$Res>
     Object? name = null,
     Object? createdAt = freezed,
     Object? likingLevel = freezed,
-    Object? numberOfLiveParticipation = freezed,
+    Object? numberOfLiveParticipation = null,
     Object? postCount = freezed,
     Object? startedLikingDate = null,
     Object? fanClubId = freezed,
     Object? contractRenewalDateForFanClub = freezed,
-    Object? amountUsed = freezed,
+    Object? amountUsed = null,
     Object? favoriteBirthDay = freezed,
     Object? link = freezed,
     Object? instagramLink = freezed,
@@ -266,10 +266,10 @@ class __$$FavoriteDataImplCopyWithImpl<$Res>
           ? _value.likingLevel
           : likingLevel // ignore: cast_nullable_to_non_nullable
               as int?,
-      numberOfLiveParticipation: freezed == numberOfLiveParticipation
+      numberOfLiveParticipation: null == numberOfLiveParticipation
           ? _value.numberOfLiveParticipation
           : numberOfLiveParticipation // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       postCount: freezed == postCount
           ? _value.postCount
           : postCount // ignore: cast_nullable_to_non_nullable
@@ -286,10 +286,10 @@ class __$$FavoriteDataImplCopyWithImpl<$Res>
           ? _value.contractRenewalDateForFanClub
           : contractRenewalDateForFanClub // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      amountUsed: freezed == amountUsed
+      amountUsed: null == amountUsed
           ? _value.amountUsed
           : amountUsed // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       favoriteBirthDay: freezed == favoriteBirthDay
           ? _value.favoriteBirthDay
           : favoriteBirthDay // ignore: cast_nullable_to_non_nullable
@@ -363,7 +363,7 @@ class _$FavoriteDataImpl implements _FavoriteData {
   final int? likingLevel;
   @override
   @JsonKey()
-  final int? numberOfLiveParticipation;
+  final int numberOfLiveParticipation;
   @override
   final int? postCount;
   @override
@@ -376,7 +376,7 @@ class _$FavoriteDataImpl implements _FavoriteData {
   final DateTime? contractRenewalDateForFanClub;
   @override
   @JsonKey()
-  final int? amountUsed;
+  final int amountUsed;
   @override
   @DateTimeConverter()
   final DateTime? favoriteBirthDay;
@@ -499,12 +499,12 @@ abstract class _FavoriteData implements FavoriteData {
       required final String name,
       @DateTimeConverter() final DateTime? createdAt,
       final int? likingLevel,
-      final int? numberOfLiveParticipation,
+      final int numberOfLiveParticipation,
       final int? postCount,
       @DateTimeConverter() required final DateTime startedLikingDate,
       final String? fanClubId,
       @DateTimeConverter() final DateTime? contractRenewalDateForFanClub,
-      final int? amountUsed,
+      final int amountUsed,
       @DateTimeConverter() final DateTime? favoriteBirthDay,
       final String? link,
       final String? instagramLink,
@@ -528,7 +528,7 @@ abstract class _FavoriteData implements FavoriteData {
   @override
   int? get likingLevel;
   @override
-  int? get numberOfLiveParticipation;
+  int get numberOfLiveParticipation;
   @override
   int? get postCount;
   @override
@@ -540,7 +540,7 @@ abstract class _FavoriteData implements FavoriteData {
   @DateTimeConverter()
   DateTime? get contractRenewalDateForFanClub;
   @override
-  int? get amountUsed;
+  int get amountUsed;
   @override
   @DateTimeConverter()
   DateTime? get favoriteBirthDay;
