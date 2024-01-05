@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/features/gradation/gradation.dart';
+import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/pages/favorite_detail/components/favorite_detail_components.dart';
 import 'package:my_fave_app/pages/favorite_detail/components/favorite_photos.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class FavoriteDetailPage extends HookConsumerWidget {
-  const FavoriteDetailPage({super.key, required this.imgUrl});
-  final String imgUrl;
+  const FavoriteDetailPage({super.key, required this.favoriteData});
+  final FavoriteData favoriteData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(gradationProvider(imgUrl)).when(
-          data: (imageAndGradient) => DecoratedBox(
-            decoration: BoxDecoration(gradient: imageAndGradient.gradient),
+    return ref.watch(gradationProvider(favoriteData.imageUrl)).when(
+          data: (gradient) => DecoratedBox(
+            decoration: BoxDecoration(gradient: gradient),
             child: Scaffold(
               backgroundColor: Colors.transparent,
               body: CustomScrollView(
@@ -36,7 +37,7 @@ class FavoriteDetailPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  FavoriteMainDetailCard(image: imageAndGradient.image),
+                  FavoriteMainDetailCard(favoriteData: favoriteData),
                   SliverToBoxAdapter(
                     child: Container(
                       width: double.infinity,
@@ -57,7 +58,7 @@ class FavoriteDetailPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const FavoritePhotos(),
+                  FavoritePhotos(photosUrlList: favoriteData.photosUrlList),
                   SliverToBoxAdapter(
                     child: Container(
                       width: double.infinity,
