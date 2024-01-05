@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_fave_app/pages/home/components/calendar_daily_card.dart';
+import 'package:my_fave_app/pages/home/components/home_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
-class CalendarView extends HookConsumerWidget {
-  const CalendarView({super.key});
+class ActivityView extends HookConsumerWidget {
+  const ActivityView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SliverMainAxisGroup(
@@ -19,7 +19,7 @@ class CalendarView extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'カレンダー',
+                    '推し活',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -37,10 +37,19 @@ class CalendarView extends HookConsumerWidget {
                 ],
               ),
               Text(
-                '今後の予定',
+                '推し活動の記録',
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColor.grey88,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '過去2週間の投稿',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.white,
                 ),
               ),
               const SizedBox(height: 8),
@@ -49,17 +58,17 @@ class CalendarView extends HookConsumerWidget {
         ),
         SliverToBoxAdapter(
           child: SizedBox(
-            height: 180,
+            height: 150,
             child: GridView.builder(
               scrollDirection: Axis.horizontal,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
                 mainAxisSpacing: 16,
-                mainAxisExtent: 152,
+                mainAxisExtent: 128,
               ),
               itemCount: 4,
               itemBuilder: (_, index) {
-                return const CalendarDailyCard();
+                return const ActivityImage();
               },
             ),
           ),
