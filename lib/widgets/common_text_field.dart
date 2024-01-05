@@ -5,6 +5,7 @@ class CommonTextField extends StatelessWidget {
   const CommonTextField({
     super.key,
     required this.labelText,
+    this.visibleLabel = true,
     required this.controller,
     this.keyboardType = TextInputType.text,
     this.validator,
@@ -17,6 +18,7 @@ class CommonTextField extends StatelessWidget {
     this.icon = const SizedBox(),
   });
   final String labelText;
+  final bool visibleLabel;
   final TextEditingController controller;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
@@ -33,12 +35,13 @@ class CommonTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          labelText,
-          style: const TextStyle(
-            fontSize: 14,
+        if (visibleLabel)
+          Text(
+            labelText,
+            style: const TextStyle(
+              fontSize: 14,
+            ),
           ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
