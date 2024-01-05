@@ -32,6 +32,7 @@ class HomePage extends HookConsumerWidget {
                     child: Loading(),
                   ),
                 ),
+            const ActivityView(),
             const CalendarView(),
           ],
         ),
