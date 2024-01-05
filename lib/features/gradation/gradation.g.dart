@@ -6,7 +6,7 @@ part of 'gradation.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$gradationHash() => r'234db1767f4cfa1926cd8f132d03cd30c5295831';
+String _$gradationHash() => r'9de6a60e21da47bb43d3fbbf633c81cd900daad5';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,7 @@ class _SystemHash {
 const gradationProvider = GradationFamily();
 
 /// See also [gradation].
-class GradationFamily extends Family<AsyncValue<ImageAndGradient>> {
+class GradationFamily extends Family<AsyncValue<Gradient>> {
   /// See also [gradation].
   const GradationFamily();
 
@@ -72,7 +72,7 @@ class GradationFamily extends Family<AsyncValue<ImageAndGradient>> {
 }
 
 /// See also [gradation].
-class GradationProvider extends AutoDisposeFutureProvider<ImageAndGradient> {
+class GradationProvider extends AutoDisposeFutureProvider<Gradient> {
   /// See also [gradation].
   GradationProvider(
     String imgUrl,
@@ -106,7 +106,7 @@ class GradationProvider extends AutoDisposeFutureProvider<ImageAndGradient> {
 
   @override
   Override overrideWith(
-    FutureOr<ImageAndGradient> Function(GradationRef provider) create,
+    FutureOr<Gradient> Function(GradationRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -123,7 +123,7 @@ class GradationProvider extends AutoDisposeFutureProvider<ImageAndGradient> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<ImageAndGradient> createElement() {
+  AutoDisposeFutureProviderElement<Gradient> createElement() {
     return _GradationProviderElement(this);
   }
 
@@ -141,14 +141,13 @@ class GradationProvider extends AutoDisposeFutureProvider<ImageAndGradient> {
   }
 }
 
-mixin GradationRef on AutoDisposeFutureProviderRef<ImageAndGradient> {
+mixin GradationRef on AutoDisposeFutureProviderRef<Gradient> {
   /// The parameter `imgUrl` of this provider.
   String get imgUrl;
 }
 
 class _GradationProviderElement
-    extends AutoDisposeFutureProviderElement<ImageAndGradient>
-    with GradationRef {
+    extends AutoDisposeFutureProviderElement<Gradient> with GradationRef {
   _GradationProviderElement(super.provider);
 
   @override

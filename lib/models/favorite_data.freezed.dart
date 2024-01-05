@@ -27,7 +27,7 @@ mixin _$FavoriteData {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   int? get likingLevel => throw _privateConstructorUsedError;
   int get numberOfLiveParticipation => throw _privateConstructorUsedError;
-  int? get postCount => throw _privateConstructorUsedError;
+  int get postCount => throw _privateConstructorUsedError;
   @DateTimeConverter()
   DateTime get startedLikingDate => throw _privateConstructorUsedError;
   String? get fanClubId => throw _privateConstructorUsedError;
@@ -63,7 +63,7 @@ abstract class $FavoriteDataCopyWith<$Res> {
       @DateTimeConverter() DateTime? createdAt,
       int? likingLevel,
       int numberOfLiveParticipation,
-      int? postCount,
+      int postCount,
       @DateTimeConverter() DateTime startedLikingDate,
       String? fanClubId,
       @DateTimeConverter() DateTime? contractRenewalDateForFanClub,
@@ -96,7 +96,7 @@ class _$FavoriteDataCopyWithImpl<$Res, $Val extends FavoriteData>
     Object? createdAt = freezed,
     Object? likingLevel = freezed,
     Object? numberOfLiveParticipation = null,
-    Object? postCount = freezed,
+    Object? postCount = null,
     Object? startedLikingDate = null,
     Object? fanClubId = freezed,
     Object? contractRenewalDateForFanClub = freezed,
@@ -134,10 +134,10 @@ class _$FavoriteDataCopyWithImpl<$Res, $Val extends FavoriteData>
           ? _value.numberOfLiveParticipation
           : numberOfLiveParticipation // ignore: cast_nullable_to_non_nullable
               as int,
-      postCount: freezed == postCount
+      postCount: null == postCount
           ? _value.postCount
           : postCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       startedLikingDate: null == startedLikingDate
           ? _value.startedLikingDate
           : startedLikingDate // ignore: cast_nullable_to_non_nullable
@@ -201,7 +201,7 @@ abstract class _$$FavoriteDataImplCopyWith<$Res>
       @DateTimeConverter() DateTime? createdAt,
       int? likingLevel,
       int numberOfLiveParticipation,
-      int? postCount,
+      int postCount,
       @DateTimeConverter() DateTime startedLikingDate,
       String? fanClubId,
       @DateTimeConverter() DateTime? contractRenewalDateForFanClub,
@@ -232,7 +232,7 @@ class __$$FavoriteDataImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? likingLevel = freezed,
     Object? numberOfLiveParticipation = null,
-    Object? postCount = freezed,
+    Object? postCount = null,
     Object? startedLikingDate = null,
     Object? fanClubId = freezed,
     Object? contractRenewalDateForFanClub = freezed,
@@ -270,10 +270,10 @@ class __$$FavoriteDataImplCopyWithImpl<$Res>
           ? _value.numberOfLiveParticipation
           : numberOfLiveParticipation // ignore: cast_nullable_to_non_nullable
               as int,
-      postCount: freezed == postCount
+      postCount: null == postCount
           ? _value.postCount
           : postCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       startedLikingDate: null == startedLikingDate
           ? _value.startedLikingDate
           : startedLikingDate // ignore: cast_nullable_to_non_nullable
@@ -332,7 +332,7 @@ class _$FavoriteDataImpl implements _FavoriteData {
       @DateTimeConverter() this.createdAt,
       this.likingLevel,
       this.numberOfLiveParticipation = 0,
-      this.postCount,
+      this.postCount = 0,
       @DateTimeConverter() required this.startedLikingDate,
       this.fanClubId,
       @DateTimeConverter() this.contractRenewalDateForFanClub,
@@ -365,7 +365,8 @@ class _$FavoriteDataImpl implements _FavoriteData {
   @JsonKey()
   final int numberOfLiveParticipation;
   @override
-  final int? postCount;
+  @JsonKey()
+  final int postCount;
   @override
   @DateTimeConverter()
   final DateTime startedLikingDate;
@@ -500,7 +501,7 @@ abstract class _FavoriteData implements FavoriteData {
       @DateTimeConverter() final DateTime? createdAt,
       final int? likingLevel,
       final int numberOfLiveParticipation,
-      final int? postCount,
+      final int postCount,
       @DateTimeConverter() required final DateTime startedLikingDate,
       final String? fanClubId,
       @DateTimeConverter() final DateTime? contractRenewalDateForFanClub,
@@ -530,7 +531,7 @@ abstract class _FavoriteData implements FavoriteData {
   @override
   int get numberOfLiveParticipation;
   @override
-  int? get postCount;
+  int get postCount;
   @override
   @DateTimeConverter()
   DateTime get startedLikingDate;

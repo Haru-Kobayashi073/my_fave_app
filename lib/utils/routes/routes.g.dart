@@ -506,24 +506,23 @@ RouteBase get $favoriteDetailPageRoute => GoRouteData.$route(
 extension $FavoriteDetailPageRouteExtension on FavoriteDetailPageRoute {
   static FavoriteDetailPageRoute _fromState(GoRouterState state) =>
       FavoriteDetailPageRoute(
-        imgUrl: state.uri.queryParameters['img-url']!,
+        $extra: state.extra as FavoriteData,
       );
 
   String get location => GoRouteData.$location(
         '/favoriteDetail',
-        queryParams: {
-          'img-url': imgUrl,
-        },
       );
 
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: $extra);
 
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
 
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: $extra);
 
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 RouteBase get $addFavoritePageRoute => GoRouteData.$route(

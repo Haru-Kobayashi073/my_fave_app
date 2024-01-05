@@ -15,7 +15,7 @@ _$FavoriteDataImpl _$$FavoriteDataImplFromJson(Map<String, dynamic> json) =>
           json['createdAt'], const DateTimeConverter().fromJson),
       likingLevel: json['likingLevel'] as int?,
       numberOfLiveParticipation: json['numberOfLiveParticipation'] as int? ?? 0,
-      postCount: json['postCount'] as int?,
+      postCount: json['postCount'] as int? ?? 0,
       startedLikingDate: const DateTimeConverter()
           .fromJson(json['startedLikingDate'] as String),
       fanClubId: json['fanClubId'] as String?,

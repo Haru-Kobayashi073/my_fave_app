@@ -383,6 +383,7 @@ class AddFavoritePage extends HookConsumerWidget {
                           context.pop();
                         },
                       );
+                      ref.invalidate(favoriteProvider);
                     } else {
                       selectImagePressed.value = null;
                       startedLikingDatePressed.value = null;
