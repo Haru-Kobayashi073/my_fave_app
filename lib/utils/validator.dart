@@ -70,4 +70,15 @@ class Validator {
     }
     return null;
   }
+
+  /// URL情報入力時のバリデーション
+  static String? url(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+    if (!Uri.tryParse(value)!.hasAbsolutePath) {
+      return 'URLの形式が正しくありません';
+    }
+    return null;
+  }
 }

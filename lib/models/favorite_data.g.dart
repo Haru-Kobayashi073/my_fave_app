@@ -16,10 +16,15 @@ _$FavoriteDataImpl _$$FavoriteDataImplFromJson(Map<String, dynamic> json) =>
       likingLevel: json['likingLevel'] as int?,
       numberOfLiveParticipation: json['numberOfLiveParticipation'] as int? ?? 0,
       postCount: json['postCount'] as int?,
-      startedLikingDate: json['startedLikingDate'],
+      startedLikingDate: const DateTimeConverter()
+          .fromJson(json['startedLikingDate'] as String),
       fanClubId: json['fanClubId'] as String?,
-      contractRenewalDateForFanClub: json['contractRenewalDateForFanClub'],
+      contractRenewalDateForFanClub: _$JsonConverterFromJson<String, DateTime>(
+          json['contractRenewalDateForFanClub'],
+          const DateTimeConverter().fromJson),
       amountUsed: json['amountUsed'] as int? ?? 0,
+      favoriteBirthDay: _$JsonConverterFromJson<String, DateTime>(
+          json['favoriteBirthDay'], const DateTimeConverter().fromJson),
       link: json['link'] as String?,
       instagramLink: json['instagramLink'] as String?,
       xLink: json['xLink'] as String?,
@@ -42,10 +47,15 @@ Map<String, dynamic> _$$FavoriteDataImplToJson(_$FavoriteDataImpl instance) =>
       'likingLevel': instance.likingLevel,
       'numberOfLiveParticipation': instance.numberOfLiveParticipation,
       'postCount': instance.postCount,
-      'startedLikingDate': instance.startedLikingDate,
+      'startedLikingDate':
+          const DateTimeConverter().toJson(instance.startedLikingDate),
       'fanClubId': instance.fanClubId,
-      'contractRenewalDateForFanClub': instance.contractRenewalDateForFanClub,
+      'contractRenewalDateForFanClub': _$JsonConverterToJson<String, DateTime>(
+          instance.contractRenewalDateForFanClub,
+          const DateTimeConverter().toJson),
       'amountUsed': instance.amountUsed,
+      'favoriteBirthDay': _$JsonConverterToJson<String, DateTime>(
+          instance.favoriteBirthDay, const DateTimeConverter().toJson),
       'link': instance.link,
       'instagramLink': instance.instagramLink,
       'xLink': instance.xLink,
