@@ -59,6 +59,7 @@ class PopUpButton extends StatelessWidget {
         if (visibleError)
           Container(
             alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 16),
             child: const Text(
               '選択してください',
               style: TextStyle(
