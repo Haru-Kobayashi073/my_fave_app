@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/pages/activity/activity_page.dart';
 import 'package:my_fave_app/pages/add_favorite/add_favorite_page.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
@@ -385,12 +386,12 @@ class ProfilePageRoute extends GoRouteData {
   path: AppRoutes.favoriteDetail,
 )
 class FavoriteDetailPageRoute extends GoRouteData {
-  const FavoriteDetailPageRoute({required this.imgUrl});
-  final String imgUrl;
+  const FavoriteDetailPageRoute({required this.$extra});
+  final FavoriteData $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => FavoriteDetailPage(
-        imgUrl: imgUrl,
+        favoriteData: $extra,
       );
 }
 
