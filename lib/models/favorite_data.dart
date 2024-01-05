@@ -13,7 +13,7 @@ abstract class FavoriteData with _$FavoriteData {
     @DateTimeConverter() DateTime? createdAt,
     int? likingLevel,
     @Default(0) int numberOfLiveParticipation,
-    int? postCount,
+    @Default(0) int postCount,
     @DateTimeConverter() required DateTime startedLikingDate,
     String? fanClubId,
     @DateTimeConverter() DateTime? contractRenewalDateForFanClub,
