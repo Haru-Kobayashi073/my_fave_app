@@ -31,11 +31,12 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/.gitkeep
-  String get gitkeep => 'assets/images/.gitkeep';
+  /// File path: assets/images/map_view_image.png
+  AssetGenImage get mapViewImage =>
+      const AssetGenImage('assets/images/map_view_image.png');
 
   /// List of all assets
-  List<String> get values => [gitkeep];
+  List<AssetGenImage> get values => [mapViewImage];
 }
 
 class Assets {
