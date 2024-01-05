@@ -4,7 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/favorite/favorite.dart';
 import 'package:my_fave_app/features/file/crop_image.dart';
 import 'package:my_fave_app/features/file/pick_image.dart';
 import 'package:my_fave_app/features/file/upload_image.dart';
@@ -350,25 +352,36 @@ class AddFavoritePage extends HookConsumerWidget {
                     if (formKey.currentState!.validate() &&
                         imageUrl.value != null &&
                         startedLikingDate.value != null) {
-                      FavoriteData(
-                        id: '',
-                        imageUrl: imageUrl.value!,
-                        name: nameController.text,
-                        startedLikingDate: startedLikingDate.value!,
-                        numberOfLiveParticipation: int.parse(
-                          numberOfLIveParticipationController.text,
+                      ref.read(favoriteProvider.notifier).create(
+                        FavoriteData(
+                          id: '',
+                          imageUrl: imageUrl.value!,
+                          name: nameController.text,
+                          startedLikingDate: startedLikingDate.value!,
+                          numberOfLiveParticipation: int.parse(
+                            numberOfLIveParticipationController.text != ''
+                                ? numberOfLIveParticipationController.text
+                                : '0',
+                          ),
+                          fanClubId: fanClubIdController.text,
+                          contractRenewalDateForFanClub:
+                              contractRenewalDateForFanClub.value,
+                          amountUsed: int.parse(
+                            amountUsedController.text != ''
+                                ? amountUsedController.text
+                                : '0',
+                          ),
+                          favoriteBirthDay: favoriteBirthDay.value,
+                          instagramLink: instagramController.text,
+                          xLink: xController.text,
+                          youtubeLink: youtubeController.text,
+                          otherlinks: otherLinkControllers.value
+                              .map((e) => e.text)
+                              .toList(),
                         ),
-                        fanClubId: fanClubIdController.text,
-                        contractRenewalDateForFanClub:
-                            contractRenewalDateForFanClub.value,
-                        amountUsed: int.parse(amountUsedController.text),
-                        favoriteBirthDay: favoriteBirthDay.value,
-                        instagramLink: instagramController.text,
-                        xLink: xController.text,
-                        youtubeLink: youtubeController.text,
-                        otherlinks: otherLinkControllers.value
-                            .map((e) => e.text)
-                            .toList(),
+                        () {
+                          context.pop();
+                        },
                       );
                     } else {
                       selectImagePressed.value = null;
