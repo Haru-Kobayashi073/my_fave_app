@@ -4,7 +4,8 @@ import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/common_button.dart';
 
 class FavoritePhotos extends HookWidget {
-  const FavoritePhotos({super.key});
+  const FavoritePhotos({super.key, required this.photosUrlList});
+  final List<String>? photosUrlList;
 
   @override
   Widget build(BuildContext context) {

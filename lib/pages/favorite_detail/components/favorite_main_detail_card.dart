@@ -1,11 +1,15 @@
+// ignore_for_file: lines_longer_than_80_chars
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/utils/utils.dart';
 
 class FavoriteMainDetailCard extends StatelessWidget {
-  const FavoriteMainDetailCard({super.key, required this.image});
-  final ImageProvider<Object> image;
+  const FavoriteMainDetailCard({super.key, required this.favoriteData});
+  final FavoriteData favoriteData;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +24,7 @@ class FavoriteMainDetailCard extends StatelessWidget {
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
                 ),
-                child: Image(
-                  image: image,
-                ),
+                child: CachedNetworkImage(imageUrl: favoriteData.imageUrl),
               ),
               Container(
                 width: double.infinity,
@@ -40,9 +42,9 @@ class FavoriteMainDetailCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'MINJI',
-                          style: TextStyle(
+                        Text(
+                          favoriteData.name,
+                          style: const TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
                           ),
@@ -97,97 +99,99 @@ class FavoriteMainDetailCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           '推し初めて',
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
-                        SizedBox(width: 40),
+                        const SizedBox(width: 40),
                         Row(
                           children: [
                             Text(
-                              '470',
-                              style: TextStyle(
+                              calculateDaysSince(
+                                favoriteData.startedLikingDate,
+                              ).toString(),
+                              style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
+                            const Text(
                               '日',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 40),
+                            const SizedBox(width: 40),
                           ],
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'LIVE参加回数',
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
-                        SizedBox(width: 40),
+                        const SizedBox(width: 40),
                         Row(
                           children: [
                             Text(
-                              '8',
-                              style: TextStyle(
+                              favoriteData.numberOfLiveParticipation.toString(),
+                              style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
+                            const Text(
                               '回',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 40),
+                            const SizedBox(width: 40),
                           ],
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'メモリーズ投稿回数',
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
-                        SizedBox(width: 40),
+                        const SizedBox(width: 40),
                         Row(
                           children: [
                             Text(
-                              '20',
-                              style: TextStyle(
+                              favoriteData.postCount.toString(),
+                              style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
+                            const Text(
                               '回',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 40),
+                            const SizedBox(width: 40),
                           ],
                         ),
                       ],
@@ -208,9 +212,9 @@ class FavoriteMainDetailCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      '2022/04',
-                      style: TextStyle(
+                    Text(
+                      '${favoriteData.startedLikingDate.year}年${favoriteData.startedLikingDate.month}月',
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -223,9 +227,9 @@ class FavoriteMainDetailCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      '123456789',
-                      style: TextStyle(
+                    Text(
+                      favoriteData.fanClubId ?? '',
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -238,9 +242,11 @@ class FavoriteMainDetailCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      '2022/04/01',
-                      style: TextStyle(
+                    Text(
+                      favoriteData.contractRenewalDateForFanClub == null
+                          ? ''
+                          : '${favoriteData.contractRenewalDateForFanClub!.year}年${favoriteData.contractRenewalDateForFanClub!.month}月${favoriteData.contractRenewalDateForFanClub!.day}日',
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -253,9 +259,9 @@ class FavoriteMainDetailCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      '¥10,000',
-                      style: TextStyle(
+                    Text(
+                      '¥${favoriteData.amountUsed}',
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -268,9 +274,9 @@ class FavoriteMainDetailCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      'https://www.google.com',
-                      style: TextStyle(
+                    Text(
+                      favoriteData.link ?? '',
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
