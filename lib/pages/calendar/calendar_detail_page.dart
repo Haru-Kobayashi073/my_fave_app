@@ -19,6 +19,18 @@ class CalendarDetailPage extends HookConsumerWidget {
     final dsiplayEventsLatest = useToggle(false);
     final controller = useState<PersistentBottomSheetController<void>?>(null);
 
+    useEffect(
+      () {
+        if (ref.read(displayLatestEventsViewProvider.notifier).state) {
+          controller.value?.closed.then((value) {
+            ref.read(displayLatestEventsViewProvider.notifier).state = false;
+          });
+        }
+        return null;
+      },
+      [controller.value],
+    );
+
     return Scaffold(
       appBar: CommonAppBar(
         icon: IconButton(
