@@ -6,21 +6,7 @@ part of 'event_loader.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$cacheEventsHash() => r'71c6cf3a44a4be3fe6bcfc09528153e7ba6a6520';
-
-/// See also [cacheEvents].
-@ProviderFor(cacheEvents)
-final cacheEventsProvider = Provider<List<DailySchedule>>.internal(
-  cacheEvents,
-  name: r'cacheEventsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$cacheEventsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef CacheEventsRef = ProviderRef<List<DailySchedule>>;
-String _$eventLoaderHash() => r'aa31d20ba3f1e815802cfb05f0e2832c8b054a82';
+String _$eventLoaderHash() => r'81ac4cd0a588a3de83a1116c9dec999c64e6faf9';
 
 /// See also [EventLoader].
 @ProviderFor(EventLoader)

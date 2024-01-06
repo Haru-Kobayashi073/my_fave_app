@@ -23,6 +23,7 @@ List<RouteBase> get $appRoutes => [
       $addFavoritePageRoute,
       $onBoardingPageRoute,
       $editFavoritePageRoute,
+      $calendarDetailPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -599,15 +600,57 @@ extension $EditFavoritePageRouteExtension on EditFavoritePageRoute {
       context.replace(location, extra: $extra);
 }
 
+RouteBase get $calendarDetailPageRoute => GoRouteData.$route(
+      path: '/calendarDetail',
+      factory: $CalendarDetailPageRouteExtension._fromState,
+    );
+
+extension $CalendarDetailPageRouteExtension on CalendarDetailPageRoute {
+  static CalendarDetailPageRoute _fromState(GoRouterState state) =>
+      CalendarDetailPageRoute(
+        $extra: state.extra as List<DailySchedule>,
+      );
+
+  String get location => GoRouteData.$location(
+        '/calendarDetail',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$goRouterHash() => r'cbcb9140dab18bcc86d1e72d4a6152b2c46f8561';
+String _$routeObserverHash() => r'9c96d7dcf6a4c5317b9b7a42ec68d7bf72d6a877';
+
+/// See also [routeObserver].
+@ProviderFor(routeObserver)
+final routeObserverProvider = Provider<RouteObserver>.internal(
+  routeObserver,
+  name: r'routeObserverProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$routeObserverHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef RouteObserverRef = ProviderRef<RouteObserver>;
+String _$goRouterHash() => r'2229b89c732bbaa50d4f937183ef0e90c3e88f5c';
 
 /// See also [goRouter].
 @ProviderFor(goRouter)
-final goRouterProvider = AutoDisposeProvider<GoRouter>.internal(
+final goRouterProvider = Provider<GoRouter>.internal(
   goRouter,
   name: r'goRouterProvider',
   debugGetCreateSourceHash:
@@ -616,6 +659,6 @@ final goRouterProvider = AutoDisposeProvider<GoRouter>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef GoRouterRef = AutoDisposeProviderRef<GoRouter>;
+typedef GoRouterRef = ProviderRef<GoRouter>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
