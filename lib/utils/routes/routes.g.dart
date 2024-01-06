@@ -22,6 +22,7 @@ List<RouteBase> get $appRoutes => [
       $favoriteDetailPageRoute,
       $addFavoritePageRoute,
       $onBoardingPageRoute,
+      $editFavoritePageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -569,6 +570,33 @@ extension $OnBoardingPageRouteExtension on OnBoardingPageRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $editFavoritePageRoute => GoRouteData.$route(
+      path: '/editFavorite',
+      factory: $EditFavoritePageRouteExtension._fromState,
+    );
+
+extension $EditFavoritePageRouteExtension on EditFavoritePageRoute {
+  static EditFavoritePageRoute _fromState(GoRouterState state) =>
+      EditFavoritePageRoute(
+        $extra: state.extra as FavoriteData,
+      );
+
+  String get location => GoRouteData.$location(
+        '/editFavorite',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 // **************************************************************************
