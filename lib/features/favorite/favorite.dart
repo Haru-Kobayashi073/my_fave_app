@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'favorite.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Favorite extends _$Favorite {
   Future<List<FavoriteData>> fetchFavoriteList() async {
     final isNetWorkCheck = await isNetworkConnected();
@@ -60,6 +60,28 @@ class Favorite extends _$Favorite {
       ref
           .read(scaffoldMessengerServiceProvider)
           .showExceptionSnackBar('推し作成に失敗しました');
+    } finally {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
+    }
+  }
+
+  Future<void> edit(FavoriteData favoriteData, VoidCallback onSuccess) async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => true);
+      await ref.read(favoriteRepositoryImplProvider).editFavorite(favoriteData);
+      onSuccess();
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        const exception = AppException(
+          message: 'Maybe your network is disconnected. Please check yours.',
+        );
+        throw exception;
+      }
+      debugPrint('推し編集エラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('推し編集に失敗しました');
     } finally {
       ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
     }
