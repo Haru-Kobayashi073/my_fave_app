@@ -13,6 +13,7 @@ import 'package:my_fave_app/pages/authentication/reconfiguration_mail_page.dart'
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
 import 'package:my_fave_app/pages/calendar/calendar_page.dart';
+import 'package:my_fave_app/pages/edit_favorite/edit_favorite_page.dart';
 import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
 import 'package:my_fave_app/pages/home/home_page.dart';
 import 'package:my_fave_app/pages/map/map_page.dart';
@@ -56,6 +57,7 @@ class AppRoutes {
   static const favoriteDetail = '/favoriteDetail';
   static const addFavorite = '/addFavorite';
   static const onBoarding = '/onBoarding';
+  static const editFavorite = '/editFavorite';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -415,4 +417,17 @@ class OnBoardingPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const OnBoardingPage();
+}
+
+@TypedGoRoute<EditFavoritePageRoute>(
+  path: AppRoutes.editFavorite,
+)
+class EditFavoritePageRoute extends GoRouteData {
+  const EditFavoritePageRoute({required this.$extra});
+  final FavoriteData $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => EditFavoritePage(
+        favoriteData: $extra,
+      );
 }

@@ -27,7 +27,12 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   Future<void> createFavorite(FavoriteData favoriteData) async {
     final uid = _auth.currentUser!.uid;
     final id = returnUuidV4();
-    await _firestore.collection('users').doc(uid).collection('favorites').add(
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('favorites')
+        .doc(id)
+        .set(
           favoriteData
               .copyWith(
                 id: id,
@@ -36,24 +41,6 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
               .toJson(),
         );
   }
-
-  // @override
-  // Stream<List<FavoriteData>> fetchFavoriteList() {
-  //   final uid = _auth.currentUser!.uid;
-  //   final snapshot = _firestore
-  //       .collection('users')
-  //       .doc(uid)
-  //       .collection('favorites')
-  //       .orderBy('createdAt', descending: true)
-  //       .snapshots();
-  //   return snapshot.map(
-  //     (snapshot) => snapshot.docs
-  //         .map(
-  //           (doc) => FavoriteData.fromJson(doc.data()),
-  //         )
-  //         .toList(),
-  //   );
-  // }
 
   @override
   Future<List<FavoriteData>> fetchFavoriteList() async {
@@ -69,5 +56,18 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
           (doc) => FavoriteData.fromJson(doc.data()),
         )
         .toList();
+  }
+
+  @override
+  Future<void> editFavorite(FavoriteData favoriteData) async {
+    final uid = _auth.currentUser!.uid;
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('favorites')
+        .doc(favoriteData.id)
+        .set(
+          favoriteData.toJson(),
+        );
   }
 }

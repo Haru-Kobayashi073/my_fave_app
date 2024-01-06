@@ -50,7 +50,10 @@ class FavoriteMainDetailCard extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            EditFavoritePageRoute($extra: favoriteData)
+                                .push<void>(context);
+                          },
                           style: TextButton.styleFrom(
                             minimumSize: Size.zero,
                             padding: EdgeInsets.zero,

@@ -15,27 +15,41 @@ import 'package:my_fave_app/pages/register_user_information/components/register_
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
-class AddFavoritePage extends HookConsumerWidget {
-  const AddFavoritePage({super.key});
+class EditFavoritePage extends HookConsumerWidget {
+  const EditFavoritePage({super.key, required this.favoriteData});
+  final FavoriteData favoriteData;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imageUrl = useState<String?>(null);
+    final imageUrl = useState<String?>(favoriteData.imageUrl);
     final selectImagePressed = useState<bool?>(false);
-    final nameController = useTextEditingController();
-    final numberOfLIveParticipationController = useTextEditingController();
-    final fanClubIdController = useTextEditingController();
-    final startedLikingDate = useState<DateTime?>(null);
+    final nameController = useTextEditingController(text: favoriteData.name);
+    final numberOfLIveParticipationController = useTextEditingController(
+      text: favoriteData.numberOfLiveParticipation.toString(),
+    );
+    final fanClubIdController =
+        useTextEditingController(text: favoriteData.fanClubId);
+    final startedLikingDate =
+        useState<DateTime?>(favoriteData.startedLikingDate);
     final startedLikingDatePressed = useState<bool?>(false);
-    final contractRenewalDateForFanClub = useState<DateTime?>(null);
+    final contractRenewalDateForFanClub =
+        useState<DateTime?>(favoriteData.contractRenewalDateForFanClub);
     final contractRenewalDateForFanClubPressed = useState<bool?>(false);
-    final favoriteBirthDay = useState<DateTime?>(null);
+    final favoriteBirthDay = useState<DateTime?>(favoriteData.favoriteBirthDay);
     final favoriteBirthDayPressed = useState<bool?>(false);
-    final amountUsedController = useTextEditingController();
-    final instagramController = useTextEditingController();
-    final xController = useTextEditingController();
-    final youtubeController = useTextEditingController();
-    final otherLinkController = useTextEditingController();
-    final otherLinkControllers = useState<List<TextEditingController>>([]);
+    final amountUsedController =
+        useTextEditingController(text: favoriteData.amountUsed.toString());
+    final instagramController =
+        useTextEditingController(text: favoriteData.instagramLink);
+    final xController = useTextEditingController(text: favoriteData.xLink);
+    final youtubeController =
+        useTextEditingController(text: favoriteData.youtubeLink);
+    final otherLinkController =
+        useTextEditingController(text: favoriteData.link);
+    final otherLinkControllers = useState<List<TextEditingController>>(
+      (favoriteData.otherlinks ?? [])
+          .map((e) => TextEditingController(text: e))
+          .toList(),
+    );
     final formKey = useFormStateKey();
     final validateMode = useState<AutovalidateMode>(AutovalidateMode.disabled);
 
@@ -50,7 +64,7 @@ class AddFavoritePage extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  '推しを追加',
+                  '推しを編集',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -349,49 +363,52 @@ class AddFavoritePage extends HookConsumerWidget {
                 const SizedBox(height: 16),
                 CommonButton(
                   onPressed: () {
-                    if (formKey.currentState!.validate() &&
-                        imageUrl.value != null &&
-                        startedLikingDate.value != null) {
-                      ref.read(favoriteProvider.notifier).create(
-                        FavoriteData(
-                          id: '',
-                          imageUrl: imageUrl.value!,
-                          name: nameController.text,
-                          startedLikingDate: startedLikingDate.value!,
-                          numberOfLiveParticipation: int.parse(
-                            numberOfLIveParticipationController.text != ''
-                                ? numberOfLIveParticipationController.text
-                                : '0',
-                          ),
-                          fanClubId: fanClubIdController.text,
-                          contractRenewalDateForFanClub:
-                              contractRenewalDateForFanClub.value,
-                          amountUsed: int.parse(
-                            amountUsedController.text != ''
-                                ? amountUsedController.text
-                                : '0',
-                          ),
-                          favoriteBirthDay: favoriteBirthDay.value,
-                          instagramLink: instagramController.text,
-                          xLink: xController.text,
-                          youtubeLink: youtubeController.text,
-                          link: otherLinkController.text,
-                          otherlinks: otherLinkControllers.value
-                              .map((e) => e.text)
-                              .toList(),
-                        ),
+                    final favoriteComparison = FavoriteData(
+                      id: favoriteData.id,
+                      createdAt: favoriteData.createdAt,
+                      imageUrl: imageUrl.value ?? favoriteData.imageUrl,
+                      name: nameController.text,
+                      startedLikingDate: startedLikingDate.value ??
+                          favoriteData.startedLikingDate,
+                      numberOfLiveParticipation: int.parse(
+                        numberOfLIveParticipationController.text != ''
+                            ? numberOfLIveParticipationController.text
+                            : favoriteData.numberOfLiveParticipation.toString(),
+                      ),
+                      fanClubId: fanClubIdController.text,
+                      contractRenewalDateForFanClub:
+                          contractRenewalDateForFanClub.value ??
+                              favoriteData.contractRenewalDateForFanClub,
+                      amountUsed: int.parse(
+                        amountUsedController.text != ''
+                            ? amountUsedController.text
+                            : favoriteData.amountUsed.toString(),
+                      ),
+                      favoriteBirthDay: favoriteBirthDay.value ??
+                          favoriteData.favoriteBirthDay,
+                      instagramLink: instagramController.text,
+                      xLink: xController.text,
+                      youtubeLink: youtubeController.text,
+                      link: otherLinkController.text,
+                      otherlinks: otherLinkControllers.value
+                          .map((e) => e.text)
+                          .toList(),
+                    );
+                    if (favoriteData != favoriteComparison) {
+                      ref.read(favoriteProvider.notifier).edit(
+                        favoriteComparison,
                         () {
-                          context.pop();
+                          ref.invalidate(favoriteProvider);
+                          context.go(const HomePageRoute().location);
                         },
                       );
-                      ref.invalidate(favoriteProvider);
                     } else {
                       selectImagePressed.value = null;
                       startedLikingDatePressed.value = null;
                       validateMode.value = AutovalidateMode.onUserInteraction;
                       ref
                           .read(scaffoldMessengerServiceProvider)
-                          .showExceptionSnackBar('必須項目を入力してください');
+                          .showExceptionSnackBar('変更がありません');
                     }
                   },
                   text: '完了',
