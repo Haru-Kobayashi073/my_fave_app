@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/pages/activity/activity_page.dart';
 import 'package:my_fave_app/pages/add_favorite/add_favorite_page.dart';
@@ -12,6 +13,7 @@ import 'package:my_fave_app/pages/authentication/login_page.dart';
 import 'package:my_fave_app/pages/authentication/reconfiguration_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
+import 'package:my_fave_app/pages/calendar/calendar_detail_page.dart';
 import 'package:my_fave_app/pages/calendar/calendar_page.dart';
 import 'package:my_fave_app/pages/edit_favorite/edit_favorite_page.dart';
 import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
@@ -58,6 +60,7 @@ class AppRoutes {
   static const addFavorite = '/addFavorite';
   static const onBoarding = '/onBoarding';
   static const editFavorite = '/editFavorite';
+  static const calendarDetail = '/calendarDetail';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -71,11 +74,15 @@ final activityNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'activity');
 final mapNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'map');
 final profileNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 
-@riverpod
+@Riverpod(keepAlive: true)
+RouteObserver routeObserver(RouteObserverRef ref) => RouteObserver();
+
+@Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
     routes: $appRoutes,
     navigatorKey: ref.read(navigatorKeyProvider),
+    observers: [ref.read(routeObserverProvider)],
     initialLocation: AppRoutes.root,
     debugLogDiagnostics: kDebugMode,
     redirect: (context, state) {
@@ -430,4 +437,16 @@ class EditFavoritePageRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => EditFavoritePage(
         favoriteData: $extra,
       );
+}
+
+@TypedGoRoute<CalendarDetailPageRoute>(
+  path: AppRoutes.calendarDetail,
+)
+class CalendarDetailPageRoute extends GoRouteData {
+  const CalendarDetailPageRoute({required this.$extra});
+  final List<DailySchedule> $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      CalendarDetailPage(events: $extra);
 }
