@@ -24,6 +24,7 @@ class CalendarPage extends HookConsumerWidget {
           onPressed: () {},
           icon: const FaIcon(FontAwesomeIcons.circleQuestion),
         ),
+        automaticallyImplyLeading: false,
       ),
       body: TableCalendar<DailySchedule>(
         focusedDay: selectedDay,
@@ -63,14 +64,18 @@ class CalendarPage extends HookConsumerWidget {
             fontSize: 10,
           ),
         ),
+        rowHeight: 72,
         calendarBuilders: CalendarBuilders(
           headerTitleBuilder: (_, date) {
             final text =
                 const HeaderStyle().titleTextFormatter?.call(date, 'en') ??
                     DateFormat.yMMMM('en').format(date);
-            return CalendarHeader(yearMonthText: text);
+            return CalendarHeader(
+              yearMonthText: text,
+              events: const [],
+            );
           },
-          selectedBuilder: (_, date, selectedDate) {
+          todayBuilder: (_, date, focusedDay) {
             return Center(
               child: CircleAvatar(
                 backgroundColor: AppColor.white,
@@ -81,6 +86,23 @@ class CalendarPage extends HookConsumerWidget {
                   ),
                 ),
               ),
+            );
+          },
+          selectedBuilder: (_, date, focusedDay) {
+            return Center(
+              child: isSameDay(DateTime.now(), date)
+                  ? CircleAvatar(
+                      backgroundColor: AppColor.white,
+                      child: Text(
+                        date.day.toString(),
+                        style: TextStyle(
+                          color: AppColor.black00,
+                        ),
+                      ),
+                    )
+                  : Text(
+                      date.day.toString(),
+                    ),
             );
           },
           markerBuilder: (_, date, events) {
