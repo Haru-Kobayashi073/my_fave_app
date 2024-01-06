@@ -375,6 +375,7 @@ class AddFavoritePage extends HookConsumerWidget {
                           instagramLink: instagramController.text,
                           xLink: xController.text,
                           youtubeLink: youtubeController.text,
+                          link: otherLinkController.text,
                           otherlinks: otherLinkControllers.value
                               .map((e) => e.text)
                               .toList(),
