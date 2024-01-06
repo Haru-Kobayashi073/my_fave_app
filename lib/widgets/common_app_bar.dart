@@ -6,8 +6,10 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CommonAppBar({
     super.key,
     this.icon = const SizedBox(),
+    this.automaticallyImplyLeading = true,
   });
   final Widget icon;
+  final bool automaticallyImplyLeading;
 
   @override
   Size get preferredSize => const Size(double.infinity, kToolbarHeight);
@@ -17,6 +19,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColor.black00,
       elevation: 0,
       actions: [icon],
+      automaticallyImplyLeading: automaticallyImplyLeading,
       title: SvgPicture.asset(
         Assets.icons.myFaveLogo,
         width: 100,
