@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/pages/home/components/calendar_daily_card.dart';
+import 'package:my_fave_app/repositories/calendar/calendar_repository_impl.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -14,61 +15,91 @@ final displayLatestEventsViewProvider = StateProvider((ref) => false);
 
 @Riverpod(keepAlive: true)
 class EventLoader extends _$EventLoader {
+  Future<Map<DateTime, List<DailySchedule>>> fetch() async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      final response =
+          await ref.read(calendarRepositoryImplProvider).fetchScheduleList();
+      final converttedMap = convertToKeyValue(response);
+      return converttedMap;
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        const exception = AppException(
+          message: 'Maybe your network is disconnected. Please check yours.',
+        );
+        throw exception;
+      }
+      debugPrint('スケジュール取得エラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('スケジュールの取得に失敗しました');
+      return {};
+    }
+  }
+
+  Map<DateTime, List<DailySchedule>> convertToKeyValue(
+    List<DailySchedule> list,
+  ) {
+    if (list.isEmpty) {
+      return {};
+    }
+
+    final map = <DateTime, List<DailySchedule>>{};
+
+    for (final schedule in list) {
+      final startDate = DateTime(
+        schedule.start.year,
+        schedule.start.month,
+        schedule.start.day,
+        9,
+      );
+      final endDate = DateTime(
+        schedule.end!.year,
+        schedule.end!.month,
+        schedule.end!.day,
+        9,
+      );
+
+      var currentDate = startDate;
+
+      while (currentDate.isBefore(endDate) ||
+          currentDate.isAtSameMomentAs(endDate)) {
+        if (!map.containsKey(currentDate)) {
+          map[currentDate] = [];
+        }
+        map[currentDate]!.add(schedule);
+
+        currentDate = currentDate.add(const Duration(days: 1));
+      }
+    }
+
+    return map;
+  }
+
   @override
-  FutureOr<Map<DateTime, List<DailySchedule>>> build() {
-    return {
-      DateTime.utc(2024, 1, 6): <DailySchedule>[
-        DailySchedule(
-          id: '1',
-          title: 'live',
-          location: 'Minato Tokyo',
-          start: DateTime.utc(2024, 1, 6),
-          createdAt: DateTime.now(),
-        ),
-      ],
-      DateTime.utc(2024, 1, 4): <DailySchedule>[
-        DailySchedule(
-          id: '2',
-          title: 'CD release',
-          location: 'Sibuya Tokyo',
-          start: DateTime.utc(2024, 1, 4),
-          createdAt: DateTime.now(),
-        ),
-        DailySchedule(
-          id: '3',
-          title: 'fan meeting',
-          location: 'Harajuku Tokyo',
-          start: DateTime.utc(2024, 1, 4),
-          createdAt: DateTime.now(),
-        ),
-        DailySchedule(
-          id: '2',
-          title: 'CD release',
-          location: 'Sibuya Tokyo',
-          start: DateTime.utc(2024, 1, 4),
-          createdAt: DateTime.now(),
-        ),
-        DailySchedule(
-          id: '3',
-          title: 'fan meeting',
-          location: 'Harajuku Tokyo',
-          start: DateTime.utc(2024, 1, 4),
-          createdAt: DateTime.now(),
-        ),
-      ],
-    };
+  FutureOr<Map<DateTime, List<DailySchedule>>> build() async {
+    return await fetch();
   }
 
   void handleSelectedDate(
     BuildContext context,
     DateTime selectedDay,
   ) {
+    final formattedDate = DateTime(
+      selectedDay.year,
+      selectedDay.month,
+      selectedDay.day,
+      9,
+    );
     if (state.value!.isEmpty) {
       return;
     }
-    if (state.value!.containsKey(selectedDay)) {
-      final events = state.value![selectedDay]!;
-      CalendarDetailPageRoute($extra: events).push<void>(context).then(
+    if (state.value!.containsKey(formattedDate)) {
+      final events = state.value![formattedDate]!;
+      CalendarDetailPageRoute(
+        $extra: events,
+        selectedDate: selectedDay,
+      ).push<void>(context).then(
         (value) {
           if (ref.read(displayLatestEventsViewProvider.notifier).state) {
             context.pop();

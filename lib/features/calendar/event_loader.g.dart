@@ -6,7 +6,7 @@ part of 'event_loader.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$eventLoaderHash() => r'61fccfe38ed33d1f1eba0954d78d269873fd63cf';
+String _$eventLoaderHash() => r'fc00c63326bdccc8cfebdd79bcd2004b85112535';
 
 /// See also [EventLoader].
 @ProviderFor(EventLoader)
