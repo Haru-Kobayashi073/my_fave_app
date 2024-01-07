@@ -74,7 +74,9 @@ class CalendarHeader extends HookConsumerWidget {
               const SizedBox(width: 16),
               IconButton(
                 onPressed: () {
-                  context.push(AddSchedulePageRoute().location);
+                  context.push(AddSchedulePageRoute().location).then((value) {
+                    ref.invalidate(eventLoaderProvider);
+                  });
                 },
                 icon: Icon(
                   Icons.add,
