@@ -13,6 +13,7 @@ import 'package:my_fave_app/pages/authentication/login_page.dart';
 import 'package:my_fave_app/pages/authentication/reconfiguration_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/register_password_page.dart';
+import 'package:my_fave_app/pages/calendar/add_schedule_page.dart';
 import 'package:my_fave_app/pages/calendar/calendar_detail_page.dart';
 import 'package:my_fave_app/pages/calendar/calendar_page.dart';
 import 'package:my_fave_app/pages/edit_favorite/edit_favorite_page.dart';
@@ -61,6 +62,7 @@ class AppRoutes {
   static const onBoarding = '/onBoarding';
   static const editFavorite = '/editFavorite';
   static const calendarDetail = '/calendarDetail';
+  static const addSchedule = '/addSchedule';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -449,4 +451,21 @@ class CalendarDetailPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       CalendarDetailPage(events: $extra);
+}
+
+@TypedGoRoute<AddSchedulePageRoute>(
+  path: AppRoutes.addSchedule,
+)
+class AddSchedulePageRoute extends GoRouteData {
+  AddSchedulePageRoute({this.selectedDate});
+  final DateTime? selectedDate;
+
+  @override
+  MaterialPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      MaterialPage<void>(
+        fullscreenDialog: true,
+        child: AddSchedulePage(
+          selectedDate: selectedDate,
+        ),
+      );
 }

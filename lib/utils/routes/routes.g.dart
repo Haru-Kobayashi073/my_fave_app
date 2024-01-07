@@ -24,6 +24,7 @@ List<RouteBase> get $appRoutes => [
       $onBoardingPageRoute,
       $editFavoritePageRoute,
       $calendarDetailPageRoute,
+      $addSchedulePageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -625,6 +626,44 @@ extension $CalendarDetailPageRouteExtension on CalendarDetailPageRoute {
 
   void replace(BuildContext context) =>
       context.replace(location, extra: $extra);
+}
+
+RouteBase get $addSchedulePageRoute => GoRouteData.$route(
+      path: '/addSchedule',
+      factory: $AddSchedulePageRouteExtension._fromState,
+    );
+
+extension $AddSchedulePageRouteExtension on AddSchedulePageRoute {
+  static AddSchedulePageRoute _fromState(GoRouterState state) =>
+      AddSchedulePageRoute(
+        selectedDate: _$convertMapValue(
+            'selected-date', state.uri.queryParameters, DateTime.parse),
+      );
+
+  String get location => GoRouteData.$location(
+        '/addSchedule',
+        queryParams: {
+          if (selectedDate != null) 'selected-date': selectedDate!.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
 }
 
 // **************************************************************************
