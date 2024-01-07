@@ -16,6 +16,7 @@ class CalendarPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDay = ref.watch(calendarProvider);
+    final calendarNotifier = ref.watch(calendarProvider.notifier);
     final eventLoader = ref.watch(eventLoaderProvider);
 
     return Scaffold(
@@ -41,11 +42,20 @@ class CalendarPage extends HookConsumerWidget {
         },
         eventLoader: (date) {
           return eventLoader.maybeWhen(
-            orElse: () => throw Exception(),
+            orElse: () => <DailySchedule>[],
             data: (events) {
-              return events[date] ?? [];
+              final localTime = date.toLocal();
+              return events[localTime] ?? [];
             },
           );
+        },
+        onPageChanged: (focusedDay) {
+          if (focusedDay != selectedDay) {
+            focusedDay.isBefore(selectedDay)
+                ? calendarNotifier.switchToPreviousMonth()
+                : calendarNotifier.switchToNextMonth();
+            ref.invalidate(eventLoaderProvider);
+          }
         },
         headerStyle: const HeaderStyle(
           formatButtonVisible: false,
