@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/features/calendar/event_loader.dart';
 import 'package:my_fave_app/models/daily_schedule.dart';
@@ -72,7 +73,9 @@ class CalendarHeader extends HookConsumerWidget {
               ),
               const SizedBox(width: 16),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push(AddSchedulePageRoute().location);
+                },
                 icon: Icon(
                   Icons.add,
                   color: AppColor.white,
