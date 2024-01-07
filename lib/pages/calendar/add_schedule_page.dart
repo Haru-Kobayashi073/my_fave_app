@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/calendar/schedule.dart';
+import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/pages/register_user_information/components/date_picker_wrapper.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -25,6 +27,7 @@ class AddSchedulePage extends HookConsumerWidget {
     final locationController = useTextEditingController();
     final urlController = useTextEditingController();
     final memoController = useTextEditingController();
+    final formattedDateTimeForAllDay = useState<(DateTime, DateTime)?>(null);
 
     useEffect(
       () {
@@ -67,7 +70,27 @@ class AddSchedulePage extends HookConsumerWidget {
               onPressed: () {
                 if (titleController.text.isNotEmpty &&
                     locationController.text.isNotEmpty) {
-                  context.pop();
+                  if (isAllDay.value) {
+                    formattedDateTimeForAllDay.value =
+                        formatDateTimeForAllDay(startDate.value, endDate.value);
+                  }
+                  ref.read(scheduleProvider.notifier).create(
+                    DailySchedule(
+                      id: '',
+                      title: titleController.text,
+                      location: locationController.text,
+                      isAllDay: isAllDay.value,
+                      url: urlController.text,
+                      memo: memoController.text,
+                      start: formattedDateTimeForAllDay.value?.$1 ??
+                          startDate.value,
+                      end:
+                          formattedDateTimeForAllDay.value?.$2 ?? endDate.value,
+                    ),
+                    () {
+                      context.go(const CalendarPageRoute().location);
+                    },
+                  );
                 } else {
                   ref
                       .read(scaffoldMessengerServiceProvider)
