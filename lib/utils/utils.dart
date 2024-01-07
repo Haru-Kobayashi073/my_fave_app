@@ -8,4 +8,5 @@ export 'helpers/helpers.dart';
 export 'hooks/hooks.dart';
 export 'routes/routes.dart';
 export 'scaffold_messanger_service.dart';
+export 'styles/styles.dart';
 export 'validator.dart';

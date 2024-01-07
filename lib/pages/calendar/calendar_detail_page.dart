@@ -121,7 +121,18 @@ class CalendarDetailPage extends HookConsumerWidget {
                     ),
                     const SizedBox(width: 16),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        final selectedDate = events[0].start;
+                        context.push(
+                          AddSchedulePageRoute(
+                            selectedDate: DateTime.utc(
+                              selectedDate.year,
+                              selectedDate.month,
+                              selectedDate.day,
+                            ),
+                          ).location,
+                        );
+                      },
                       icon: Icon(
                         Icons.add,
                         color: AppColor.white,
