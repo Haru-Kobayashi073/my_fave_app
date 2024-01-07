@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/pages/home/components/calendar_daily_card.dart';
 import 'package:my_fave_app/utils/utils.dart';
@@ -29,7 +30,9 @@ class CalendarView extends HookConsumerWidget {
                     width: 120,
                     height: 56,
                     child: CommonButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(AddSchedulePageRoute().location);
+                      },
                       text: '追加',
                       isWhite: false,
                     ),
