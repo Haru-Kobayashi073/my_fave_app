@@ -12,3 +12,9 @@ int calculateDaysSince(DateTime pastDate) {
   final weekDay = DateFormat.E('ja').format(dateTime);
   return ('$formattedDate($weekDay)', formattedTime);
 }
+
+(DateTime, DateTime) formatDateTimeForAllDay(DateTime start, DateTime end) {
+  final formattedStart = DateTime(start.year, start.month, start.day);
+  final formattedEnd = DateTime(end.year, end.month, end.day);
+  return (formattedStart, formattedEnd);
+}

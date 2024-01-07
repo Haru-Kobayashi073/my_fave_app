@@ -14,7 +14,8 @@ abstract class DailySchedule with _$DailySchedule {
     @DateTimeConverter() required DateTime start,
     @DateTimeConverter() DateTime? end,
     String? url,
-    String? notes,
+    String? memo,
+    @DateTimeConverter() DateTime? createdAt,
   }) = _DailySchedule;
 
   factory DailySchedule.fromJson(Map<String, dynamic> json) =>

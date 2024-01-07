@@ -29,7 +29,9 @@ mixin _$DailySchedule {
   @DateTimeConverter()
   DateTime? get end => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
-  String? get notes => throw _privateConstructorUsedError;
+  String? get memo => throw _privateConstructorUsedError;
+  @DateTimeConverter()
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +53,8 @@ abstract class $DailyScheduleCopyWith<$Res> {
       @DateTimeConverter() DateTime start,
       @DateTimeConverter() DateTime? end,
       String? url,
-      String? notes});
+      String? memo,
+      @DateTimeConverter() DateTime? createdAt});
 }
 
 /// @nodoc
@@ -74,7 +77,8 @@ class _$DailyScheduleCopyWithImpl<$Res, $Val extends DailySchedule>
     Object? start = null,
     Object? end = freezed,
     Object? url = freezed,
-    Object? notes = freezed,
+    Object? memo = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -105,10 +109,14 @@ class _$DailyScheduleCopyWithImpl<$Res, $Val extends DailySchedule>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String?,
-      notes: freezed == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
+      memo: freezed == memo
+          ? _value.memo
+          : memo // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -129,7 +137,8 @@ abstract class _$$DailyScheduleImplCopyWith<$Res>
       @DateTimeConverter() DateTime start,
       @DateTimeConverter() DateTime? end,
       String? url,
-      String? notes});
+      String? memo,
+      @DateTimeConverter() DateTime? createdAt});
 }
 
 /// @nodoc
@@ -150,7 +159,8 @@ class __$$DailyScheduleImplCopyWithImpl<$Res>
     Object? start = null,
     Object? end = freezed,
     Object? url = freezed,
-    Object? notes = freezed,
+    Object? memo = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_$DailyScheduleImpl(
       id: null == id
@@ -181,10 +191,14 @@ class __$$DailyScheduleImplCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String?,
-      notes: freezed == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
+      memo: freezed == memo
+          ? _value.memo
+          : memo // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -200,7 +214,8 @@ class _$DailyScheduleImpl implements _DailySchedule {
       @DateTimeConverter() required this.start,
       @DateTimeConverter() this.end,
       this.url,
-      this.notes});
+      this.memo,
+      @DateTimeConverter() this.createdAt});
 
   factory _$DailyScheduleImpl.fromJson(Map<String, dynamic> json) =>
       _$$DailyScheduleImplFromJson(json);
@@ -222,11 +237,14 @@ class _$DailyScheduleImpl implements _DailySchedule {
   @override
   final String? url;
   @override
-  final String? notes;
+  final String? memo;
+  @override
+  @DateTimeConverter()
+  final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'DailySchedule(id: $id, title: $title, location: $location, isAllDay: $isAllDay, start: $start, end: $end, url: $url, notes: $notes)';
+    return 'DailySchedule(id: $id, title: $title, location: $location, isAllDay: $isAllDay, start: $start, end: $end, url: $url, memo: $memo, createdAt: $createdAt)';
   }
 
   @override
@@ -243,13 +261,15 @@ class _$DailyScheduleImpl implements _DailySchedule {
             (identical(other.start, start) || other.start == start) &&
             (identical(other.end, end) || other.end == end) &&
             (identical(other.url, url) || other.url == url) &&
-            (identical(other.notes, notes) || other.notes == notes));
+            (identical(other.memo, memo) || other.memo == memo) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, title, location, isAllDay, start, end, url, notes);
+  int get hashCode => Object.hash(runtimeType, id, title, location, isAllDay,
+      start, end, url, memo, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -274,7 +294,8 @@ abstract class _DailySchedule implements DailySchedule {
       @DateTimeConverter() required final DateTime start,
       @DateTimeConverter() final DateTime? end,
       final String? url,
-      final String? notes}) = _$DailyScheduleImpl;
+      final String? memo,
+      @DateTimeConverter() final DateTime? createdAt}) = _$DailyScheduleImpl;
 
   factory _DailySchedule.fromJson(Map<String, dynamic> json) =
       _$DailyScheduleImpl.fromJson;
@@ -296,7 +317,10 @@ abstract class _DailySchedule implements DailySchedule {
   @override
   String? get url;
   @override
-  String? get notes;
+  String? get memo;
+  @override
+  @DateTimeConverter()
+  DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$DailyScheduleImplCopyWith<_$DailyScheduleImpl> get copyWith =>

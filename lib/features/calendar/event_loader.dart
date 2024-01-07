@@ -23,6 +23,7 @@ class EventLoader extends _$EventLoader {
           title: 'live',
           location: 'Minato Tokyo',
           start: DateTime.utc(2024, 1, 6),
+          createdAt: DateTime.now(),
         ),
       ],
       DateTime.utc(2024, 1, 4): <DailySchedule>[
@@ -31,24 +32,28 @@ class EventLoader extends _$EventLoader {
           title: 'CD release',
           location: 'Sibuya Tokyo',
           start: DateTime.utc(2024, 1, 4),
+          createdAt: DateTime.now(),
         ),
         DailySchedule(
           id: '3',
           title: 'fan meeting',
           location: 'Harajuku Tokyo',
           start: DateTime.utc(2024, 1, 4),
+          createdAt: DateTime.now(),
         ),
         DailySchedule(
           id: '2',
           title: 'CD release',
           location: 'Sibuya Tokyo',
           start: DateTime.utc(2024, 1, 4),
+          createdAt: DateTime.now(),
         ),
         DailySchedule(
           id: '3',
           title: 'fan meeting',
           location: 'Harajuku Tokyo',
           start: DateTime.utc(2024, 1, 4),
+          createdAt: DateTime.now(),
         ),
       ],
     };
