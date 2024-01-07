@@ -1,3 +1,4 @@
+import 'package:my_fave_app/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'calendar.g.dart';
@@ -13,4 +14,16 @@ class Calendar extends _$Calendar {
     state = dateTime;
     return;
   }
+
+  void switchToPreviousMonth() => state = state.subtract(
+        Duration(
+          days: state.getDaysInCurrentMonth,
+        ),
+      );
+
+  void switchToNextMonth() => state = state.add(
+        Duration(
+          days: state.getDaysInNextMonth,
+        ),
+      );
 }
