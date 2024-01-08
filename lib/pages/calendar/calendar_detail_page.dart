@@ -157,42 +157,48 @@ class CalendarDetailPage extends HookConsumerWidget {
                   final event = events[selectedDate.toLocal()]![index];
                   final startDate = event.start;
                   final endDate = event.end ?? event.start;
-                  return Container(
-                    width: double.infinity,
-                    height: 152,
-                    padding: const EdgeInsets.all(16),
-                    margin: const EdgeInsets.only(bottom: 24),
-                    decoration: BoxDecoration(
-                      color: AppColor.black15,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 8),
-                        Text(
-                          event.title,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                  return InkWell(
+                    onTap: () {
+                      ScheduleDetailPageRoute($extra: event)
+                          .push<void>(context);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 152,
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.only(bottom: 24),
+                      decoration: BoxDecoration(
+                        color: AppColor.black15,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
+                          Text(
+                            event.title,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '${startDate.year}/${startDate.month}/${startDate.day} ${'${'日月火水木金土'[startDate.weekday]}曜日'} ${startDate.hour}:${startDate.minute}~${endDate.hour}:${endDate.minute}',
-                          style: const TextStyle(
-                            fontSize: 16,
+                          const SizedBox(height: 8),
+                          Text(
+                            '${startDate.year}/${startDate.month}/${startDate.day} ${'${'日月火水木金土'[startDate.weekday]}曜日'} ${startDate.hour}:${startDate.minute}~${endDate.hour}:${endDate.minute}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                          style: TextStyle(
-                            fontSize: 16,
+                          const SizedBox(height: 16),
+                          const Text(
+                            'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
