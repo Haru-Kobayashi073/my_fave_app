@@ -98,7 +98,7 @@ class EventLoader extends _$EventLoader {
         result.addAll(schedules[currentDate]!);
       }
     }
-
+    result.sort((a, b) => a.start.compareTo(b.start));
     return result;
   }
 
