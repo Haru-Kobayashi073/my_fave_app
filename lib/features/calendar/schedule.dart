@@ -39,4 +39,26 @@ class Schedule extends _$Schedule {
       ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
     }
   }
+
+  Future<void> edit(DailySchedule schedule, VoidCallback onSuccess) async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => true);
+      await ref.read(calendarRepositoryImplProvider).editSchedule(schedule);
+      onSuccess();
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        const exception = AppException(
+          message: 'Maybe your network is disconnected. Please check yours.',
+        );
+        throw exception;
+      }
+      debugPrint('予定編集エラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('予定編集に失敗しました');
+    } finally {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
+    }
+  }
 }

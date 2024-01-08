@@ -16,6 +16,7 @@ import 'package:my_fave_app/pages/authentication/register_password_page.dart';
 import 'package:my_fave_app/pages/calendar/add_schedule_page.dart';
 import 'package:my_fave_app/pages/calendar/calendar_detail_page.dart';
 import 'package:my_fave_app/pages/calendar/calendar_page.dart';
+import 'package:my_fave_app/pages/calendar/edit_schedule_page.dart';
 import 'package:my_fave_app/pages/calendar/schedule__detail_page.dart';
 import 'package:my_fave_app/pages/edit_favorite/edit_favorite_page.dart';
 import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
@@ -65,6 +66,7 @@ class AppRoutes {
   static const calendarDetail = '/calendarDetail';
   static const addSchedule = '/addSchedule';
   static const scheduleDetail = '/scheduleDetail';
+  static const editSchedule = '/editSchedule';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -490,6 +492,23 @@ class ScheduleDetailPageRoute extends GoRouteData {
       MaterialPage<void>(
         fullscreenDialog: true,
         child: ScheduleDetailPage(
+          schedule: $extra,
+        ),
+      );
+}
+
+@TypedGoRoute<EditSchedulePageRoute>(
+  path: AppRoutes.editSchedule,
+)
+class EditSchedulePageRoute extends GoRouteData {
+  EditSchedulePageRoute({required this.$extra});
+  final DailySchedule $extra;
+
+  @override
+  MaterialPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      MaterialPage<void>(
+        fullscreenDialog: true,
+        child: EditSchedulePage(
           schedule: $extra,
         ),
       );

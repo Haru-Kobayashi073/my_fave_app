@@ -56,4 +56,17 @@ class CalendarRepositoryImpl implements CalendarRepository {
         )
         .toList();
   }
+
+  @override
+  Future<void> editSchedule(DailySchedule schedule) async {
+    final uid = _auth.currentUser!.uid;
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('schedules')
+        .doc(schedule.id)
+        .set(
+          schedule.toJson(),
+        );
+  }
 }
