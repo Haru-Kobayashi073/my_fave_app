@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/calendar/event_loader.dart';
+import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/pages/home/components/calendar_daily_card.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class CalendarView extends HookConsumerWidget {
-  const CalendarView({super.key});
+  const CalendarView({super.key, required this.events});
+  final Map<DateTime, List<DailySchedule>> events;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SliverMainAxisGroup(
@@ -60,9 +63,15 @@ class CalendarView extends HookConsumerWidget {
                 mainAxisSpacing: 16,
                 mainAxisExtent: 152,
               ),
-              itemCount: 4,
+              itemCount: ref
+                  .read(eventLoaderProvider.notifier)
+                  .getScheduleForNext31Days(events)
+                  .length,
               itemBuilder: (_, index) {
-                return const CalendarDailyCard();
+                final schedule = ref
+                    .read(eventLoaderProvider.notifier)
+                    .getScheduleForNext31Days(events)[index];
+                return CalendarDailyCard(schedule: schedule);
               },
             ),
           ),
