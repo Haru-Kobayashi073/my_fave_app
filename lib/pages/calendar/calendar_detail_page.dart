@@ -16,7 +16,7 @@ class CalendarDetailPage extends HookConsumerWidget {
     required this.events,
     required this.selectedDate,
   });
-  final List<DailySchedule> events;
+  final Map<DateTime, List<DailySchedule>> events;
   final DateTime selectedDate;
 
   @override
@@ -152,9 +152,9 @@ class CalendarDetailPage extends HookConsumerWidget {
             const SizedBox(height: 8),
             Expanded(
               child: ListView.builder(
-                itemCount: events.length,
+                itemCount: events[selectedDate.toLocal()]!.length,
                 itemBuilder: (context, index) {
-                  final event = events[index];
+                  final event = events[selectedDate.toLocal()]![index];
                   final startDate = event.start;
                   final endDate = event.end ?? event.start;
                   return Container(

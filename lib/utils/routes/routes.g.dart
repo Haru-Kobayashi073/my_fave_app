@@ -611,7 +611,7 @@ extension $CalendarDetailPageRouteExtension on CalendarDetailPageRoute {
       CalendarDetailPageRoute(
         selectedDate:
             DateTime.parse(state.uri.queryParameters['selected-date']!),
-        $extra: state.extra as List<DailySchedule>,
+        $extra: state.extra as Map<DateTime, List<DailySchedule>>,
       );
 
   String get location => GoRouteData.$location(
