@@ -7,4 +7,6 @@ abstract class CalendarRepository {
   Future<void> createSchedule(DailySchedule schedule);
 
   Future<List<DailySchedule>> fetchScheduleList();
+
+  Future<void> editSchedule(DailySchedule schedule);
 }
