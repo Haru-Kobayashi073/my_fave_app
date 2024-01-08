@@ -27,6 +27,7 @@ List<RouteBase> get $appRoutes => [
       $addSchedulePageRoute,
       $scheduleDetailPageRoute,
       $editSchedulePageRoute,
+      $addActivityPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -725,6 +726,29 @@ extension $EditSchedulePageRouteExtension on EditSchedulePageRoute {
 
   void replace(BuildContext context) =>
       context.replace(location, extra: $extra);
+}
+
+RouteBase get $addActivityPageRoute => GoRouteData.$route(
+      path: '/addActivity',
+      factory: $AddActivityPageRouteExtension._fromState,
+    );
+
+extension $AddActivityPageRouteExtension on AddActivityPageRoute {
+  static AddActivityPageRoute _fromState(GoRouterState state) =>
+      AddActivityPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/addActivity',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 // **************************************************************************
