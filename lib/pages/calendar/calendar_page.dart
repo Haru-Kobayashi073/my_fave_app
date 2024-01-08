@@ -27,108 +27,109 @@ class CalendarPage extends HookConsumerWidget {
         ),
         automaticallyImplyLeading: false,
       ),
-      body: TableCalendar<DailySchedule>(
-        focusedDay: selectedDay,
-        firstDay: DateTime(DateTime.now().year - 30),
-        lastDay: DateTime(DateTime.now().year + 5),
-        selectedDayPredicate: (day) {
-          return isSameDay(selectedDay, day);
-        },
-        onDaySelected: (selectedDay, focusedDay) {
-          ref.read(calendarProvider.notifier).selectedDate(selectedDay);
-          ref
-              .read(eventLoaderProvider.notifier)
-              .handleSelectedDate(context, selectedDay);
-        },
-        eventLoader: (date) {
-          return eventLoader.maybeWhen(
-            orElse: () => <DailySchedule>[],
-            data: (events) {
+      body: eventLoader.when(
+        data: (events) {
+          return TableCalendar<DailySchedule>(
+            focusedDay: selectedDay,
+            firstDay: DateTime(DateTime.now().year - 30),
+            lastDay: DateTime(DateTime.now().year + 5),
+            selectedDayPredicate: (day) {
+              return isSameDay(selectedDay, day);
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              ref.read(calendarProvider.notifier).selectedDate(selectedDay);
+              ref
+                  .read(eventLoaderProvider.notifier)
+                  .handleSelectedDate(context, selectedDay);
+            },
+            eventLoader: (date) {
               final localTime = date.toLocal();
               return events[localTime] ?? [];
             },
+            onPageChanged: (focusedDay) {
+              if (focusedDay != selectedDay) {
+                focusedDay.isBefore(selectedDay)
+                    ? calendarNotifier.switchToPreviousMonth()
+                    : calendarNotifier.switchToNextMonth();
+                ref.invalidate(eventLoaderProvider);
+              }
+            },
+            headerStyle: const HeaderStyle(
+              formatButtonVisible: false,
+              leftChevronVisible: false,
+              rightChevronVisible: false,
+            ),
+            daysOfWeekStyle: DaysOfWeekStyle(
+              weekdayStyle: TextStyle(
+                color: AppColor.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 10,
+              ),
+              weekendStyle: TextStyle(
+                color: AppColor.grey88,
+                fontWeight: FontWeight.w600,
+                fontSize: 10,
+              ),
+            ),
+            rowHeight: 72,
+            calendarBuilders: CalendarBuilders(
+              headerTitleBuilder: (_, date) {
+                final text =
+                    const HeaderStyle().titleTextFormatter?.call(date, 'en') ??
+                        DateFormat.yMMMM('en').format(date);
+                return CalendarHeader(
+                  yearMonthText: text,
+                  events: events,
+                );
+              },
+              todayBuilder: (_, date, focusedDay) {
+                return Center(
+                  child: CircleAvatar(
+                    backgroundColor: AppColor.white,
+                    child: Text(
+                      date.day.toString(),
+                      style: TextStyle(
+                        color: AppColor.black00,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              selectedBuilder: (_, date, focusedDay) {
+                return Center(
+                  child: isSameDay(DateTime.now(), date)
+                      ? CircleAvatar(
+                          backgroundColor: AppColor.white,
+                          child: Text(
+                            date.day.toString(),
+                            style: TextStyle(
+                              color: AppColor.black00,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          date.day.toString(),
+                        ),
+                );
+              },
+              markerBuilder: (_, date, events) {
+                return events.isNotEmpty
+                    ? Container(
+                        width: 6,
+                        height: 6,
+                        alignment: Alignment.topCenter,
+                        decoration: BoxDecoration(
+                          color: AppColor.white,
+                          shape: BoxShape.circle,
+                        ),
+                      )
+                    : const SizedBox();
+              },
+            ),
           );
         },
-        onPageChanged: (focusedDay) {
-          if (focusedDay != selectedDay) {
-            focusedDay.isBefore(selectedDay)
-                ? calendarNotifier.switchToPreviousMonth()
-                : calendarNotifier.switchToNextMonth();
-            ref.invalidate(eventLoaderProvider);
-          }
-        },
-        headerStyle: const HeaderStyle(
-          formatButtonVisible: false,
-          leftChevronVisible: false,
-          rightChevronVisible: false,
-        ),
-        daysOfWeekStyle: DaysOfWeekStyle(
-          weekdayStyle: TextStyle(
-            color: AppColor.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 10,
-          ),
-          weekendStyle: TextStyle(
-            color: AppColor.grey88,
-            fontWeight: FontWeight.w600,
-            fontSize: 10,
-          ),
-        ),
-        rowHeight: 72,
-        calendarBuilders: CalendarBuilders(
-          headerTitleBuilder: (_, date) {
-            final text =
-                const HeaderStyle().titleTextFormatter?.call(date, 'en') ??
-                    DateFormat.yMMMM('en').format(date);
-            return CalendarHeader(
-              yearMonthText: text,
-              events: const [],
-            );
-          },
-          todayBuilder: (_, date, focusedDay) {
-            return Center(
-              child: CircleAvatar(
-                backgroundColor: AppColor.white,
-                child: Text(
-                  date.day.toString(),
-                  style: TextStyle(
-                    color: AppColor.black00,
-                  ),
-                ),
-              ),
-            );
-          },
-          selectedBuilder: (_, date, focusedDay) {
-            return Center(
-              child: isSameDay(DateTime.now(), date)
-                  ? CircleAvatar(
-                      backgroundColor: AppColor.white,
-                      child: Text(
-                        date.day.toString(),
-                        style: TextStyle(
-                          color: AppColor.black00,
-                        ),
-                      ),
-                    )
-                  : Text(
-                      date.day.toString(),
-                    ),
-            );
-          },
-          markerBuilder: (_, date, events) {
-            return events.isNotEmpty
-                ? Container(
-                    width: 6,
-                    height: 6,
-                    alignment: Alignment.topCenter,
-                    decoration: BoxDecoration(
-                      color: AppColor.white,
-                      shape: BoxShape.circle,
-                    ),
-                  )
-                : const SizedBox();
-          },
-        ),
+        error: (e, s) => const SizedBox(),
+        loading: () => const SizedBox(),
       ),
     );
   }
