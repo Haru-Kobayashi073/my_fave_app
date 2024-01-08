@@ -1,6 +1,5 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -70,49 +69,16 @@ class EditFavoritePage extends HookConsumerWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: GestureDetector(
-                    onTap: () async {
-                      final pickedImage =
-                          await ref.read(pickImageProvider).call();
-                      final croppedImage =
-                          await ref.read(cropImageProvider).call(pickedImage);
-                      imageUrl.value = await ref
-                          .read(uploadImageProvider)
-                          .call(croppedImage);
-                    },
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(16),
-                      ),
-                      child: imageUrl.value != null
-                          ? CachedNetworkImage(
-                              imageUrl: imageUrl.value!,
-                              fit: BoxFit.cover,
-                              width: context.deviceWidth,
-                              height: context.deviceWidth - 32,
-                              progressIndicatorBuilder: (_, __, ___) =>
-                                  const Loading(),
-                            )
-                          : Container(
-                              color: AppColor.black15,
-                              width: context.deviceWidth,
-                              height: context.deviceWidth - 32,
-                              child: Center(
-                                child: CircleAvatar(
-                                  backgroundColor: AppColor.grey88,
-                                  radius: 20,
-                                  child: Icon(
-                                    Icons.add,
-                                    color: AppColor.white,
-                                    size: 36,
-                                  ),
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
+                SelectImage(
+                  onTap: () async {
+                    final pickedImage =
+                        await ref.read(pickImageProvider).call();
+                    final croppedImage =
+                        await ref.read(cropImageProvider).call(pickedImage);
+                    imageUrl.value =
+                        await ref.read(uploadImageProvider).call(croppedImage);
+                  },
+                  imageUrl: imageUrl.value,
                 ),
                 if (selectImagePressed.value ?? imageUrl.value == null)
                   Container(
