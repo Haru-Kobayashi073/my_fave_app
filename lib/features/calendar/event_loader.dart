@@ -76,6 +76,32 @@ class EventLoader extends _$EventLoader {
     return map;
   }
 
+  List<DailySchedule> getScheduleForNext31Days(
+    Map<DateTime, List<DailySchedule>> schedules,
+  ) {
+    final result = <DailySchedule>[];
+
+    // 今日の日付を取得
+    final today = DateTime.now();
+
+    // 31日分の予定を取得
+    for (var i = 0; i < 31; i++) {
+      final currentDate = DateTime(
+        today.year,
+        today.month,
+        today.day + i,
+        9,
+      );
+
+      // currentDate に該当する予定があれば、それを result に追加
+      if (schedules.containsKey(currentDate)) {
+        result.addAll(schedules[currentDate]!);
+      }
+    }
+
+    return result;
+  }
+
   @override
   FutureOr<Map<DateTime, List<DailySchedule>>> build() async {
     return await fetch();
@@ -95,7 +121,7 @@ class EventLoader extends _$EventLoader {
       return;
     }
     if (state.value!.containsKey(formattedDate)) {
-      final events = state.value![formattedDate]!;
+      final events = state.value!;
       CalendarDetailPageRoute(
         $extra: events,
         selectedDate: selectedDay,
@@ -114,8 +140,9 @@ class EventLoader extends _$EventLoader {
 
   PersistentBottomSheetController<void> showLatestEventsView(
     BuildContext context,
-    List<DailySchedule> events,
+    Map<DateTime, List<DailySchedule>> events,
   ) {
+    final list = getScheduleForNext31Days(events);
     return showBottomSheet<void>(
       context: context,
       backgroundColor: AppColor.black15.withOpacity(0.5),
@@ -160,9 +187,9 @@ class EventLoader extends _$EventLoader {
                           mainAxisSpacing: 16,
                           mainAxisExtent: 152,
                         ),
-                        itemCount: 4,
+                        itemCount: list.length,
                         itemBuilder: (_, index) {
-                          return const CalendarDailyCard();
+                          return CalendarDailyCard(schedule: list[index]);
                         },
                       ),
                     ),
