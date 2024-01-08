@@ -286,7 +286,6 @@ class AddSchedulePage extends HookConsumerWidget {
                 controller: memoController,
                 maxLines: null,
                 cursorColor: AppColor.white,
-                textInputAction: TextInputAction.done,
                 focusNode: memoFocusNode,
                 decoration: InputDecorationStyles.bottomSemiCircle('メモ'),
                 style: const TextStyle(

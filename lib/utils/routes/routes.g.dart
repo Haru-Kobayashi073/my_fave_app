@@ -25,6 +25,7 @@ List<RouteBase> get $appRoutes => [
       $editFavoritePageRoute,
       $calendarDetailPageRoute,
       $addSchedulePageRoute,
+      $scheduleDetailPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -669,6 +670,33 @@ T? _$convertMapValue<T>(
 ) {
   final value = map[key];
   return value == null ? null : converter(value);
+}
+
+RouteBase get $scheduleDetailPageRoute => GoRouteData.$route(
+      path: '/scheduleDetail',
+      factory: $ScheduleDetailPageRouteExtension._fromState,
+    );
+
+extension $ScheduleDetailPageRouteExtension on ScheduleDetailPageRoute {
+  static ScheduleDetailPageRoute _fromState(GoRouterState state) =>
+      ScheduleDetailPageRoute(
+        $extra: state.extra as DailySchedule,
+      );
+
+  String get location => GoRouteData.$location(
+        '/scheduleDetail',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 // **************************************************************************

@@ -11,7 +11,9 @@ class CalendarDailyCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        ScheduleDetailPageRoute($extra: schedule).push<void>(context);
+      },
       borderRadius: BorderRadius.circular(16),
       child: Container(
         padding: const EdgeInsets.all(16),
