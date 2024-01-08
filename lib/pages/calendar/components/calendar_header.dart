@@ -13,7 +13,7 @@ class CalendarHeader extends HookConsumerWidget {
     required this.events,
   });
   final String yearMonthText;
-  final List<DailySchedule> events;
+  final Map<DateTime, List<DailySchedule>> events;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,7 +74,9 @@ class CalendarHeader extends HookConsumerWidget {
               const SizedBox(width: 16),
               IconButton(
                 onPressed: () {
-                  context.push(AddSchedulePageRoute().location);
+                  context.push(AddSchedulePageRoute().location).then((value) {
+                    ref.invalidate(eventLoaderProvider);
+                  });
                 },
                 icon: Icon(
                   Icons.add,

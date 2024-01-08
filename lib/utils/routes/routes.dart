@@ -445,12 +445,18 @@ class EditFavoritePageRoute extends GoRouteData {
   path: AppRoutes.calendarDetail,
 )
 class CalendarDetailPageRoute extends GoRouteData {
-  const CalendarDetailPageRoute({required this.$extra});
-  final List<DailySchedule> $extra;
+  const CalendarDetailPageRoute({
+    required this.$extra,
+    required this.selectedDate,
+  });
+  final Map<DateTime, List<DailySchedule>> $extra;
+  final DateTime selectedDate;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      CalendarDetailPage(events: $extra);
+  Widget build(BuildContext context, GoRouterState state) => CalendarDetailPage(
+        events: $extra,
+        selectedDate: selectedDate,
+      );
 }
 
 @TypedGoRoute<AddSchedulePageRoute>(

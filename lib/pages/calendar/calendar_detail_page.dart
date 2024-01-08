@@ -11,8 +11,13 @@ import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class CalendarDetailPage extends HookConsumerWidget {
-  const CalendarDetailPage({super.key, required this.events});
-  final List<DailySchedule> events;
+  const CalendarDetailPage({
+    super.key,
+    required this.events,
+    required this.selectedDate,
+  });
+  final Map<DateTime, List<DailySchedule>> events;
+  final DateTime selectedDate;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -63,7 +68,7 @@ class CalendarDetailPage extends HookConsumerWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      '${events[0].start.month}月${events[0].start.day}日',
+                      '${selectedDate.month}月${selectedDate.day}日',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -122,7 +127,6 @@ class CalendarDetailPage extends HookConsumerWidget {
                     const SizedBox(width: 16),
                     IconButton(
                       onPressed: () {
-                        final selectedDate = events[0].start;
                         context.push(
                           AddSchedulePageRoute(
                             selectedDate: DateTime.utc(
@@ -148,9 +152,9 @@ class CalendarDetailPage extends HookConsumerWidget {
             const SizedBox(height: 8),
             Expanded(
               child: ListView.builder(
-                itemCount: events.length,
+                itemCount: events[selectedDate.toLocal()]!.length,
                 itemBuilder: (context, index) {
-                  final event = events[index];
+                  final event = events[selectedDate.toLocal()]![index];
                   final startDate = event.start;
                   final endDate = event.end ?? event.start;
                   return Container(

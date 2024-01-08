@@ -9,7 +9,7 @@ part 'favorite.g.dart';
 
 @Riverpod(keepAlive: true)
 class Favorite extends _$Favorite {
-  Future<List<FavoriteData>> fetchFavoriteList() async {
+  Future<List<FavoriteData>> fetch() async {
     final isNetWorkCheck = await isNetworkConnected();
     try {
       ref.read(overlayLoadingWidgetProvider.notifier).update((state) => true);
@@ -35,7 +35,7 @@ class Favorite extends _$Favorite {
 
   @override
   FutureOr<List<FavoriteData>> build() async {
-    return await fetchFavoriteList();
+    return await fetch();
   }
 
   Future<void> create(

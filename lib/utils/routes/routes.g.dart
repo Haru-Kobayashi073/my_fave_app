@@ -609,11 +609,16 @@ RouteBase get $calendarDetailPageRoute => GoRouteData.$route(
 extension $CalendarDetailPageRouteExtension on CalendarDetailPageRoute {
   static CalendarDetailPageRoute _fromState(GoRouterState state) =>
       CalendarDetailPageRoute(
-        $extra: state.extra as List<DailySchedule>,
+        selectedDate:
+            DateTime.parse(state.uri.queryParameters['selected-date']!),
+        $extra: state.extra as Map<DateTime, List<DailySchedule>>,
       );
 
   String get location => GoRouteData.$location(
         '/calendarDetail',
+        queryParams: {
+          'selected-date': selectedDate.toString(),
+        },
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);

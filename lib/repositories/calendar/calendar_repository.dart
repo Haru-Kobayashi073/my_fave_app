@@ -5,4 +5,6 @@ abstract class CalendarRepository {
   User? get currentUser;
 
   Future<void> createSchedule(DailySchedule schedule);
+
+  Future<List<DailySchedule>> fetchScheduleList();
 }

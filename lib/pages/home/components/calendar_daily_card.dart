@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class CalendarDailyCard extends HookConsumerWidget {
-  const CalendarDailyCard({super.key});
+  const CalendarDailyCard({super.key, required this.schedule});
+  final DailySchedule schedule;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
@@ -21,9 +24,9 @@ class CalendarDailyCard extends HookConsumerWidget {
           children: [
             Row(
               children: [
-                const Text(
-                  '17',
-                  style: TextStyle(
+                Text(
+                  schedule.start.day.toString(),
+                  style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
                   ),
@@ -35,9 +38,9 @@ class CalendarDailyCard extends HookConsumerWidget {
                     thickness: 1.5,
                   ),
                 ),
-                const VerticalText(
-                  '土曜日',
-                  style: TextStyle(
+                VerticalText(
+                  '${'日月火水木金土'[schedule.start.weekday]}曜日',
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -45,19 +48,19 @@ class CalendarDailyCard extends HookConsumerWidget {
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 4),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
               child: Text(
-                'New Jeans',
-                style: TextStyle(
+                schedule.title,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const Text(
-              'New Jeans New Jeans New Jeans New Jeans New Jeans ',
-              style: TextStyle(
+            Text(
+              schedule.memo ?? '',
+              style: const TextStyle(
                 fontSize: 14,
               ),
               maxLines: 2,

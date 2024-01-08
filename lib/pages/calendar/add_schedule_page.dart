@@ -88,7 +88,7 @@ class AddSchedulePage extends HookConsumerWidget {
                           formattedDateTimeForAllDay.value?.$2 ?? endDate.value,
                     ),
                     () {
-                      context.go(const CalendarPageRoute().location);
+                      context.pop();
                     },
                   );
                 } else {
