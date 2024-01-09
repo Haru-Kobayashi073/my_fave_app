@@ -29,6 +29,7 @@ List<RouteBase> get $appRoutes => [
       $editSchedulePageRoute,
       $addActivityPageRoute,
       $pastActivityPageRoute,
+      $activityDetailPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -773,6 +774,37 @@ extension $PastActivityPageRouteExtension on PastActivityPageRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $activityDetailPageRoute => GoRouteData.$route(
+      path: '/activityDetail',
+      factory: $ActivityDetailPageRouteExtension._fromState,
+    );
+
+extension $ActivityDetailPageRouteExtension on ActivityDetailPageRoute {
+  static ActivityDetailPageRoute _fromState(GoRouterState state) =>
+      ActivityDetailPageRoute(
+        selectedDay: DateTime.parse(state.uri.queryParameters['selected-day']!),
+        $extra: state.extra as List<ActivityData>,
+      );
+
+  String get location => GoRouteData.$location(
+        '/activityDetail',
+        queryParams: {
+          'selected-day': selectedDay.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 // **************************************************************************

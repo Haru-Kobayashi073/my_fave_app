@@ -3,8 +3,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_fave_app/models/activity_data.dart';
 import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
+import 'package:my_fave_app/pages/activity/activity_detail_page.dart';
 import 'package:my_fave_app/pages/activity/activity_page.dart';
 import 'package:my_fave_app/pages/activity/add_activity_page.dart';
 import 'package:my_fave_app/pages/activity/past_activity_page.dart';
@@ -19,7 +21,7 @@ import 'package:my_fave_app/pages/calendar/add_schedule_page.dart';
 import 'package:my_fave_app/pages/calendar/calendar_detail_page.dart';
 import 'package:my_fave_app/pages/calendar/calendar_page.dart';
 import 'package:my_fave_app/pages/calendar/edit_schedule_page.dart';
-import 'package:my_fave_app/pages/calendar/schedule__detail_page.dart';
+import 'package:my_fave_app/pages/calendar/schedule_detail_page.dart';
 import 'package:my_fave_app/pages/edit_favorite/edit_favorite_page.dart';
 import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
 import 'package:my_fave_app/pages/home/home_page.dart';
@@ -71,6 +73,7 @@ class AppRoutes {
   static const editSchedule = '/editSchedule';
   static const addActivity = '/addActivity';
   static const pastActivity = '/pastActivity';
+  static const activityDetail = '/activityDetail';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -541,4 +544,23 @@ class PastActivityPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const PastActivityPage();
+}
+
+@TypedGoRoute<ActivityDetailPageRoute>(
+  path: AppRoutes.activityDetail,
+)
+class ActivityDetailPageRoute extends GoRouteData {
+  ActivityDetailPageRoute({
+    required this.$extra,
+    required this.selectedDay,
+  });
+  final List<ActivityData> $extra;
+  final DateTime selectedDay;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      AcctivityDetailPage(
+        activityDataList: $extra,
+        selectedDay: selectedDay,
+      );
 }
