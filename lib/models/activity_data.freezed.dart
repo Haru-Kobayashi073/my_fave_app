@@ -24,6 +24,7 @@ mixin _$ActivityData {
   String get imageUrl => throw _privateConstructorUsedError;
   @DateTimeConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
+  bool get isLiked => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +39,10 @@ abstract class $ActivityDataCopyWith<$Res> {
       _$ActivityDataCopyWithImpl<$Res, ActivityData>;
   @useResult
   $Res call(
-      {String id, String imageUrl, @DateTimeConverter() DateTime? createdAt});
+      {String id,
+      String imageUrl,
+      @DateTimeConverter() DateTime? createdAt,
+      bool isLiked});
 }
 
 /// @nodoc
@@ -57,6 +61,7 @@ class _$ActivityDataCopyWithImpl<$Res, $Val extends ActivityData>
     Object? id = null,
     Object? imageUrl = null,
     Object? createdAt = freezed,
+    Object? isLiked = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -71,6 +76,10 @@ class _$ActivityDataCopyWithImpl<$Res, $Val extends ActivityData>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isLiked: null == isLiked
+          ? _value.isLiked
+          : isLiked // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -84,7 +93,10 @@ abstract class _$$ActivityDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id, String imageUrl, @DateTimeConverter() DateTime? createdAt});
+      {String id,
+      String imageUrl,
+      @DateTimeConverter() DateTime? createdAt,
+      bool isLiked});
 }
 
 /// @nodoc
@@ -101,6 +113,7 @@ class __$$ActivityDataImplCopyWithImpl<$Res>
     Object? id = null,
     Object? imageUrl = null,
     Object? createdAt = freezed,
+    Object? isLiked = null,
   }) {
     return _then(_$ActivityDataImpl(
       id: null == id
@@ -115,6 +128,10 @@ class __$$ActivityDataImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isLiked: null == isLiked
+          ? _value.isLiked
+          : isLiked // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -125,7 +142,8 @@ class _$ActivityDataImpl implements _ActivityData {
   const _$ActivityDataImpl(
       {required this.id,
       required this.imageUrl,
-      @DateTimeConverter() this.createdAt});
+      @DateTimeConverter() this.createdAt,
+      required this.isLiked});
 
   factory _$ActivityDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$ActivityDataImplFromJson(json);
@@ -137,10 +155,12 @@ class _$ActivityDataImpl implements _ActivityData {
   @override
   @DateTimeConverter()
   final DateTime? createdAt;
+  @override
+  final bool isLiked;
 
   @override
   String toString() {
-    return 'ActivityData(id: $id, imageUrl: $imageUrl, createdAt: $createdAt)';
+    return 'ActivityData(id: $id, imageUrl: $imageUrl, createdAt: $createdAt, isLiked: $isLiked)';
   }
 
   @override
@@ -152,12 +172,14 @@ class _$ActivityDataImpl implements _ActivityData {
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.isLiked, isLiked) || other.isLiked == isLiked));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, imageUrl, createdAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, imageUrl, createdAt, isLiked);
 
   @JsonKey(ignore: true)
   @override
@@ -177,7 +199,8 @@ abstract class _ActivityData implements ActivityData {
   const factory _ActivityData(
       {required final String id,
       required final String imageUrl,
-      @DateTimeConverter() final DateTime? createdAt}) = _$ActivityDataImpl;
+      @DateTimeConverter() final DateTime? createdAt,
+      required final bool isLiked}) = _$ActivityDataImpl;
 
   factory _ActivityData.fromJson(Map<String, dynamic> json) =
       _$ActivityDataImpl.fromJson;
@@ -189,6 +212,8 @@ abstract class _ActivityData implements ActivityData {
   @override
   @DateTimeConverter()
   DateTime? get createdAt;
+  @override
+  bool get isLiked;
   @override
   @JsonKey(ignore: true)
   _$$ActivityDataImplCopyWith<_$ActivityDataImpl> get copyWith =>

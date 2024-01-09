@@ -10,6 +10,7 @@ abstract class ActivityData with _$ActivityData {
     required String id,
     required String imageUrl,
     @DateTimeConverter() DateTime? createdAt,
+    required bool isLiked,
   }) = _ActivityData;
 
   factory ActivityData.fromJson(Map<String, dynamic> json) =>
