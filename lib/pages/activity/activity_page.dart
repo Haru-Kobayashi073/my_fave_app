@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/pages/home/components/home_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
@@ -112,12 +113,16 @@ class ActivityPage extends HookConsumerWidget {
                         width: 120,
                         height: 56,
                         child: CommonButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context
+                                .push(const PastActivityPageRoute().location);
+                          },
                           text: '過去の投稿',
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
