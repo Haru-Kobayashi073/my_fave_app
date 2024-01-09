@@ -30,6 +30,7 @@ List<RouteBase> get $appRoutes => [
       $addActivityPageRoute,
       $pastActivityPageRoute,
       $activityDetailPageRoute,
+      $addFavoritePhotoPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -805,6 +806,34 @@ extension $ActivityDetailPageRouteExtension on ActivityDetailPageRoute {
 
   void replace(BuildContext context) =>
       context.replace(location, extra: $extra);
+}
+
+RouteBase get $addFavoritePhotoPageRoute => GoRouteData.$route(
+      path: '/addFavoritePhoto',
+      factory: $AddFavoritePhotoPageRouteExtension._fromState,
+    );
+
+extension $AddFavoritePhotoPageRouteExtension on AddFavoritePhotoPageRoute {
+  static AddFavoritePhotoPageRoute _fromState(GoRouterState state) =>
+      AddFavoritePhotoPageRoute(
+        id: state.uri.queryParameters['id']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/addFavoritePhoto',
+        queryParams: {
+          'id': id,
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 // **************************************************************************
