@@ -53,6 +53,7 @@ class AddActivityPage extends HookConsumerWidget {
                       ActivityData(
                         id: '',
                         imageUrl: imageUrl.value!,
+                        isLiked: false,
                       ), () {
                     ref.invalidate(activityProvider);
                     context.go(const ActivityPageRoute().location);
