@@ -11,6 +11,7 @@ import 'package:my_fave_app/pages/activity/activity_page.dart';
 import 'package:my_fave_app/pages/activity/add_activity_page.dart';
 import 'package:my_fave_app/pages/activity/past_activity_page.dart';
 import 'package:my_fave_app/pages/add_favorite/add_favorite_page.dart';
+import 'package:my_fave_app/pages/add_favorite/add_favorite_photo_page.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
 import 'package:my_fave_app/pages/authentication/confirmation_mail_page.dart';
 import 'package:my_fave_app/pages/authentication/login_page.dart';
@@ -74,6 +75,7 @@ class AppRoutes {
   static const addActivity = '/addActivity';
   static const pastActivity = '/pastActivity';
   static const activityDetail = '/activityDetail';
+  static const addFavoritePhoto = '/addFavoritePhoto';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -562,5 +564,22 @@ class ActivityDetailPageRoute extends GoRouteData {
       AcctivityDetailPage(
         activityDataList: $extra,
         selectedDay: selectedDay,
+      );
+}
+
+@TypedGoRoute<AddFavoritePhotoPageRoute>(
+  path: AppRoutes.addFavoritePhoto,
+)
+class AddFavoritePhotoPageRoute extends GoRouteData {
+  AddFavoritePhotoPageRoute({required this.id});
+  final String id;
+
+  @override
+  MaterialPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      MaterialPage<void>(
+        fullscreenDialog: true,
+        child: AddFavoritePhotoPage(
+          id: id,
+        ),
       );
 }

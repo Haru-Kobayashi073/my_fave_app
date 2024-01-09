@@ -58,7 +58,7 @@ class FavoriteDetailPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  FavoritePhotos(photosUrlList: favoriteData.photosUrlList),
+                  FavoritePhotos(favoriteData: favoriteData),
                   SliverToBoxAdapter(
                     child: Container(
                       width: double.infinity,

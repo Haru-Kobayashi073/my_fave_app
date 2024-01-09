@@ -1,15 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/favorite/favorite.dart';
+import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/common_button.dart';
 
-class FavoritePhotos extends HookWidget {
-  const FavoritePhotos({super.key, required this.photosUrlList});
-  final List<String>? photosUrlList;
+class FavoritePhotos extends HookConsumerWidget {
+  const FavoritePhotos({super.key, required this.favoriteData});
+  final FavoriteData favoriteData;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final editing = useToggle(false);
+    final imageUrlList = favoriteData.photosUrlList;
 
     return SliverToBoxAdapter(
       child: Container(
@@ -48,7 +52,10 @@ class FavoritePhotos extends HookWidget {
                         height: 56,
                         padding: const EdgeInsets.only(left: 8),
                         child: CommonButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            AddFavoritePhotoPageRoute(id: favoriteData.id)
+                                .push<void>(context);
+                          },
                           text: '追加',
                           isWhite: false,
                         ),
@@ -72,39 +79,56 @@ class FavoritePhotos extends HookWidget {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 4 / 3,
+                  mainAxisExtent: 160,
                 ),
-                itemCount: 20,
-                itemBuilder: (_, index) => Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColor.black15,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    if (editing.value)
-                      CircleAvatar(
-                        radius: 14,
-                        backgroundColor: AppColor.greybb,
-                        child: IconButton(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
-                          icon: Icon(
-                            Icons.close,
-                            size: 20,
-                            color: AppColor.black33,
+                itemCount: imageUrlList?.length ?? 0,
+                itemBuilder: (_, index) => imageUrlList != null
+                    ? Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          Container(
+                            height: 200,
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 12,
+                              horizontal: 8,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: CachedNetworkImage(
+                                imageUrl: imageUrlList[index],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                          onPressed: () {},
-                        ),
-                      ),
-                  ],
-                ),
+                          if (editing.value)
+                            CircleAvatar(
+                              radius: 14,
+                              backgroundColor: AppColor.greybb,
+                              child: IconButton(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                                icon: Icon(
+                                  Icons.close,
+                                  size: 20,
+                                  color: AppColor.black33,
+                                ),
+                                onPressed: () {
+                                  ref
+                                      .read(favoriteProvider.notifier)
+                                      .deletePhoto(
+                                    favoriteData.id,
+                                    imageUrlList[index],
+                                    () {
+                                      ref.invalidate(favoriteProvider);
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
               ),
             ),
           ],
