@@ -7,6 +7,7 @@ import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/pages/activity/activity_page.dart';
 import 'package:my_fave_app/pages/activity/add_activity_page.dart';
+import 'package:my_fave_app/pages/activity/past_activity_page.dart';
 import 'package:my_fave_app/pages/add_favorite/add_favorite_page.dart';
 import 'package:my_fave_app/pages/authentication/authentication_page.dart';
 import 'package:my_fave_app/pages/authentication/confirmation_mail_page.dart';
@@ -69,6 +70,7 @@ class AppRoutes {
   static const scheduleDetail = '/scheduleDetail';
   static const editSchedule = '/editSchedule';
   static const addActivity = '/addActivity';
+  static const pastActivity = '/pastActivity';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -528,4 +530,15 @@ class AddActivityPageRoute extends GoRouteData {
         fullscreenDialog: true,
         child: AddActivityPage(),
       );
+}
+
+@TypedGoRoute<PastActivityPageRoute>(
+  path: AppRoutes.pastActivity,
+)
+class PastActivityPageRoute extends GoRouteData {
+  const PastActivityPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const PastActivityPage();
 }
