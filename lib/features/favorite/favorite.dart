@@ -21,7 +21,7 @@ class Favorite extends _$Favorite {
           await ref.read(favoriteRepositoryImplProvider).fetchFavoriteList();
       return response;
     } on Exception catch (e) {
-      if (isNetWorkCheck) {
+      if (!isNetWorkCheck) {
         throw appException;
       }
       debugPrint('推し取得エラー: $e');
@@ -51,7 +51,7 @@ class Favorite extends _$Favorite {
           .createFavorite(favoriteData);
       onSuccess();
     } on Exception catch (e) {
-      if (isNetWorkCheck) {
+      if (!isNetWorkCheck) {
         throw appException;
       }
       debugPrint('推し作成エラー: $e');
@@ -70,7 +70,7 @@ class Favorite extends _$Favorite {
       await ref.read(favoriteRepositoryImplProvider).editFavorite(favoriteData);
       onSuccess();
     } on Exception catch (e) {
-      if (isNetWorkCheck) {
+      if (!isNetWorkCheck) {
         throw appException;
       }
       debugPrint('推し編集エラー: $e');
@@ -94,7 +94,7 @@ class Favorite extends _$Favorite {
           .addFavoritePhoto(id, imageUrl);
       onSuccess();
     } on Exception catch (e) {
-      if (isNetWorkCheck) {
+      if (!isNetWorkCheck) {
         throw appException;
       }
       debugPrint('フォト追加編集エラー: $e');
