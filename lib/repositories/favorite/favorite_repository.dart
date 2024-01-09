@@ -9,4 +9,8 @@ abstract class FavoriteRepository {
   Future<List<FavoriteData>> fetchFavoriteList();
 
   Future<void> editFavorite(FavoriteData favoriteData);
+
+  Future<void> addFavoritePhoto(String id, String imageUrl);
+
+  Future<void> deleteFavoritePhoto(String id, String imageUrl);
 }
