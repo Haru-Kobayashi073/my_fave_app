@@ -12,6 +12,7 @@ _$ActivityDataImpl _$$ActivityDataImplFromJson(Map<String, dynamic> json) =>
       imageUrl: json['imageUrl'] as String,
       createdAt: _$JsonConverterFromJson<String, DateTime>(
           json['createdAt'], const DateTimeConverter().fromJson),
+      isLiked: json['isLiked'] as bool,
     );
 
 Map<String, dynamic> _$$ActivityDataImplToJson(_$ActivityDataImpl instance) =>
@@ -20,6 +21,7 @@ Map<String, dynamic> _$$ActivityDataImplToJson(_$ActivityDataImpl instance) =>
       'imageUrl': instance.imageUrl,
       'createdAt': _$JsonConverterToJson<String, DateTime>(
           instance.createdAt, const DateTimeConverter().toJson),
+      'isLiked': instance.isLiked,
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(
