@@ -70,4 +70,34 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
           favoriteData.toJson(),
         );
   }
+
+  @override
+  Future<void> addFavoritePhoto(String id, String imageUrl) async {
+    final uid = _auth.currentUser!.uid;
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('favorites')
+        .doc(id)
+        .update(
+      {
+        'photosUrlList': FieldValue.arrayUnion([imageUrl]),
+      },
+    );
+  }
+
+  @override
+  Future<void> deleteFavoritePhoto(String id, String imageUrl) async {
+    final uid = _auth.currentUser!.uid;
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('favorites')
+        .doc(id)
+        .update(
+      {
+        'photosUrlList': FieldValue.arrayRemove([imageUrl]),
+      },
+    );
+  }
 }
