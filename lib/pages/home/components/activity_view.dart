@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/activity/activity.dart';
+import 'package:my_fave_app/models/activity_data.dart';
 import 'package:my_fave_app/pages/home/components/home_components.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class ActivityView extends HookConsumerWidget {
-  const ActivityView({super.key});
+  const ActivityView({super.key, required this.activityList});
+  final List<ActivityData> activityList;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final activityNotifier = ref.watch(activityProvider.notifier);
+
     return SliverMainAxisGroup(
       slivers: [
         SliverToBoxAdapter(
@@ -66,9 +72,25 @@ class ActivityView extends HookConsumerWidget {
                 mainAxisSpacing: 16,
                 mainAxisExtent: 128,
               ),
-              itemCount: 4,
+              itemCount: activityList.length,
               itemBuilder: (_, index) {
-                return const ActivityImage();
+                return GestureDetector(
+                  onTap: () {
+                    final selectedDay = activityList[index].createdAt;
+                    final selectedDateActivityList =
+                        activityNotifier.generateSelectedDayActivityList(
+                      activityList,
+                      selectedDay!,
+                    );
+                    ActivityDetailPageRoute(
+                      $extra: selectedDateActivityList,
+                      selectedDay: selectedDay,
+                    ).push<void>(context);
+                  },
+                  child: ActivityImage(
+                    activityData: activityList[index],
+                  ),
+                );
               },
             ),
           ),
