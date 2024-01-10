@@ -18,6 +18,7 @@ class CalendarPage extends HookConsumerWidget {
     final selectedDay = ref.watch(calendarProvider);
     final calendarNotifier = ref.watch(calendarProvider.notifier);
     final eventLoader = ref.watch(eventLoaderProvider);
+    final eventLoaderNotifer = ref.watch(eventLoaderProvider.notifier);
 
     return Scaffold(
       appBar: CommonAppBar(
@@ -81,7 +82,7 @@ class CalendarPage extends HookConsumerWidget {
                       DateFormat.yMMMM('en').format(date);
                   return CalendarHeader(
                     yearMonthText: text,
-                    events: events,
+                    events: eventLoaderNotifer.extractAllValues(events),
                   );
                 },
                 todayBuilder: (_, date, focusedDay) {
