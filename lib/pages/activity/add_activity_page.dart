@@ -55,8 +55,7 @@ class AddActivityPage extends HookConsumerWidget {
                         imageUrl: imageUrl.value!,
                         isLiked: false,
                       ), () {
-                    ref.invalidate(activityProvider);
-                    context.go(const ActivityPageRoute().location);
+                    context.pop();
                   });
                 } else {
                   selectImagePressed.value = null;

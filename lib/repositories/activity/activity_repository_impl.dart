@@ -41,4 +41,15 @@ class ActivityRepositoryImpl implements ActivityRepository {
               .toJson(),
         );
   }
+
+  @override
+  Stream<QuerySnapshot> fetchActivities() {
+    final uid = _auth.currentUser!.uid;
+    return _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('activities')
+        .orderBy('createdAt', descending: true)
+        .snapshots();
+  }
 }

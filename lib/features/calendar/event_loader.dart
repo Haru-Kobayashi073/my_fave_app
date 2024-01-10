@@ -37,6 +37,27 @@ class EventLoader extends _$EventLoader {
     }
   }
 
+  Future<List<DailySchedule>> fetchList() async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      final response =
+          await ref.read(calendarRepositoryImplProvider).fetchScheduleList();
+      return response;
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        const exception = AppException(
+          message: 'Maybe your network is disconnected. Please check yours.',
+        );
+        throw exception;
+      }
+      debugPrint('スケジュール取得エラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('スケジュールの取得に失敗しました');
+      return [];
+    }
+  }
+
   Map<DateTime, List<DailySchedule>> convertToKeyValue(
     List<DailySchedule> list,
   ) {
@@ -102,9 +123,42 @@ class EventLoader extends _$EventLoader {
     return result;
   }
 
+  List<DailySchedule> generateMonthlyScheduleList(
+    List<DailySchedule> scheduleList,
+  ) {
+    final futureOneMonthSchedules = <DailySchedule>[];
+    final today = DateTime.now();
+    final oneMonthLater = today.add(const Duration(days: 30));
+
+    for (final dailySchedule in scheduleList) {
+      if (dailySchedule.start.isAfter(today) &&
+          dailySchedule.start.isBefore(oneMonthLater)) {
+        futureOneMonthSchedules.add(dailySchedule);
+      }
+    }
+
+    return futureOneMonthSchedules;
+  }
+
   @override
   FutureOr<Map<DateTime, List<DailySchedule>>> build() async {
     return await fetch();
+  }
+
+  List<DailySchedule> extractAllValues(
+    Map<DateTime, List<DailySchedule>> inputMap,
+  ) {
+    // 新しいリストを作成
+    final allValues = <DailySchedule>[];
+
+    // マップ内の各エントリに対してループ
+    inputMap.forEach((key, value) {
+      // マップの値（List<dynamic>）をすべてリストに追加
+      allValues.addAll(value);
+    });
+
+    // 結果を返す
+    return allValues;
   }
 
   void handleSelectedDate(
@@ -121,7 +175,7 @@ class EventLoader extends _$EventLoader {
       return;
     }
     if (state.value!.containsKey(formattedDate)) {
-      final events = state.value!;
+      final events = extractAllValues(state.value!);
       CalendarDetailPageRoute(
         $extra: events,
         selectedDate: selectedDay,
@@ -140,9 +194,9 @@ class EventLoader extends _$EventLoader {
 
   PersistentBottomSheetController<void> showLatestEventsView(
     BuildContext context,
-    Map<DateTime, List<DailySchedule>> events,
+    List<DailySchedule> events,
   ) {
-    final list = getScheduleForNext31Days(events);
+    final list = generateMonthlyScheduleList(events);
     return showBottomSheet<void>(
       context: context,
       backgroundColor: AppColor.black15.withOpacity(0.5),

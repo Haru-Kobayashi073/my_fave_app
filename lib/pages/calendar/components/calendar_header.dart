@@ -13,7 +13,7 @@ class CalendarHeader extends HookConsumerWidget {
     required this.events,
   });
   final String yearMonthText;
-  final Map<DateTime, List<DailySchedule>> events;
+  final List<DailySchedule> events;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
