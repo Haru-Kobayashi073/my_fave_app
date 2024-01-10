@@ -6,12 +6,11 @@ part of 'activity.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$activityHash() => r'ee51701c9f19af8716c02fbb177692c678da7535';
+String _$activityHash() => r'62e93c1791b91452bab48565e1c6ab9bbf416912';
 
 /// See also [Activity].
 @ProviderFor(Activity)
-final activityProvider = AutoDisposeAsyncNotifierProvider<Activity,
-    Map<DateTime, List<ActivityData>>>.internal(
+final activityProvider = AutoDisposeNotifierProvider<Activity, void>.internal(
   Activity.new,
   name: r'activityProvider',
   debugGetCreateSourceHash:
@@ -20,7 +19,6 @@ final activityProvider = AutoDisposeAsyncNotifierProvider<Activity,
   allTransitiveDependencies: null,
 );
 
-typedef _$Activity
-    = AutoDisposeAsyncNotifier<Map<DateTime, List<ActivityData>>>;
+typedef _$Activity = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
