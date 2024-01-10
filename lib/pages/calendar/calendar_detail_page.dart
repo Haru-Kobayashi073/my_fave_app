@@ -9,6 +9,7 @@ import 'package:my_fave_app/features/calendar/event_loader.dart';
 import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class CalendarDetailPage extends HookConsumerWidget {
   const CalendarDetailPage({
@@ -16,7 +17,7 @@ class CalendarDetailPage extends HookConsumerWidget {
     required this.events,
     required this.selectedDate,
   });
-  final Map<DateTime, List<DailySchedule>> events;
+  final List<DailySchedule> events;
   final DateTime selectedDate;
 
   @override
@@ -152,9 +153,15 @@ class CalendarDetailPage extends HookConsumerWidget {
             const SizedBox(height: 8),
             Expanded(
               child: ListView.builder(
-                itemCount: events[selectedDate.toLocal()]!.length,
+                itemCount: events
+                    .where((element) => isSameDay(element.start, selectedDate))
+                    .length,
                 itemBuilder: (context, index) {
-                  final event = events[selectedDate.toLocal()]![index];
+                  final event = events
+                      .where(
+                        (element) => isSameDay(element.start, selectedDate),
+                      )
+                      .toList()[index];
                   final startDate = event.start;
                   final endDate = event.end ?? event.start;
                   return InkWell(

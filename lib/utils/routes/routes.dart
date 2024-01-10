@@ -462,7 +462,7 @@ class CalendarDetailPageRoute extends GoRouteData {
     required this.$extra,
     required this.selectedDate,
   });
-  final Map<DateTime, List<DailySchedule>> $extra;
+  final List<DailySchedule> $extra;
   final DateTime selectedDate;
 
   @override
