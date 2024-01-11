@@ -7,6 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_fave_app/features/file/upload_image.dart';
+import 'package:my_fave_app/features/map/map.dart';
+import 'package:my_fave_app/models/marker_data.dart';
+import 'package:my_fave_app/pages/map/map_page.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
@@ -111,7 +114,28 @@ class AddMarkerPhotoPage extends HookConsumerWidget {
                         const SizedBox(height: 32),
                         CommonButton(
                           onPressed: () {
-                            context.pop();
+                            final currentSpot = ref.read(currentSpotProvider);
+                            if (titleController.text.isNotEmpty &&
+                                locationController.text.isNotEmpty &&
+                                currentSpot != null) {
+                              ref.read(mapProvider.notifier).create(
+                                MarkerData(
+                                  markerId: '',
+                                  title: titleController.text,
+                                  location: locationController.text,
+                                  imageUrl: imageUrl.value!,
+                                  latitude: currentSpot.latitude,
+                                  longitude: currentSpot.longitude,
+                                ),
+                                () {
+                                  context.pop();
+                                },
+                              );
+                            } else {
+                              ref
+                                  .read(scaffoldMessengerServiceProvider)
+                                  .showExceptionSnackBar('必須項目を入力してください');
+                            }
                           },
                           text: '追加',
                         ),
@@ -124,13 +148,12 @@ class AddMarkerPhotoPage extends HookConsumerWidget {
                           final takedImage =
                               await AddMarkerInformationPageRoute()
                                   .push<XFile?>(context);
-                          if (takedImage == null) {
-                            return;
+                          if (takedImage != null) {
+                            final imageFile = File(takedImage.path);
+                            imageUrl.value = await ref
+                                .read(uploadImageProvider)
+                                .call(imageFile);
                           }
-                          final imageFile = File(takedImage.path);
-                          imageUrl.value = await ref
-                              .read(uploadImageProvider)
-                              .call(imageFile);
                         },
                         child: ClipRRect(
                           borderRadius: const BorderRadius.all(
@@ -178,12 +201,12 @@ class AddMarkerPhotoPage extends HookConsumerWidget {
                       onPressed: () async {
                         final takedImage = await AddMarkerInformationPageRoute()
                             .push<XFile?>(context);
-                        if (takedImage == null) {
-                          return;
+                        if (takedImage != null) {
+                          final imageFile = File(takedImage.path);
+                          imageUrl.value = await ref
+                              .read(uploadImageProvider)
+                              .call(imageFile);
                         }
-                        final imageFile = File(takedImage.path);
-                        imageUrl.value =
-                            await ref.read(uploadImageProvider).call(imageFile);
                       },
                       text: '再撮影',
                       isWhite: false,
