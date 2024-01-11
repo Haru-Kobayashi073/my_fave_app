@@ -118,4 +118,36 @@ class InputDecorationStyles {
       ),
     );
   }
+
+  static InputDecoration square(String hintText) {
+    return InputDecoration(
+      fillColor: AppColor.black15,
+      filled: true,
+      hintText: hintText,
+      hintStyle: TextStyle(
+        fontSize: 16,
+        color: AppColor.grey88,
+      ),
+      contentPadding: const EdgeInsets.all(16),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderSide: BorderSide.none,
+      ),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.red,
+        ),
+      ),
+      disabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide.none,
+      ),
+      errorBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.red,
+        ),
+      ),
+    );
+  }
 }
