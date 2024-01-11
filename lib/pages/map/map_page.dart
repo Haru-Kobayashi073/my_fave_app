@@ -114,7 +114,9 @@ class MapPage extends HookConsumerWidget {
                           height: 56,
                           child: CommonButton(
                             onPressed: () {
-                              context.push(AddMarkerPhotoPageRoute().location);
+                              context.push(
+                                AddMarkerInformationPageRoute().location,
+                              );
                             },
                             text: '聖地を追加',
                           ),

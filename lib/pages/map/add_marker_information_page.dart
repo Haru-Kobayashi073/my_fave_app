@@ -13,8 +13,8 @@ import 'package:my_fave_app/pages/map/map_page.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
-class AddMarkerPhotoPage extends HookConsumerWidget {
-  const AddMarkerPhotoPage({super.key});
+class AddMarkerInformationPage extends HookConsumerWidget {
+  const AddMarkerInformationPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final imageUrl = useState<String?>(null);
