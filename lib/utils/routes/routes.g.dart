@@ -31,6 +31,8 @@ List<RouteBase> get $appRoutes => [
       $pastActivityPageRoute,
       $activityDetailPageRoute,
       $addFavoritePhotoPageRoute,
+      $addMarkerInformationPageRoute,
+      $takePhotoPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -824,6 +826,53 @@ extension $AddFavoritePhotoPageRouteExtension on AddFavoritePhotoPageRoute {
         queryParams: {
           'id': id,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addMarkerInformationPageRoute => GoRouteData.$route(
+      path: '/addMarkerInformation',
+      factory: $AddMarkerInformationPageRouteExtension._fromState,
+    );
+
+extension $AddMarkerInformationPageRouteExtension
+    on AddMarkerInformationPageRoute {
+  static AddMarkerInformationPageRoute _fromState(GoRouterState state) =>
+      AddMarkerInformationPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/addMarkerInformation',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $takePhotoPageRoute => GoRouteData.$route(
+      path: '/takePhoto',
+      factory: $TakePhotoPageRouteExtension._fromState,
+    );
+
+extension $TakePhotoPageRouteExtension on TakePhotoPageRoute {
+  static TakePhotoPageRoute _fromState(GoRouterState state) =>
+      TakePhotoPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/takePhoto',
       );
 
   void go(BuildContext context) => context.go(location);

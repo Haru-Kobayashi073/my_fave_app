@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:my_fave_app/utils/date_time_converter.dart';
 
 part 'marker_data.freezed.dart';
 part 'marker_data.g.dart';
@@ -7,7 +8,7 @@ part 'marker_data.g.dart';
 abstract class MarkerData with _$MarkerData {
   const factory MarkerData({
     required String markerId,
-    required dynamic createdAt,
+    @DateTimeConverter() DateTime? createdAt,
     required String title,
     required String location,
     required String imageUrl,

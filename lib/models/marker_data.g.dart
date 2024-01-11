@@ -9,7 +9,8 @@ part of 'marker_data.dart';
 _$MarkerDataImpl _$$MarkerDataImplFromJson(Map<String, dynamic> json) =>
     _$MarkerDataImpl(
       markerId: json['markerId'] as String,
-      createdAt: json['createdAt'],
+      createdAt: _$JsonConverterFromJson<String, DateTime>(
+          json['createdAt'], const DateTimeConverter().fromJson),
       title: json['title'] as String,
       location: json['location'] as String,
       imageUrl: json['imageUrl'] as String,
@@ -21,7 +22,8 @@ _$MarkerDataImpl _$$MarkerDataImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$MarkerDataImplToJson(_$MarkerDataImpl instance) =>
     <String, dynamic>{
       'markerId': instance.markerId,
-      'createdAt': instance.createdAt,
+      'createdAt': _$JsonConverterToJson<String, DateTime>(
+          instance.createdAt, const DateTimeConverter().toJson),
       'title': instance.title,
       'location': instance.location,
       'imageUrl': instance.imageUrl,
@@ -29,3 +31,15 @@ Map<String, dynamic> _$$MarkerDataImplToJson(_$MarkerDataImpl instance) =>
       'longitude': instance.longitude,
       'memo': instance.memo,
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

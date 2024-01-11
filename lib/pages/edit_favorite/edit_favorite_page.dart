@@ -1,5 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -75,8 +77,9 @@ class EditFavoritePage extends HookConsumerWidget {
                         await ref.read(pickImageProvider).call();
                     final croppedImage =
                         await ref.read(cropImageProvider).call(pickedImage);
+                    final imageFile = File(croppedImage?.path ?? '');
                     imageUrl.value =
-                        await ref.read(uploadImageProvider).call(croppedImage);
+                        await ref.read(uploadImageProvider).call(imageFile);
                   },
                   imageUrl: imageUrl.value,
                 ),

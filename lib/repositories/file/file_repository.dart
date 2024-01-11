@@ -10,5 +10,5 @@ abstract class FileRepository {
 
   Future<CroppedFile?> cropImage(File? imageFile);
 
-  Future<String?> uploadImage(CroppedFile? croppedFile);
+  Future<String?> uploadImage(File? file);
 }
