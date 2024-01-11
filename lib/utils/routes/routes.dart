@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_fave_app/models/activity_data.dart';
 import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
@@ -26,10 +27,11 @@ import 'package:my_fave_app/pages/calendar/schedule_detail_page.dart';
 import 'package:my_fave_app/pages/edit_favorite/edit_favorite_page.dart';
 import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
 import 'package:my_fave_app/pages/home/home_page.dart';
+import 'package:my_fave_app/pages/map/add_marker_photo_page.dart';
 import 'package:my_fave_app/pages/map/map_page.dart';
+import 'package:my_fave_app/pages/map/take_photo_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_page.dart';
-
 import 'package:my_fave_app/pages/profile/profile_page.dart';
 import 'package:my_fave_app/pages/register_user_information/complete_registration_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_birthday_page.dart';
@@ -38,6 +40,7 @@ import 'package:my_fave_app/pages/register_user_information/register_user_name_p
 import 'package:my_fave_app/start_up_page.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 // ...略
 
 part 'routes.g.dart';
@@ -76,6 +79,8 @@ class AppRoutes {
   static const pastActivity = '/pastActivity';
   static const activityDetail = '/activityDetail';
   static const addFavoritePhoto = '/addFavoritePhoto';
+  static const addMarkerPhoto = '/addMarkerPhoto';
+  static const addMarkerInfformation = '/addMarkerInfformation';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -581,5 +586,33 @@ class AddFavoritePhotoPageRoute extends GoRouteData {
         child: AddFavoritePhotoPage(
           id: id,
         ),
+      );
+}
+
+@TypedGoRoute<AddMarkerPhotoPageRoute>(
+  path: AppRoutes.addMarkerPhoto,
+)
+class AddMarkerPhotoPageRoute extends GoRouteData {
+  AddMarkerPhotoPageRoute();
+
+  @override
+  MaterialPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      const MaterialPage<void>(
+        fullscreenDialog: true,
+        child: AddMarkerPhotoPage(),
+      );
+}
+
+@TypedGoRoute<AddMarkerInformationPageRoute>(
+  path: AppRoutes.addMarkerInfformation,
+)
+class AddMarkerInformationPageRoute extends GoRouteData {
+  AddMarkerInformationPageRoute();
+
+  @override
+  MaterialPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      const MaterialPage<XFile?>(
+        fullscreenDialog: true,
+        child: TakePhotoPage(),
       );
 }

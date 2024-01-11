@@ -31,6 +31,8 @@ List<RouteBase> get $appRoutes => [
       $pastActivityPageRoute,
       $activityDetailPageRoute,
       $addFavoritePhotoPageRoute,
+      $addMarkerPhotoPageRoute,
+      $addMarkerInformationPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -824,6 +826,53 @@ extension $AddFavoritePhotoPageRouteExtension on AddFavoritePhotoPageRoute {
         queryParams: {
           'id': id,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addMarkerPhotoPageRoute => GoRouteData.$route(
+      path: '/addMarkerPhoto',
+      factory: $AddMarkerPhotoPageRouteExtension._fromState,
+    );
+
+extension $AddMarkerPhotoPageRouteExtension on AddMarkerPhotoPageRoute {
+  static AddMarkerPhotoPageRoute _fromState(GoRouterState state) =>
+      AddMarkerPhotoPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/addMarkerPhoto',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addMarkerInformationPageRoute => GoRouteData.$route(
+      path: '/addMarkerInfformation',
+      factory: $AddMarkerInformationPageRouteExtension._fromState,
+    );
+
+extension $AddMarkerInformationPageRouteExtension
+    on AddMarkerInformationPageRoute {
+  static AddMarkerInformationPageRoute _fromState(GoRouterState state) =>
+      AddMarkerInformationPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/addMarkerInfformation',
       );
 
   void go(BuildContext context) => context.go(location);
