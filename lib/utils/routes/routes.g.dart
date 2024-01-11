@@ -31,8 +31,8 @@ List<RouteBase> get $appRoutes => [
       $pastActivityPageRoute,
       $activityDetailPageRoute,
       $addFavoritePhotoPageRoute,
-      $addMarkerPhotoPageRoute,
       $addMarkerInformationPageRoute,
+      $takePhotoPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -838,17 +838,18 @@ extension $AddFavoritePhotoPageRouteExtension on AddFavoritePhotoPageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $addMarkerPhotoPageRoute => GoRouteData.$route(
-      path: '/addMarkerPhoto',
-      factory: $AddMarkerPhotoPageRouteExtension._fromState,
+RouteBase get $addMarkerInformationPageRoute => GoRouteData.$route(
+      path: '/addMarkerInformation',
+      factory: $AddMarkerInformationPageRouteExtension._fromState,
     );
 
-extension $AddMarkerPhotoPageRouteExtension on AddMarkerPhotoPageRoute {
-  static AddMarkerPhotoPageRoute _fromState(GoRouterState state) =>
-      AddMarkerPhotoPageRoute();
+extension $AddMarkerInformationPageRouteExtension
+    on AddMarkerInformationPageRoute {
+  static AddMarkerInformationPageRoute _fromState(GoRouterState state) =>
+      AddMarkerInformationPageRoute();
 
   String get location => GoRouteData.$location(
-        '/addMarkerPhoto',
+        '/addMarkerInformation',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -861,18 +862,17 @@ extension $AddMarkerPhotoPageRouteExtension on AddMarkerPhotoPageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $addMarkerInformationPageRoute => GoRouteData.$route(
-      path: '/addMarkerInfformation',
-      factory: $AddMarkerInformationPageRouteExtension._fromState,
+RouteBase get $takePhotoPageRoute => GoRouteData.$route(
+      path: '/takePhoto',
+      factory: $TakePhotoPageRouteExtension._fromState,
     );
 
-extension $AddMarkerInformationPageRouteExtension
-    on AddMarkerInformationPageRoute {
-  static AddMarkerInformationPageRoute _fromState(GoRouterState state) =>
-      AddMarkerInformationPageRoute();
+extension $TakePhotoPageRouteExtension on TakePhotoPageRoute {
+  static TakePhotoPageRoute _fromState(GoRouterState state) =>
+      TakePhotoPageRoute();
 
   String get location => GoRouteData.$location(
-        '/addMarkerInfformation',
+        '/takePhoto',
       );
 
   void go(BuildContext context) => context.go(location);

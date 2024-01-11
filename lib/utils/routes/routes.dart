@@ -27,7 +27,7 @@ import 'package:my_fave_app/pages/calendar/schedule_detail_page.dart';
 import 'package:my_fave_app/pages/edit_favorite/edit_favorite_page.dart';
 import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
 import 'package:my_fave_app/pages/home/home_page.dart';
-import 'package:my_fave_app/pages/map/add_marker_photo_page.dart';
+import 'package:my_fave_app/pages/map/add_marker_information_page.dart';
 import 'package:my_fave_app/pages/map/map_page.dart';
 import 'package:my_fave_app/pages/map/take_photo_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
@@ -79,8 +79,8 @@ class AppRoutes {
   static const pastActivity = '/pastActivity';
   static const activityDetail = '/activityDetail';
   static const addFavoritePhoto = '/addFavoritePhoto';
-  static const addMarkerPhoto = '/addMarkerPhoto';
-  static const addMarkerInfformation = '/addMarkerInfformation';
+  static const addMarkerInformation = '/addMarkerInformation';
+  static const takePhoto = '/takePhoto';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -589,25 +589,25 @@ class AddFavoritePhotoPageRoute extends GoRouteData {
       );
 }
 
-@TypedGoRoute<AddMarkerPhotoPageRoute>(
-  path: AppRoutes.addMarkerPhoto,
+@TypedGoRoute<AddMarkerInformationPageRoute>(
+  path: AppRoutes.addMarkerInformation,
 )
-class AddMarkerPhotoPageRoute extends GoRouteData {
-  AddMarkerPhotoPageRoute();
+class AddMarkerInformationPageRoute extends GoRouteData {
+  AddMarkerInformationPageRoute();
 
   @override
   MaterialPage<void> buildPage(BuildContext context, GoRouterState state) =>
       const MaterialPage<void>(
         fullscreenDialog: true,
-        child: AddMarkerPhotoPage(),
+        child: AddMarkerInformationPage(),
       );
 }
 
-@TypedGoRoute<AddMarkerInformationPageRoute>(
-  path: AppRoutes.addMarkerInfformation,
+@TypedGoRoute<TakePhotoPageRoute>(
+  path: AppRoutes.takePhoto,
 )
-class AddMarkerInformationPageRoute extends GoRouteData {
-  AddMarkerInformationPageRoute();
+class TakePhotoPageRoute extends GoRouteData {
+  TakePhotoPageRoute();
 
   @override
   MaterialPage<void> buildPage(BuildContext context, GoRouterState state) =>
