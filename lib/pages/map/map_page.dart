@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/utils/utils.dart';
@@ -59,7 +60,9 @@ class MapPage extends HookConsumerWidget {
                           width: 120,
                           height: 56,
                           child: CommonButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.push(AddMarkerPhotoPageRoute().location);
+                            },
                             text: '聖地を追加',
                           ),
                         ),
