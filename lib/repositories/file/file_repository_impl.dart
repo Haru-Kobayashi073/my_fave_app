@@ -54,13 +54,12 @@ class FileRepositoryImpl implements FileRepository {
   }
 
   @override
-  Future<String?> uploadImage(CroppedFile? croppedFile) async {
-    if (croppedFile != null) {
+  Future<String?> uploadImage(File? file) async {
+    if (file != null) {
       final uid = _auth.currentUser!.uid;
       final fileName = returnJpgFileName();
-      final imageFile = File(croppedFile.path);
       final ref = _storage.ref().child('users').child(uid).child(fileName);
-      await ref.putFile(imageFile);
+      await ref.putFile(file);
       final downloadUrl = await ref.getDownloadURL();
       return downloadUrl;
     }
