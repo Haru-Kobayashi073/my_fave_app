@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -78,8 +80,9 @@ class AddActivityPage extends HookConsumerWidget {
                 final pickedImage = await ref.read(pickImageProvider).call();
                 final croppedImage =
                     await ref.read(cropImageProvider).call(pickedImage);
+                final imageFile = File(croppedImage?.path ?? '');
                 imageUrl.value =
-                    await ref.read(uploadImageProvider).call(croppedImage);
+                    await ref.read(uploadImageProvider).call(imageFile);
               },
               imageUrl: imageUrl.value,
             ),
