@@ -75,6 +75,8 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - geolocator_apple (1.2.0):
+    - Flutter
   - google_maps_flutter_ios (0.0.1):
     - Flutter
     - GoogleMaps (< 9.0)
@@ -144,6 +146,7 @@ DEPENDENCIES:
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `10.18.0`)
   - Flutter (from `Flutter`)
   - flutter_config (from `.symlinks/plugins/flutter_config/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
@@ -196,6 +199,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_config:
     :path: ".symlinks/plugins/flutter_config/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
   google_maps_flutter_ios:
     :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
   google_sign_in_ios:
@@ -236,6 +241,7 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_config: f48f0d47a284f1791aacce2687eabb3309ba7a41
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  geolocator_apple: 9157311f654584b9bb72686c55fc02a97b73f461
   google_maps_flutter_ios: 590249c67f34f422122c232f2a626192adbc78ee
   google_sign_in_ios: ede92ec558c3a73ec07cb180f31820152fb8ca89
   GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
