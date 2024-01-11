@@ -21,7 +21,8 @@ MarkerData _$MarkerDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MarkerData {
   String get markerId => throw _privateConstructorUsedError;
-  dynamic get createdAt => throw _privateConstructorUsedError;
+  @DateTimeConverter()
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
@@ -43,7 +44,7 @@ abstract class $MarkerDataCopyWith<$Res> {
   @useResult
   $Res call(
       {String markerId,
-      dynamic createdAt,
+      @DateTimeConverter() DateTime? createdAt,
       String title,
       String location,
       String imageUrl,
@@ -82,7 +83,7 @@ class _$MarkerDataCopyWithImpl<$Res, $Val extends MarkerData>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as DateTime?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -121,7 +122,7 @@ abstract class _$$MarkerDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {String markerId,
-      dynamic createdAt,
+      @DateTimeConverter() DateTime? createdAt,
       String title,
       String location,
       String imageUrl,
@@ -158,7 +159,7 @@ class __$$MarkerDataImplCopyWithImpl<$Res>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as DateTime?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -192,7 +193,7 @@ class __$$MarkerDataImplCopyWithImpl<$Res>
 class _$MarkerDataImpl implements _MarkerData {
   const _$MarkerDataImpl(
       {required this.markerId,
-      required this.createdAt,
+      @DateTimeConverter() this.createdAt,
       required this.title,
       required this.location,
       required this.imageUrl,
@@ -206,7 +207,8 @@ class _$MarkerDataImpl implements _MarkerData {
   @override
   final String markerId;
   @override
-  final dynamic createdAt;
+  @DateTimeConverter()
+  final DateTime? createdAt;
   @override
   final String title;
   @override
@@ -232,7 +234,8 @@ class _$MarkerDataImpl implements _MarkerData {
             other is _$MarkerDataImpl &&
             (identical(other.markerId, markerId) ||
                 other.markerId == markerId) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.location, location) ||
                 other.location == location) &&
@@ -247,16 +250,8 @@ class _$MarkerDataImpl implements _MarkerData {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      markerId,
-      const DeepCollectionEquality().hash(createdAt),
-      title,
-      location,
-      imageUrl,
-      latitude,
-      longitude,
-      memo);
+  int get hashCode => Object.hash(runtimeType, markerId, createdAt, title,
+      location, imageUrl, latitude, longitude, memo);
 
   @JsonKey(ignore: true)
   @override
@@ -275,7 +270,7 @@ class _$MarkerDataImpl implements _MarkerData {
 abstract class _MarkerData implements MarkerData {
   const factory _MarkerData(
       {required final String markerId,
-      required final dynamic createdAt,
+      @DateTimeConverter() final DateTime? createdAt,
       required final String title,
       required final String location,
       required final String imageUrl,
@@ -289,7 +284,8 @@ abstract class _MarkerData implements MarkerData {
   @override
   String get markerId;
   @override
-  dynamic get createdAt;
+  @DateTimeConverter()
+  DateTime? get createdAt;
   @override
   String get title;
   @override
