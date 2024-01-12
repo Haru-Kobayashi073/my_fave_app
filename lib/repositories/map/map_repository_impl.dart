@@ -41,4 +41,15 @@ class MapRepositoryImpl implements MapRepository {
               .toJson(),
         );
   }
+
+  @override
+  Stream<QuerySnapshot> fetchMarkers() {
+    final uid = currentUser!.uid;
+    final snapshot = _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('markers')
+        .snapshots();
+    return snapshot;
+  }
 }
