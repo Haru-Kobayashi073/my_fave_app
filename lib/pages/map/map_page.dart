@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/google_map_marker/google_map_marker.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
@@ -72,6 +74,8 @@ class MapPage extends HookConsumerWidget {
       [],
     );
 
+    final googleMapMarkerNotifier = ref.watch(googleMapMarkerProvider.notifier);
+
     return Scaffold(
       appBar: CommonAppBar(
         icon: IconButton(
@@ -132,18 +136,35 @@ class MapPage extends HookConsumerWidget {
           Expanded(
             child: ref.watch(currentSpotProvider) == null
                 ? const Loading()
-                : GoogleMap(
-                    onMapCreated: onMapCreated,
-                    myLocationButtonEnabled: false,
-                    myLocationEnabled: true,
-                    initialCameraPosition: CameraPosition(
-                      target: watch(currentSpotProvider) ??
-                          const LatLng(
-                            35.658034,
-                            139.701636,
-                          ),
-                      zoom: 14,
-                    ),
+                : StreamBuilder<QuerySnapshot>(
+                    stream: googleMapMarkerNotifier.fetchMarkers(),
+                    builder: (context, markers) {
+                      if (markers.hasError) {
+                        return const Center(
+                          child: Text('エラーが発生しました'),
+                        );
+                      }
+                      if (markers.connectionState == ConnectionState.waiting) {
+                        return const Loading();
+                      }
+
+                      final markerDataList =
+                          googleMapMarkerNotifier.generateMarkerList(markers);
+                      return GoogleMap(
+                        onMapCreated: onMapCreated,
+                        myLocationButtonEnabled: false,
+                        myLocationEnabled: true,
+                        initialCameraPosition: CameraPosition(
+                          target: watch(currentSpotProvider) ??
+                              const LatLng(
+                                35.658034,
+                                139.701636,
+                              ),
+                          zoom: 14,
+                        ),
+                        markers: markerDataList.toSet(),
+                      );
+                    },
                   ),
           ),
         ],
