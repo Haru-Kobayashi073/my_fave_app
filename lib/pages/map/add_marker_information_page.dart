@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_fave_app/features/file/upload_image.dart';
-import 'package:my_fave_app/features/map/map.dart';
+import 'package:my_fave_app/features/google_map_marker/google_map_marker.dart';
 import 'package:my_fave_app/models/marker_data.dart';
 import 'package:my_fave_app/pages/map/map_page.dart';
 import 'package:my_fave_app/utils/utils.dart';
@@ -15,6 +15,7 @@ import 'package:my_fave_app/widgets/widget.dart';
 
 class AddMarkerInformationPage extends HookConsumerWidget {
   const AddMarkerInformationPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final imageUrl = useState<String?>(null);
@@ -118,7 +119,7 @@ class AddMarkerInformationPage extends HookConsumerWidget {
                             if (titleController.text.isNotEmpty &&
                                 locationController.text.isNotEmpty &&
                                 currentSpot != null) {
-                              ref.read(mapProvider.notifier).create(
+                              ref.read(googleMapMarkerProvider.notifier).create(
                                 MarkerData(
                                   markerId: '',
                                   title: titleController.text,
@@ -146,8 +147,7 @@ class AddMarkerInformationPage extends HookConsumerWidget {
                       child: GestureDetector(
                         onTap: () async {
                           final takedImage =
-                              await AddMarkerInformationPageRoute()
-                                  .push<XFile?>(context);
+                              await TakePhotoPageRoute().push<XFile?>(context);
                           if (takedImage != null) {
                             final imageFile = File(takedImage.path);
                             imageUrl.value = await ref
@@ -199,8 +199,8 @@ class AddMarkerInformationPage extends HookConsumerWidget {
                     ),
                     CommonButton(
                       onPressed: () async {
-                        final takedImage = await AddMarkerInformationPageRoute()
-                            .push<XFile?>(context);
+                        final takedImage =
+                            await TakePhotoPageRoute().push<XFile?>(context);
                         if (takedImage != null) {
                           final imageFile = File(takedImage.path);
                           imageUrl.value = await ref
