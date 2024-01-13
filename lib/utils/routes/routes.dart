@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_fave_app/models/activity_data.dart';
 import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
+import 'package:my_fave_app/models/marker_data.dart';
 import 'package:my_fave_app/pages/activity/activity_detail_page.dart';
 import 'package:my_fave_app/pages/activity/activity_page.dart';
 import 'package:my_fave_app/pages/activity/add_activity_page.dart';
@@ -29,6 +30,7 @@ import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
 import 'package:my_fave_app/pages/home/home_page.dart';
 import 'package:my_fave_app/pages/map/add_marker_information_page.dart';
 import 'package:my_fave_app/pages/map/map_page.dart';
+import 'package:my_fave_app/pages/map/marker_detail_page.dart';
 import 'package:my_fave_app/pages/map/take_photo_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_page.dart';
@@ -81,6 +83,7 @@ class AppRoutes {
   static const addFavoritePhoto = '/addFavoritePhoto';
   static const addMarkerInformation = '/addMarkerInformation';
   static const takePhoto = '/takePhoto';
+  static const markerDetail = '/markerDetail';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -614,5 +617,22 @@ class TakePhotoPageRoute extends GoRouteData {
       const MaterialPage<XFile?>(
         fullscreenDialog: true,
         child: TakePhotoPage(),
+      );
+}
+
+@TypedGoRoute<MarkerDetailPageRoute>(
+  path: AppRoutes.markerDetail,
+)
+class MarkerDetailPageRoute extends GoRouteData {
+  MarkerDetailPageRoute({required this.$extra});
+  final MarkerData $extra;
+
+  @override
+  MaterialPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      MaterialPage<void>(
+        fullscreenDialog: true,
+        child: MarkerDetailPage(
+          marker: $extra,
+        ),
       );
 }
