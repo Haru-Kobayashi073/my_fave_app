@@ -9,6 +9,17 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'google_map_marker.g.dart';
 
+enum MarkerOption {
+  edit(title: '編集'),
+  delete(title: '削除');
+
+  const MarkerOption({
+    required this.title,
+  });
+
+  final String title;
+}
+
 @riverpod
 class GoogleMapMarker extends _$GoogleMapMarker {
   Stream<QuerySnapshot> fetchMarkers() async* {
