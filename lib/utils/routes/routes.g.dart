@@ -33,6 +33,7 @@ List<RouteBase> get $appRoutes => [
       $addFavoritePhotoPageRoute,
       $addMarkerInformationPageRoute,
       $takePhotoPageRoute,
+      $markerDetailPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -883,6 +884,33 @@ extension $TakePhotoPageRouteExtension on TakePhotoPageRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $markerDetailPageRoute => GoRouteData.$route(
+      path: '/markerDetail',
+      factory: $MarkerDetailPageRouteExtension._fromState,
+    );
+
+extension $MarkerDetailPageRouteExtension on MarkerDetailPageRoute {
+  static MarkerDetailPageRoute _fromState(GoRouterState state) =>
+      MarkerDetailPageRoute(
+        $extra: state.extra as MarkerData,
+      );
+
+  String get location => GoRouteData.$location(
+        '/markerDetail',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 // **************************************************************************

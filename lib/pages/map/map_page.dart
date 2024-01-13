@@ -149,7 +149,10 @@ class MapPage extends HookConsumerWidget {
                       }
 
                       final markerDataList =
-                          googleMapMarkerNotifier.generateMarkerList(markers);
+                          googleMapMarkerNotifier.generateMarkerList(
+                        markers,
+                        context,
+                      );
                       return GoogleMap(
                         onMapCreated: onMapCreated,
                         myLocationButtonEnabled: false,

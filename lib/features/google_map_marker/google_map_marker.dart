@@ -9,6 +9,17 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'google_map_marker.g.dart';
 
+enum MarkerOption {
+  edit(title: '編集'),
+  delete(title: '削除');
+
+  const MarkerOption({
+    required this.title,
+  });
+
+  final String title;
+}
+
 @riverpod
 class GoogleMapMarker extends _$GoogleMapMarker {
   Stream<QuerySnapshot> fetchMarkers() async* {
@@ -37,6 +48,7 @@ class GoogleMapMarker extends _$GoogleMapMarker {
 
   List<Marker> generateMarkerList(
     AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+    BuildContext context,
   ) {
     final markerDataList = snapshot.data!.docs
         .map(
@@ -54,6 +66,10 @@ class GoogleMapMarker extends _$GoogleMapMarker {
             infoWindow: InfoWindow(
               title: markerData.title,
             ),
+            consumeTapEvents: true,
+            onTap: () {
+              MarkerDetailPageRoute($extra: markerData).push<void>(context);
+            },
           ),
         )
         .toList();
