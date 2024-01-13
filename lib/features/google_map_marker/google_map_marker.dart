@@ -37,6 +37,7 @@ class GoogleMapMarker extends _$GoogleMapMarker {
 
   List<Marker> generateMarkerList(
     AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+    BuildContext context,
   ) {
     final markerDataList = snapshot.data!.docs
         .map(
@@ -54,6 +55,10 @@ class GoogleMapMarker extends _$GoogleMapMarker {
             infoWindow: InfoWindow(
               title: markerData.title,
             ),
+            consumeTapEvents: true,
+            onTap: () {
+              MarkerDetailPageRoute($extra: markerData).push<void>(context);
+            },
           ),
         )
         .toList();
