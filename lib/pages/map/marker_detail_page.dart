@@ -6,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/models/marker_data.dart';
+import 'package:my_fave_app/pages/map/components/map_components.dart';
+
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
@@ -59,11 +61,17 @@ class MarkerDetailPage extends HookConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 8),
-                        Text(
-                          '${marker.createdAt!.year}/${marker.createdAt!.month}/${marker.createdAt!.day} ${'${'日月火水木金土'[marker.createdAt!.weekday]}曜日'}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${marker.createdAt!.year}/${marker.createdAt!.month}/${marker.createdAt!.day} ${'${'日月火水木金土'[marker.createdAt!.weekday]}曜日'}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            const MarkerOptionPopUp(),
+                          ],
                         ),
                         const SizedBox(height: 8),
                         Text(
