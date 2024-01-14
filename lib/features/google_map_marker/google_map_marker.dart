@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_fave_app/models/marker_data.dart';
+import 'package:my_fave_app/pages/map/map_page.dart';
 import 'package:my_fave_app/repositories/map/map_repository_impl.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -46,7 +47,7 @@ class GoogleMapMarker extends _$GoogleMapMarker {
     return null;
   }
 
-  List<Marker> generateMarkerList(
+  (List<Marker>, List<MarkerData>) generateMarkerList(
     AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
     BuildContext context,
   ) {
@@ -68,12 +69,13 @@ class GoogleMapMarker extends _$GoogleMapMarker {
             ),
             consumeTapEvents: true,
             onTap: () {
-              MarkerDetailPageRoute($extra: markerData).push<void>(context);
+              ref.read(isOpenedTouchedMarkerModalProvider.notifier).state =
+                  true;
             },
           ),
         )
         .toList();
-    return markerList;
+    return (markerList, markerDataList);
   }
 
   Future<void> create(
