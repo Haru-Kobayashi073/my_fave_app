@@ -21,11 +21,24 @@ class $AssetsIconsGen {
   /// File path: assets/icons/my_fave_logo.svg
   String get myFaveLogo => 'assets/icons/my_fave_logo.svg';
 
+  /// File path: assets/icons/touched_location.svg
+  String get touchedLocation => 'assets/icons/touched_location.svg';
+
+  /// File path: assets/icons/untouched_location.svg
+  String get untouchedLocation => 'assets/icons/untouched_location.svg';
+
   /// File path: assets/icons/x_twitter_icon.svg
   String get xTwitterIcon => 'assets/icons/x_twitter_icon.svg';
 
   /// List of all assets
-  List<String> get values => [appleIcon, googleIcon, myFaveLogo, xTwitterIcon];
+  List<String> get values => [
+        appleIcon,
+        googleIcon,
+        myFaveLogo,
+        touchedLocation,
+        untouchedLocation,
+        xTwitterIcon
+      ];
 }
 
 class $AssetsImagesGen {
