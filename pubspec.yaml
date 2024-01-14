@@ -43,6 +43,7 @@ dependencies:
   open_file: ^3.3.2
   path_provider: ^2.1.2
   riverpod_annotation: ^2.3.3
+  sliding_up_panel: ^2.0.0+1
   table_calendar: ^3.0.9
   uuid: ^4.2.2
 
