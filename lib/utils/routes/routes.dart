@@ -624,7 +624,7 @@ class TakePhotoPageRoute extends GoRouteData {
   path: AppRoutes.markerDetail,
 )
 class MarkerDetailPageRoute extends GoRouteData {
-  MarkerDetailPageRoute({required this.$extra});
+  const MarkerDetailPageRoute({required this.$extra});
   final MarkerData $extra;
 
   @override
