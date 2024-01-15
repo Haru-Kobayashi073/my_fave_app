@@ -52,4 +52,20 @@ class ActivityRepositoryImpl implements ActivityRepository {
         .orderBy('createdAt', descending: true)
         .snapshots();
   }
+
+  @override
+  Future<void> favoriteActivity({
+    required String activityId,
+    required bool isLiked,
+  }) async {
+    final uid = _auth.currentUser!.uid;
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('activities')
+        .doc(activityId)
+        .update({
+      'isLiked': isLiked,
+    });
+  }
 }
