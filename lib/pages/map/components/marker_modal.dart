@@ -39,49 +39,57 @@ class MarkerModal extends HookConsumerWidget {
               ),
             ),
             const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${markerData.createdAt!.year}/${markerData.createdAt!.month}/${markerData.createdAt!.day} ${'${'日月火水木金土'[markerData.createdAt!.weekday]}曜日'}',
-                  style: const TextStyle(
-                    fontSize: 16,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${markerData.createdAt!.year}/${markerData.createdAt!.month}/${markerData.createdAt!.day} ${'${'日月火水木金土'[markerData.createdAt!.weekday]}曜日'}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  markerData.title,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 8),
+                  Text(
+                    markerData.title,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.location_on,
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: AppColor.white,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            markerData.location,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    markerData.memo ?? '',
+                    style: TextStyle(
+                      fontSize: 14,
                       color: AppColor.white,
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      markerData.location,
-                      style: const TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  markerData.memo ?? '',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColor.white,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
