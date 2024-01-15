@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/google_map_marker/google_map_marker.dart';
 import 'package:my_fave_app/models/marker_data.dart';
 import 'package:my_fave_app/pages/map/components/map_components.dart';
+import 'package:my_fave_app/pages/map/map_page.dart';
 
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -17,6 +19,8 @@ class MarkerDetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final googleMapMarkerNotifier = ref.read(googleMapMarkerProvider.notifier);
+
     return Scaffold(
       appBar: CommonAppBar(
         icon: IconButton(
@@ -70,7 +74,30 @@ class MarkerDetailPage extends HookConsumerWidget {
                                 fontSize: 16,
                               ),
                             ),
-                            const MarkerOptionPopUp(),
+                            MarkerOptionPopUp(
+                              onPressedEdit: () {
+                                EditMarkerPageRoute($extra: marker)
+                                    .push<void>(context);
+                              },
+                              onPressedDelete: () async {
+                                if (ref.read(
+                                  isOpenedTouchedMarkerModalProvider,
+                                )) {
+                                  ref
+                                      .read(
+                                        isOpenedTouchedMarkerModalProvider
+                                            .notifier,
+                                      )
+                                      .state = false;
+                                }
+                                await googleMapMarkerNotifier.delete(
+                                  marker,
+                                  () {
+                                    context.pop();
+                                  },
+                                );
+                              },
+                            ),
                           ],
                         ),
                         const SizedBox(height: 8),

@@ -29,6 +29,7 @@ import 'package:my_fave_app/pages/edit_favorite/edit_favorite_page.dart';
 import 'package:my_fave_app/pages/favorite_detail/favorite_detail_page.dart';
 import 'package:my_fave_app/pages/home/home_page.dart';
 import 'package:my_fave_app/pages/map/add_marker_information_page.dart';
+import 'package:my_fave_app/pages/map/edit_marker_page.dart';
 import 'package:my_fave_app/pages/map/map_page.dart';
 import 'package:my_fave_app/pages/map/marker_detail_page.dart';
 import 'package:my_fave_app/pages/map/take_photo_page.dart';
@@ -84,6 +85,7 @@ class AppRoutes {
   static const addMarkerInformation = '/addMarkerInformation';
   static const takePhoto = '/takePhoto';
   static const markerDetail = '/markerDetail';
+  static const editMarker = '/editMarker';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -632,6 +634,23 @@ class MarkerDetailPageRoute extends GoRouteData {
       MaterialPage<void>(
         fullscreenDialog: true,
         child: MarkerDetailPage(
+          marker: $extra,
+        ),
+      );
+}
+
+@TypedGoRoute<EditMarkerPageRoute>(
+  path: AppRoutes.editMarker,
+)
+class EditMarkerPageRoute extends GoRouteData {
+  EditMarkerPageRoute({required this.$extra});
+  final MarkerData $extra;
+
+  @override
+  MaterialPage<void> buildPage(BuildContext context, GoRouterState state) =>
+      MaterialPage<void>(
+        fullscreenDialog: true,
+        child: EditMarkerPage(
           marker: $extra,
         ),
       );

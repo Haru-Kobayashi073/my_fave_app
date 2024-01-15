@@ -8,4 +8,8 @@ abstract class MapRepository {
   Future<void> createMarker(MarkerData marker);
 
   Stream<QuerySnapshot> fetchMarkers();
+
+  Future<void> editMarker(MarkerData marker);
+
+  Future<void> deleteMarker(MarkerData marker);
 }

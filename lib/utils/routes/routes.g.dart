@@ -34,6 +34,7 @@ List<RouteBase> get $appRoutes => [
       $addMarkerInformationPageRoute,
       $takePhotoPageRoute,
       $markerDetailPageRoute,
+      $editMarkerPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -899,6 +900,33 @@ extension $MarkerDetailPageRouteExtension on MarkerDetailPageRoute {
 
   String get location => GoRouteData.$location(
         '/markerDetail',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+RouteBase get $editMarkerPageRoute => GoRouteData.$route(
+      path: '/editMarker',
+      factory: $EditMarkerPageRouteExtension._fromState,
+    );
+
+extension $EditMarkerPageRouteExtension on EditMarkerPageRoute {
+  static EditMarkerPageRoute _fromState(GoRouterState state) =>
+      EditMarkerPageRoute(
+        $extra: state.extra as MarkerData,
+      );
+
+  String get location => GoRouteData.$location(
+        '/editMarker',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);

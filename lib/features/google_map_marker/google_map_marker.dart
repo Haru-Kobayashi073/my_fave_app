@@ -23,6 +23,10 @@ enum MarkerOption {
 
 @riverpod
 class GoogleMapMarker extends _$GoogleMapMarker {
+  AppException get exception => const AppException(
+        message: 'Maybe your network is disconnected. Please check yours.',
+      );
+
   Stream<QuerySnapshot> fetchMarkers() async* {
     final isNetWorkCheck = await isNetworkConnected();
     try {
@@ -30,9 +34,6 @@ class GoogleMapMarker extends _$GoogleMapMarker {
       yield* response;
     } on Exception catch (e) {
       if (!isNetWorkCheck) {
-        const exception = AppException(
-          message: 'Maybe your network is disconnected. Please check yours.',
-        );
         throw exception;
       }
       debugPrint('マーカーの取得エラー: $e');
@@ -89,15 +90,56 @@ class GoogleMapMarker extends _$GoogleMapMarker {
       onSuccess();
     } on Exception catch (e) {
       if (!isNetWorkCheck) {
-        const exception = AppException(
-          message: 'Maybe your network is disconnected. Please check yours.',
-        );
         throw exception;
       }
       debugPrint('マーカー作成エラー: $e');
       ref
           .read(scaffoldMessengerServiceProvider)
           .showExceptionSnackBar('マーカー作成に失敗しました');
+    } finally {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
+    }
+  }
+
+  Future<void> edit(
+    MarkerData markerData,
+    VoidCallback onSuccess,
+  ) async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => true);
+      await ref.read(mapRepositoryImplProvider).editMarker(markerData);
+      onSuccess();
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        throw exception;
+      }
+      debugPrint('マーカー編集エラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('マーカー編集に失敗しました');
+    } finally {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
+    }
+  }
+
+  Future<void> delete(
+    MarkerData markerData,
+    VoidCallback onSuccess,
+  ) async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => true);
+      await ref.read(mapRepositoryImplProvider).deleteMarker(markerData);
+      onSuccess();
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        throw exception;
+      }
+      debugPrint('マーカー削除エラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('マーカー削除に失敗しました');
     } finally {
       ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
     }
