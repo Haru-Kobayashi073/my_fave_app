@@ -7,7 +7,11 @@ import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class ReconfigurationMailPage extends HookConsumerWidget {
-  const ReconfigurationMailPage({super.key});
+  const ReconfigurationMailPage({
+    super.key,
+    this.isReconfigurationForCertifier = false,
+  });
+  final bool isReconfigurationForCertifier;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,6 +68,8 @@ class ReconfigurationMailPage extends HookConsumerWidget {
                             context.push(
                               ConfirmationMailPageRoute(
                                 email: emailController.text,
+                                isReconfigurationForCertifier:
+                                    isReconfigurationForCertifier,
                               ).location,
                             );
                           },

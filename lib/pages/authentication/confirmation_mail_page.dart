@@ -8,9 +8,11 @@ class ConfirmationMailPage extends HookConsumerWidget {
   const ConfirmationMailPage({
     super.key,
     required this.email,
+    this.isReconfigurationForCertifier = false,
   });
 
   final String email;
+  final bool isReconfigurationForCertifier;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,7 +52,11 @@ class ConfirmationMailPage extends HookConsumerWidget {
             const SizedBox(height: 24),
             CommonButton(
               onPressed: () {
-                context.go(const LoginPageRoute().location);
+                if (isReconfigurationForCertifier) {
+                  context.go(const HomePageRoute().location);
+                } else {
+                  context.go(const LoginPageRoute().location);
+                }
               },
               text: '完了',
             ),
