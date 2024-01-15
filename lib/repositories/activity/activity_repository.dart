@@ -8,4 +8,9 @@ abstract class ActivityRepository {
   Future<void> createActivity(ActivityData activity);
 
   Stream<QuerySnapshot> fetchActivities();
+
+  Future<void> favoriteActivity({
+    required String activityId,
+    required bool isLiked,
+  });
 }

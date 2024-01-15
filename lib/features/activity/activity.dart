@@ -145,50 +145,6 @@ class Activity extends _$Activity {
     return selectedDayActivityList;
   }
 
-  // @override
-  // FutureOr<Map<DateTime, List<ActivityData>>> build() {
-  //   return {
-  //     DateTime(2024, 1, 10, 9): [
-  //       const ActivityData(
-  //         id: '',
-  //         imageUrl:
-  //             'https://images.unsplash.com/photo-1610349862738-157f45be3f71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D',
-  //         isLiked: false,
-  //       ),
-  //       const ActivityData(
-  //         id: '',
-  //         imageUrl:
-  //             'https://images.unsplash.com/photo-1610349862738-157f45be3f71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D',
-  //         isLiked: false,
-  //       ),
-  //     ],
-  //     DateTime(2024, 1, 11, 9): [
-  //       const ActivityData(
-  //         id: '',
-  //         imageUrl:
-  //             'https://images.unsplash.com/photo-1610349862738-157f45be3f71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D',
-  //         isLiked: false,
-  //       ),
-  //     ],
-  //     DateTime(2024, 1, 17, 9): [
-  //       const ActivityData(
-  //         id: '',
-  //         imageUrl:
-  //             'https://images.unsplash.com/photo-1610349862738-157f45be3f71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D',
-  //         isLiked: false,
-  //       ),
-  //     ],
-  //     DateTime(2024, 1, 3, 9): [
-  //       const ActivityData(
-  //         id: '',
-  //         imageUrl:
-  //             'https://images.unsplash.com/photo-1610349862738-157f45be3f71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D',
-  //         isLiked: false,
-  //       ),
-  //     ],
-  //   };
-  // }
-
   Future<void> create(
     ActivityData activity,
     VoidCallback onSuccess,
@@ -211,6 +167,29 @@ class Activity extends _$Activity {
           .showExceptionSnackBar('推し活作成に失敗しました');
     } finally {
       ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
+    }
+  }
+
+  Future<void> favorite({
+    required String activityId,
+    required bool isLiked,
+  }) async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      await ref
+          .read(activityRepositoryImplProvider)
+          .favoriteActivity(activityId: activityId, isLiked: isLiked);
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        const exception = AppException(
+          message: 'Maybe your network is disconnected. Please check yours.',
+        );
+        throw exception;
+      }
+      debugPrint('推し活のお気に入りエラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('推し活のお気に入りに失敗しました');
     }
   }
 }
