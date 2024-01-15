@@ -35,11 +35,11 @@ import 'package:my_fave_app/pages/map/marker_detail_page.dart';
 import 'package:my_fave_app/pages/map/take_photo_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_page.dart';
-import 'package:my_fave_app/pages/profile/profile_page.dart';
 import 'package:my_fave_app/pages/register_user_information/complete_registration_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_birthday_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_gender_page.dart';
 import 'package:my_fave_app/pages/register_user_information/register_user_name_page.dart';
+import 'package:my_fave_app/pages/settings/settings_page.dart';
 import 'package:my_fave_app/start_up_page.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -69,7 +69,7 @@ class AppRoutes {
   static const calendar = '/calendar';
   static const activity = '/activity';
   static const map = '/map';
-  static const profile = '/profile';
+  static const settings = '/settings';
   static const favoriteDetail = '/favoriteDetail';
   static const addFavorite = '/addFavorite';
   static const onBoarding = '/onBoarding';
@@ -97,7 +97,7 @@ final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final calendarNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'calendar');
 final activityNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'activity');
 final mapNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'map');
-final profileNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
+final settingsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'settings');
 
 @Riverpod(keepAlive: true)
 RouteObserver routeObserver(RouteObserverRef ref) => RouteObserver();
@@ -151,10 +151,10 @@ GoRouter goRouter(GoRouterRef ref) {
         ),
       ],
     ),
-    TypedStatefulShellBranch<ProfileBranch>(
+    TypedStatefulShellBranch<SettingsBranch>(
       routes: [
-        TypedGoRoute<ProfilePageRoute>(
-          path: AppRoutes.profile,
+        TypedGoRoute<SettingsPageRoute>(
+          path: AppRoutes.settings,
         ),
       ],
     ),
@@ -201,10 +201,10 @@ class MapBranch extends StatefulShellBranchData {
   static final GlobalKey<NavigatorState> $navigatorKey = mapNavigatorKey;
 }
 
-class ProfileBranch extends StatefulShellBranchData {
-  const ProfileBranch();
+class SettingsBranch extends StatefulShellBranchData {
+  const SettingsBranch();
 
-  static final GlobalKey<NavigatorState> $navigatorKey = profileNavigatorKey;
+  static final GlobalKey<NavigatorState> $navigatorKey = settingsNavigatorKey;
 }
 
 // TOPレベルのパスには、@TypedGoRouteをつける
@@ -308,21 +308,34 @@ class RegisterBirthdayPageRoute extends GoRouteData {
   ],
 )
 class ReconfigurationMailPageRoute extends GoRouteData {
-  const ReconfigurationMailPageRoute();
+  const ReconfigurationMailPageRoute({
+    this.isReconfigurationForCertifier = false,
+  });
+  final bool isReconfigurationForCertifier;
+
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ReconfigurationMailPage();
+      ReconfigurationMailPage(
+        isReconfigurationForCertifier: isReconfigurationForCertifier,
+      );
 }
 
 @immutable
 class ConfirmationMailPageRoute extends GoRouteData {
-  const ConfirmationMailPageRoute({required this.email});
+  const ConfirmationMailPageRoute({
+    required this.email,
+    this.isReconfigurationForCertifier = false,
+  });
 
   final String email;
+  final bool isReconfigurationForCertifier;
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ConfirmationMailPage(email: email);
+      ConfirmationMailPage(
+        email: email,
+        isReconfigurationForCertifier: isReconfigurationForCertifier,
+      );
 }
 
 @immutable
@@ -405,15 +418,15 @@ class MapPageRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => const MapPage();
 }
 
-@TypedGoRoute<ProfilePageRoute>(
-  path: AppRoutes.profile,
+@TypedGoRoute<SettingsPageRoute>(
+  path: AppRoutes.settings,
 )
-class ProfilePageRoute extends GoRouteData {
-  const ProfilePageRoute();
+class SettingsPageRoute extends GoRouteData {
+  const SettingsPageRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ProfilePage();
+      const SettingsPage();
 }
 
 @TypedGoRoute<FavoriteDetailPageRoute>(

@@ -18,7 +18,7 @@ List<RouteBase> get $appRoutes => [
       $calendarPageRoute,
       $activityPageRoute,
       $mapPageRoute,
-      $profilePageRoute,
+      $settingsPageRoute,
       $favoriteDetailPageRoute,
       $addFavoritePageRoute,
       $onBoardingPageRoute,
@@ -77,11 +77,11 @@ RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
           ],
         ),
         StatefulShellBranchData.$branch(
-          navigatorKey: ProfileBranch.$navigatorKey,
+          navigatorKey: SettingsBranch.$navigatorKey,
           routes: [
             GoRouteData.$route(
-              path: '/profile',
-              factory: $ProfilePageRouteExtension._fromState,
+              path: '/settings',
+              factory: $SettingsPageRouteExtension._fromState,
             ),
           ],
         ),
@@ -163,12 +163,12 @@ extension $MapPageRouteExtension on MapPageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $ProfilePageRouteExtension on ProfilePageRoute {
-  static ProfilePageRoute _fromState(GoRouterState state) =>
-      const ProfilePageRoute();
+extension $SettingsPageRouteExtension on SettingsPageRoute {
+  static SettingsPageRoute _fromState(GoRouterState state) =>
+      const SettingsPageRoute();
 
   String get location => GoRouteData.$location(
-        '/profile',
+        '/settings',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -399,10 +399,21 @@ RouteBase get $reconfigurationMailPageRoute => GoRouteData.$route(
 extension $ReconfigurationMailPageRouteExtension
     on ReconfigurationMailPageRoute {
   static ReconfigurationMailPageRoute _fromState(GoRouterState state) =>
-      const ReconfigurationMailPageRoute();
+      ReconfigurationMailPageRoute(
+        isReconfigurationForCertifier: _$convertMapValue(
+                'is-reconfiguration-for-certifier',
+                state.uri.queryParameters,
+                _$boolConverter) ??
+            false,
+      );
 
   String get location => GoRouteData.$location(
         '/reconfigurationMail',
+        queryParams: {
+          if (isReconfigurationForCertifier != false)
+            'is-reconfiguration-for-certifier':
+                isReconfigurationForCertifier.toString(),
+        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -419,12 +430,20 @@ extension $ConfirmationMailPageRouteExtension on ConfirmationMailPageRoute {
   static ConfirmationMailPageRoute _fromState(GoRouterState state) =>
       ConfirmationMailPageRoute(
         email: state.uri.queryParameters['email']!,
+        isReconfigurationForCertifier: _$convertMapValue(
+                'is-reconfiguration-for-certifier',
+                state.uri.queryParameters,
+                _$boolConverter) ??
+            false,
       );
 
   String get location => GoRouteData.$location(
         '/reconfigurationMail/confirmationMail',
         queryParams: {
           'email': email,
+          if (isReconfigurationForCertifier != false)
+            'is-reconfiguration-for-certifier':
+                isReconfigurationForCertifier.toString(),
         },
       );
 
@@ -436,6 +455,26 @@ extension $ConfirmationMailPageRouteExtension on ConfirmationMailPageRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
+}
+
+bool _$boolConverter(String value) {
+  switch (value) {
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      throw UnsupportedError('Cannot convert "$value" into a bool.');
+  }
 }
 
 RouteBase get $completeRegistrationPageRoute => GoRouteData.$route(
@@ -506,9 +545,9 @@ RouteBase get $mapPageRoute => GoRouteData.$route(
       factory: $MapPageRouteExtension._fromState,
     );
 
-RouteBase get $profilePageRoute => GoRouteData.$route(
-      path: '/profile',
-      factory: $ProfilePageRouteExtension._fromState,
+RouteBase get $settingsPageRoute => GoRouteData.$route(
+      path: '/settings',
+      factory: $SettingsPageRouteExtension._fromState,
     );
 
 RouteBase get $favoriteDetailPageRoute => GoRouteData.$route(
@@ -670,15 +709,6 @@ extension $AddSchedulePageRouteExtension on AddSchedulePageRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
-}
-
-T? _$convertMapValue<T>(
-  String key,
-  Map<String, String> map,
-  T Function(String) converter,
-) {
-  final value = map[key];
-  return value == null ? null : converter(value);
 }
 
 RouteBase get $scheduleDetailPageRoute => GoRouteData.$route(
