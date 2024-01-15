@@ -4,7 +4,14 @@ import 'package:my_fave_app/features/google_map_marker/google_map_marker.dart';
 import 'package:my_fave_app/utils/utils.dart';
 
 class MarkerOptionPopUp extends HookConsumerWidget {
-  const MarkerOptionPopUp({super.key});
+  const MarkerOptionPopUp({
+    super.key,
+    required this.onPressedEdit,
+    required this.onPressedDelete,
+  });
+  final void Function() onPressedEdit;
+
+  final void Function() onPressedDelete;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return PopupMenuButton(
@@ -22,6 +29,7 @@ class MarkerOptionPopUp extends HookConsumerWidget {
           PopupMenuItem(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             value: MarkerOption.edit,
+            onTap: onPressedEdit,
             child: Text(
               MarkerOption.edit.title,
               style: TextStyle(
@@ -41,6 +49,7 @@ class MarkerOptionPopUp extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             height: 5,
             value: MarkerOption.delete,
+            onTap: onPressedDelete,
             child: Text(
               MarkerOption.delete.title,
               style: TextStyle(
