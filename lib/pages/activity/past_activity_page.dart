@@ -119,6 +119,12 @@ class PastActivityPage extends HookConsumerWidget {
                             return ActivityImage(
                               displayIsLike: true,
                               activityData: likedActivityList[index],
+                              onTap: (isLiked) {
+                                activityNotifier.favorite(
+                                  activityId: likedActivityList[index].id,
+                                  isLiked: !likedActivityList[index].isLiked,
+                                );
+                              },
                             );
                           },
                         ),
