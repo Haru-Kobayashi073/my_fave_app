@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_positional_boolean_parameters
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -5,12 +7,15 @@ import 'package:my_fave_app/models/activity_data.dart';
 import 'package:my_fave_app/utils/utils.dart';
 
 class ActivityMainImage extends HookConsumerWidget {
-  const ActivityMainImage({super.key, required this.activityData});
+  const ActivityMainImage({
+    super.key,
+    required this.activityData,
+    required this.onTap,
+  });
   final ActivityData activityData;
+  final void Function(bool?) onTap;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLike = useToggle(false);
-
     return Column(
       children: [
         Expanded(
@@ -33,9 +38,7 @@ class ActivityMainImage extends HookConsumerWidget {
                 width: 24,
                 child: Checkbox(
                   value: activityData.isLiked,
-                  onChanged: (value) {
-                    isLike.toggle();
-                  },
+                  onChanged: onTap,
                   side: BorderSide(
                     color: AppColor.white,
                   ),
