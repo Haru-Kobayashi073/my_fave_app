@@ -43,10 +43,10 @@ class CommonNavigationBar extends StatelessWidget {
           ),
           NavigationDestination(
             icon: Icon(
-              Icons.person,
+              Icons.settings,
               color: AppColor.white,
             ),
-            label: 'プロフィール',
+            label: '設定',
           ),
         ],
         onDestinationSelected: (index) {
