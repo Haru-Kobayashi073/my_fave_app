@@ -3,8 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/features/authentication/sign_in.dart';
-import 'package:my_fave_app/features/calendar/event_loader.dart';
-import 'package:my_fave_app/features/favorite/favorite.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
@@ -80,9 +78,6 @@ class LoginPage extends HookConsumerWidget {
                           passwordController.text,
                           () {
                             context.go(AppRoutes.home);
-                            ref
-                              ..invalidate(eventLoaderProvider)
-                              ..invalidate(favoriteProvider);
                           },
                         ),
                       );
