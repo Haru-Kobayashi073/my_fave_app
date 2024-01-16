@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
 
@@ -6,7 +7,7 @@ abstract class FavoriteRepository {
 
   Future<void> createFavorite(FavoriteData favoriteData);
 
-  Future<List<FavoriteData>> fetchFavoriteList();
+  Stream<QuerySnapshot> fetchFavoriteList();
 
   Future<void> editFavorite(FavoriteData favoriteData);
 
