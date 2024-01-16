@@ -117,12 +117,9 @@ class FavoritePhotos extends HookConsumerWidget {
                                   ref
                                       .read(favoriteProvider.notifier)
                                       .deletePhoto(
-                                    favoriteData.id,
-                                    imageUrlList[index],
-                                    () {
-                                      ref.invalidate(favoriteProvider);
-                                    },
-                                  );
+                                        favoriteData.id,
+                                        imageUrlList[index],
+                                      );
                                 },
                               ),
                             ),
