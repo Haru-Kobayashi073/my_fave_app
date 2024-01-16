@@ -6,7 +6,7 @@ part of 'favorite.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$favoriteHash() => r'bf44b36e9f0bc8fd9a272bb982045ca159ef121b';
+String _$favoriteHash() => r'57055a79941d315e5aa07282d2ba32dae4f5ea85';
 
 /// See also [Favorite].
 @ProviderFor(Favorite)
