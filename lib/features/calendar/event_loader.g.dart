@@ -6,12 +6,11 @@ part of 'event_loader.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$eventLoaderHash() => r'6a807c9e5ca2ce5b3cb8d12a4c2aac9d4d7ebf3a';
+String _$eventLoaderHash() => r'33dfe8c63bc285cce143e8d76a12c685b5eb3edd';
 
 /// See also [EventLoader].
 @ProviderFor(EventLoader)
-final eventLoaderProvider = AsyncNotifierProvider<EventLoader,
-    Map<DateTime, List<DailySchedule>>>.internal(
+final eventLoaderProvider = AsyncNotifierProvider<EventLoader, void>.internal(
   EventLoader.new,
   name: r'eventLoaderProvider',
   debugGetCreateSourceHash:
@@ -20,6 +19,6 @@ final eventLoaderProvider = AsyncNotifierProvider<EventLoader,
   allTransitiveDependencies: null,
 );
 
-typedef _$EventLoader = AsyncNotifier<Map<DateTime, List<DailySchedule>>>;
+typedef _$EventLoader = AsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
