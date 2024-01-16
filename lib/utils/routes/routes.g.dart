@@ -558,23 +558,24 @@ RouteBase get $favoriteDetailPageRoute => GoRouteData.$route(
 extension $FavoriteDetailPageRouteExtension on FavoriteDetailPageRoute {
   static FavoriteDetailPageRoute _fromState(GoRouterState state) =>
       FavoriteDetailPageRoute(
-        $extra: state.extra as FavoriteData,
+        favoriteIndex: int.parse(state.uri.queryParameters['favorite-index']!),
       );
 
   String get location => GoRouteData.$location(
         '/favoriteDetail',
+        queryParams: {
+          'favorite-index': favoriteIndex.toString(),
+        },
       );
 
-  void go(BuildContext context) => context.go(location, extra: $extra);
+  void go(BuildContext context) => context.go(location);
 
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: $extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: $extra);
+      context.pushReplacement(location);
 
-  void replace(BuildContext context) =>
-      context.replace(location, extra: $extra);
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $addFavoritePageRoute => GoRouteData.$route(
