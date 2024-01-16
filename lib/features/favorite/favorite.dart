@@ -117,14 +117,12 @@ class Favorite extends _$Favorite {
   Future<void> deletePhoto(
     String id,
     String imageUrl,
-    VoidCallback onSuccess,
   ) async {
     final isNetWorkCheck = await isNetworkConnected();
     try {
       await ref
           .read(favoriteRepositoryImplProvider)
           .deleteFavoritePhoto(id, imageUrl);
-      onSuccess();
     } on Exception catch (e) {
       if (isNetWorkCheck) {
         throw appException;
