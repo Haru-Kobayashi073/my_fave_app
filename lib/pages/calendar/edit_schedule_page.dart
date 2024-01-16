@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_fave_app/features/calendar/event_loader.dart';
 import 'package:my_fave_app/features/calendar/schedule.dart';
 import 'package:my_fave_app/models/daily_schedule.dart';
 import 'package:my_fave_app/pages/register_user_information/components/date_picker_wrapper.dart';
@@ -92,7 +91,6 @@ class EditSchedulePage extends HookConsumerWidget {
                     ref.read(scheduleProvider.notifier).edit(
                       scheduleComparison,
                       () {
-                        ref.invalidate(eventLoaderProvider);
                         context.go(const CalendarPageRoute().location);
                       },
                     );
