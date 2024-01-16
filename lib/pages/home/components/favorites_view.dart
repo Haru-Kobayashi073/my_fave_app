@@ -59,7 +59,7 @@ class FavoritesView extends HookConsumerWidget {
                 itemCount: favoriteDataList.length,
                 itemBuilder: (_, index) => InkWell(
                   onTap: () =>
-                      FavoriteDetailPageRoute($extra: favoriteDataList[index])
+                      FavoriteDetailPageRoute(favoriteIndex: index)
                           .push<void>(context),
                   borderRadius: BorderRadius.circular(16),
                   child: Column(

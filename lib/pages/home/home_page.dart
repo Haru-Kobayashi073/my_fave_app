@@ -13,7 +13,9 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteNotifier = ref.watch(favoriteProvider.notifier);
     final activityNotifier = ref.watch(activityProvider.notifier);
+    final eventLoaderNotifer = ref.watch(eventLoaderProvider.notifier);
 
     return Scaffold(
       appBar: CommonAppBar(
@@ -26,17 +28,22 @@ class HomePage extends HookConsumerWidget {
         padding: const EdgeInsets.all(16),
         child: CustomScrollView(
           slivers: [
-            ref.watch(favoriteProvider).when(
-                  data: (favoriteList) {
-                    return FavoritesView(
-                      favoriteDataList: favoriteList,
-                    );
-                  },
-                  error: (e, s) => const SliverToBoxAdapter(),
-                  loading: () => const SliverToBoxAdapter(
+            StreamBuilder(
+              stream: favoriteNotifier.fetch(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting &&
+                    !snapshot.hasData) {
+                  return const SliverToBoxAdapter(
                     child: Loading(),
-                  ),
-                ),
+                  );
+                }
+                final favoriteList =
+                    favoriteNotifier.convertToFavoriteDataList(snapshot);
+                return FavoritesView(
+                  favoriteDataList: favoriteList,
+                );
+              },
+            ),
             StreamBuilder<QuerySnapshot>(
               stream: activityNotifier.fetchActivities(),
               builder: (context, snapshot) {
@@ -55,15 +62,19 @@ class HomePage extends HookConsumerWidget {
                 return ActivityView(activityList: twoWeeksActivityList);
               },
             ),
-            ref.watch(eventLoaderProvider).when(
-                  data: (events) {
-                    return CalendarView(events: events);
-                  },
-                  error: (e, s) => const SliverToBoxAdapter(),
-                  loading: () => const SliverToBoxAdapter(
+            StreamBuilder(
+              stream: eventLoaderNotifer.fetch(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting &&
+                    !snapshot.hasData) {
+                  return const SliverToBoxAdapter(
                     child: Loading(),
-                  ),
-                ),
+                  );
+                }
+                final events = eventLoaderNotifer.convertToKeyValue(snapshot);
+                return CalendarView(events: events);
+              },
+            ),
             const MapView(),
           ],
         ),

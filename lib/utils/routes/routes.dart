@@ -433,12 +433,12 @@ class SettingsPageRoute extends GoRouteData {
   path: AppRoutes.favoriteDetail,
 )
 class FavoriteDetailPageRoute extends GoRouteData {
-  const FavoriteDetailPageRoute({required this.$extra});
-  final FavoriteData $extra;
+  const FavoriteDetailPageRoute({required this.favoriteIndex});
+  final int favoriteIndex;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => FavoriteDetailPage(
-        favoriteData: $extra,
+        favoriteIndex: favoriteIndex,
       );
 }
 

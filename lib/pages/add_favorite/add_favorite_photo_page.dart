@@ -56,7 +56,6 @@ class AddFavoritePhotoPage extends HookConsumerWidget {
                     id,
                     imageUrl.value!,
                     () {
-                      ref.invalidate(favoriteProvider);
                       context.pop();
                     },
                   );

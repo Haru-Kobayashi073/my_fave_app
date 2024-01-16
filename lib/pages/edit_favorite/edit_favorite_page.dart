@@ -367,8 +367,7 @@ class EditFavoritePage extends HookConsumerWidget {
                       ref.read(favoriteProvider.notifier).edit(
                         favoriteComparison,
                         () {
-                          ref.invalidate(favoriteProvider);
-                          context.go(const HomePageRoute().location);
+                          context.pop();
                         },
                       );
                     } else {

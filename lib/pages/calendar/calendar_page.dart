@@ -17,7 +17,6 @@ class CalendarPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDay = ref.watch(calendarProvider);
     final calendarNotifier = ref.watch(calendarProvider.notifier);
-    final eventLoader = ref.watch(eventLoaderProvider);
     final eventLoaderNotifer = ref.watch(eventLoaderProvider.notifier);
 
     return Scaffold(
@@ -29,8 +28,14 @@ class CalendarPage extends HookConsumerWidget {
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
-        child: eventLoader.when(
-          data: (events) {
+        child: StreamBuilder(
+          stream: eventLoaderNotifer.fetch(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting &&
+                !snapshot.hasData) {
+              return const Loading();
+            }
+            final events = eventLoaderNotifer.convertToKeyValue(snapshot);
             return TableCalendar<DailySchedule>(
               focusedDay: selectedDay,
               firstDay: DateTime(DateTime.now().year - 30),
@@ -42,7 +47,7 @@ class CalendarPage extends HookConsumerWidget {
                 ref.read(calendarProvider.notifier).selectedDate(selectedDay);
                 ref
                     .read(eventLoaderProvider.notifier)
-                    .handleSelectedDate(context, selectedDay);
+                    .handleSelectedDate(context, selectedDay, events);
               },
               eventLoader: (date) {
                 final localTime = date.toLocal();
@@ -53,7 +58,6 @@ class CalendarPage extends HookConsumerWidget {
                   focusedDay.isBefore(selectedDay)
                       ? calendarNotifier.switchToPreviousMonth()
                       : calendarNotifier.switchToNextMonth();
-                  ref.invalidate(eventLoaderProvider);
                 }
               },
               headerStyle: const HeaderStyle(
@@ -131,8 +135,6 @@ class CalendarPage extends HookConsumerWidget {
               ),
             );
           },
-          error: (e, s) => const SizedBox(),
-          loading: () => const SizedBox(),
         ),
       ),
     );

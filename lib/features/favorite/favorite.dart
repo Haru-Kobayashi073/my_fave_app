@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/repositories/favorite/favorite_repository_impl.dart';
@@ -13,13 +14,12 @@ class Favorite extends _$Favorite {
         message: 'Maybe your network is disconnected. Please check yours.',
       );
 
-  Future<List<FavoriteData>> fetch() async {
+  Stream<QuerySnapshot> fetch() async* {
     final isNetWorkCheck = await isNetworkConnected();
     try {
-      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => true);
       final response =
-          await ref.read(favoriteRepositoryImplProvider).fetchFavoriteList();
-      return response;
+          ref.read(favoriteRepositoryImplProvider).fetchFavoriteList();
+      yield* response;
     } on Exception catch (e) {
       if (!isNetWorkCheck) {
         throw appException;
@@ -28,15 +28,25 @@ class Favorite extends _$Favorite {
       ref
           .read(scaffoldMessengerServiceProvider)
           .showExceptionSnackBar('推しの取得に失敗しました');
-      return [];
-    } finally {
-      ref.read(overlayLoadingWidgetProvider.notifier).update((state) => false);
     }
   }
 
   @override
-  FutureOr<List<FavoriteData>> build() async {
-    return await fetch();
+  FutureOr<void> build() {
+    return null;
+  }
+
+  List<FavoriteData> convertToFavoriteDataList(
+    AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+  ) {
+    if (snapshot.data == null) {
+      return [];
+    }
+    final favoriteDataList = snapshot.data!.docs.map((doc) {
+      final data = doc.data()! as Map<String, dynamic>;
+      return FavoriteData.fromJson(data);
+    }).toList();
+    return favoriteDataList;
   }
 
   Future<void> create(
@@ -107,14 +117,12 @@ class Favorite extends _$Favorite {
   Future<void> deletePhoto(
     String id,
     String imageUrl,
-    VoidCallback onSuccess,
   ) async {
     final isNetWorkCheck = await isNetworkConnected();
     try {
       await ref
           .read(favoriteRepositoryImplProvider)
           .deleteFavoritePhoto(id, imageUrl);
-      onSuccess();
     } on Exception catch (e) {
       if (isNetWorkCheck) {
         throw appException;

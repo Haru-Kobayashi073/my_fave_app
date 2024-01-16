@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,13 +16,12 @@ final displayLatestEventsViewProvider = StateProvider((ref) => false);
 
 @Riverpod(keepAlive: true)
 class EventLoader extends _$EventLoader {
-  Future<Map<DateTime, List<DailySchedule>>> fetch() async {
+  Stream<QuerySnapshot> fetch() async* {
     final isNetWorkCheck = await isNetworkConnected();
     try {
       final response =
-          await ref.read(calendarRepositoryImplProvider).fetchScheduleList();
-      final converttedMap = convertToKeyValue(response);
-      return converttedMap;
+          ref.read(calendarRepositoryImplProvider).fetchScheduleList();
+      yield* response;
     } on Exception catch (e) {
       if (!isNetWorkCheck) {
         const exception = AppException(
@@ -33,16 +33,15 @@ class EventLoader extends _$EventLoader {
       ref
           .read(scaffoldMessengerServiceProvider)
           .showExceptionSnackBar('スケジュールの取得に失敗しました');
-      return {};
     }
   }
 
-  Future<List<DailySchedule>> fetchList() async {
+  Stream<QuerySnapshot> fetchList() async* {
     final isNetWorkCheck = await isNetworkConnected();
     try {
       final response =
-          await ref.read(calendarRepositoryImplProvider).fetchScheduleList();
-      return response;
+          ref.read(calendarRepositoryImplProvider).fetchScheduleList();
+      yield* response;
     } on Exception catch (e) {
       if (!isNetWorkCheck) {
         const exception = AppException(
@@ -54,16 +53,21 @@ class EventLoader extends _$EventLoader {
       ref
           .read(scaffoldMessengerServiceProvider)
           .showExceptionSnackBar('スケジュールの取得に失敗しました');
-      return [];
     }
   }
 
   Map<DateTime, List<DailySchedule>> convertToKeyValue(
-    List<DailySchedule> list,
+    AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
   ) {
-    if (list.isEmpty) {
+    if (snapshot.data == null) {
       return {};
     }
+
+    final list = snapshot.data!.docs
+        .map(
+          (doc) => DailySchedule.fromJson(doc.data()! as Map<String, dynamic>),
+        )
+        .toList();
 
     final map = <DateTime, List<DailySchedule>>{};
 
@@ -141,8 +145,8 @@ class EventLoader extends _$EventLoader {
   }
 
   @override
-  FutureOr<Map<DateTime, List<DailySchedule>>> build() async {
-    return await fetch();
+  FutureOr<void> build() {
+    return null;
   }
 
   List<DailySchedule> extractAllValues(
@@ -164,6 +168,7 @@ class EventLoader extends _$EventLoader {
   void handleSelectedDate(
     BuildContext context,
     DateTime selectedDay,
+    Map<DateTime, List<DailySchedule>> detaMap,
   ) {
     final formattedDate = DateTime(
       selectedDay.year,
@@ -171,11 +176,11 @@ class EventLoader extends _$EventLoader {
       selectedDay.day,
       9,
     );
-    if (state.value!.isEmpty) {
+    if (detaMap.isEmpty) {
       return;
     }
-    if (state.value!.containsKey(formattedDate)) {
-      final events = extractAllValues(state.value!);
+    if (detaMap.containsKey(formattedDate)) {
+      final events = extractAllValues(detaMap);
       CalendarDetailPageRoute(
         $extra: events,
         selectedDate: selectedDay,
