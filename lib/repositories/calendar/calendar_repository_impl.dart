@@ -43,18 +43,14 @@ class CalendarRepositoryImpl implements CalendarRepository {
   }
 
   @override
-  Future<List<DailySchedule>> fetchScheduleList() async {
+  Stream<QuerySnapshot> fetchScheduleList() {
     final uid = _auth.currentUser!.uid;
-    final snapshot = await _firestore
+    final snapshot = _firestore
         .collection('users')
         .doc(uid)
         .collection('schedules')
-        .get();
-    return snapshot.docs
-        .map(
-          (doc) => DailySchedule.fromJson(doc.data()),
-        )
-        .toList();
+        .snapshots();
+    return snapshot;
   }
 
   @override
