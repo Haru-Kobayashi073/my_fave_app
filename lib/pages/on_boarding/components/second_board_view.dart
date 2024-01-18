@@ -4,7 +4,9 @@ import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class SecondBoardView extends HookConsumerWidget {
-  const SecondBoardView({super.key});
+  const SecondBoardView({super.key, required this.pageController});
+  final PageController pageController;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
@@ -18,7 +20,12 @@ class SecondBoardView extends HookConsumerWidget {
           ),
           const Text('Description Text 2'),
           CommonButton(
-            onPressed: () {},
+            onPressed: () {
+              pageController.nextPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease,
+              );
+            },
             text: '次へ',
           ),
         ],

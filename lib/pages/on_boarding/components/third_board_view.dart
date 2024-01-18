@@ -4,7 +4,9 @@ import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class ThirdBoardView extends HookConsumerWidget {
-  const ThirdBoardView({super.key});
+  const ThirdBoardView({super.key, required this.pageController});
+  final PageController pageController;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
@@ -18,7 +20,12 @@ class ThirdBoardView extends HookConsumerWidget {
           ),
           const Text('Description Text 3'),
           CommonButton(
-            onPressed: () {},
+            onPressed: () {
+              pageController.nextPage(
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+              );
+            },
             text: '次へ',
           ),
         ],
