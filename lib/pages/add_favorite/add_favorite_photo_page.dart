@@ -81,8 +81,10 @@ class AddFavoritePhotoPage extends HookConsumerWidget {
                 final croppedImage =
                     await ref.read(cropImageProvider).call(pickedImage);
                 final imageFile = File(croppedImage?.path ?? '');
-                imageUrl.value =
-                    await ref.read(uploadImageProvider).call(imageFile);
+                if (imageFile.path != '') {
+                  imageUrl.value =
+                      await ref.read(uploadImageProvider).call(imageFile);
+                }
               },
               imageUrl: imageUrl.value,
             ),
