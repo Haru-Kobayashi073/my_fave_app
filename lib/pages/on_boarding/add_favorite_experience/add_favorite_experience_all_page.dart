@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,16 +17,28 @@ import 'package:my_fave_app/pages/register_user_information/components/register_
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
-class AddFavoritePage extends HookConsumerWidget {
-  const AddFavoritePage({super.key});
+class AddFavoriteExperienceAllPage extends HookConsumerWidget {
+  const AddFavoriteExperienceAllPage({
+    super.key,
+    required this.imageUrl,
+    required this.name,
+    required this.startedLikingDate,
+    required this.numberOfLiveParticipation,
+  });
+  final String imageUrl;
+  final String name;
+  final DateTime startedLikingDate;
+  final int numberOfLiveParticipation;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imageUrl = useState<String?>(null);
+    final imageUrlState = useState<String?>(imageUrl);
     final selectImagePressed = useState<bool?>(false);
-    final nameController = useTextEditingController();
-    final numberOfLIveParticipationController = useTextEditingController();
+    final nameController = useTextEditingController(text: name);
+    final numberOfLIveParticipationController =
+        useTextEditingController(text: numberOfLiveParticipation.toString());
     final fanClubIdController = useTextEditingController();
-    final startedLikingDate = useState<DateTime?>(null);
+    final startedLikingDateState = useState<DateTime?>(startedLikingDate);
     final startedLikingDatePressed = useState<bool?>(false);
     final contractRenewalDateForFanClub = useState<DateTime?>(null);
     final contractRenewalDateForFanClubPressed = useState<bool?>(false);
@@ -65,25 +78,39 @@ class AddFavoritePage extends HookConsumerWidget {
                         await ref.read(cropImageProvider).call(pickedImage);
                     final imageFile = File(croppedImage?.path ?? '');
                     if (imageFile.path != '') {
-                      imageUrl.value =
+                      imageUrlState.value =
                           await ref.read(uploadImageProvider).call(imageFile);
                     }
                   },
-                  imageUrl: imageUrl.value,
+                  imageUrl: imageUrlState.value,
                 ),
-                if (selectImagePressed.value ?? imageUrl.value == null)
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.only(left: 16),
-                    child: const Text(
-                      '選択してください',
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                    ),
+                    onPressed: () async {
+                      final pickedImage =
+                          await ref.read(pickImageProvider).call();
+                      final croppedImage =
+                          await ref.read(cropImageProvider).call(pickedImage);
+                      final imageFile = File(croppedImage?.path ?? '');
+                      if (imageFile.path != '') {
+                        imageUrlState.value =
+                            await ref.read(uploadImageProvider).call(imageFile);
+                      }
+                    },
+                    child: Text(
+                      '写真を変更',
                       style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 12,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.white,
                       ),
                     ),
                   ),
-                const SizedBox(height: 16),
+                ),
                 CommonTextField(
                   labelText: '推しの名前を入力※',
                   controller: nameController,
@@ -95,13 +122,13 @@ class AddFavoritePage extends HookConsumerWidget {
                 PopUpButton(
                   labelText: '推し始めたのはいつ頃ですか？※',
                   visibleError: startedLikingDatePressed.value ??
-                      startedLikingDate.value == null,
+                      startedLikingDateState.value == null,
                   child: Text(
-                    startedLikingDate.value == null
+                    startedLikingDateState.value == null
                         ? '選択してください'
-                        : '${startedLikingDate.value!.year}年${startedLikingDate.value!.month}月',
+                        : '${startedLikingDateState.value!.year}年${startedLikingDateState.value!.month}月',
                     style: TextStyle(
-                      color: startedLikingDate.value == null
+                      color: startedLikingDateState.value == null
                           ? AppColor.grey88
                           : AppColor.white,
                       fontSize: 16,
@@ -112,10 +139,10 @@ class AddFavoritePage extends HookConsumerWidget {
                       context: context,
                       builder: (_) => DatePickerWrapper(
                         child: CupertinoDatePicker(
-                          initialDateTime: startedLikingDate.value,
+                          initialDateTime: startedLikingDateState.value,
                           mode: CupertinoDatePickerMode.monthYear,
                           onDateTimeChanged: (dateTime) {
-                            startedLikingDate.value = dateTime;
+                            startedLikingDateState.value = dateTime;
                           },
                           maximumYear: DateTime.now().year,
                           backgroundColor: AppColor.black15,
@@ -129,6 +156,7 @@ class AddFavoritePage extends HookConsumerWidget {
                   labelText: 'LIVEに参加した回数を教えてください!',
                   controller: numberOfLIveParticipationController,
                   keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 const SizedBox(height: 16),
                 const Text(
@@ -321,14 +349,14 @@ class AddFavoritePage extends HookConsumerWidget {
                 CommonButton(
                   onPressed: () {
                     if (formKey.currentState!.validate() &&
-                        imageUrl.value != null &&
-                        startedLikingDate.value != null) {
+                        imageUrlState.value != null &&
+                        startedLikingDateState.value != null) {
                       ref.read(favoriteProvider.notifier).create(
                         FavoriteData(
                           id: '',
-                          imageUrl: imageUrl.value!,
+                          imageUrl: imageUrlState.value!,
                           name: nameController.text,
-                          startedLikingDate: startedLikingDate.value!,
+                          startedLikingDate: startedLikingDateState.value!,
                           numberOfLiveParticipation: int.parse(
                             numberOfLIveParticipationController.text != ''
                                 ? numberOfLIveParticipationController.text
@@ -352,7 +380,7 @@ class AddFavoritePage extends HookConsumerWidget {
                               .toList(),
                         ),
                         () {
-                          context.pop();
+                          context.go(const HomePageRoute().location);
                         },
                       );
                     } else {

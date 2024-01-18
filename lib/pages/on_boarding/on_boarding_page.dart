@@ -31,8 +31,8 @@ class OnBoardingPage extends HookConsumerWidget {
               },
               children: [
                 FirstBoardView(pageController: pageController),
-                const SecondBoardView(),
-                const ThirdBoardView(),
+                SecondBoardView(pageController: pageController),
+                ThirdBoardView(pageController: pageController),
                 const FourthBoardView(),
               ],
             ),

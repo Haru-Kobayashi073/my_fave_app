@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -18,7 +19,11 @@ class FourthBoardView extends HookConsumerWidget {
           ),
           const Text('Description Text'),
           CommonButton(
-            onPressed: () {},
+            onPressed: () {
+              context.push(
+                const AddFavoriteExperienceIntroducePageRoute().location,
+              );
+            },
             text: '次へ',
           ),
         ],

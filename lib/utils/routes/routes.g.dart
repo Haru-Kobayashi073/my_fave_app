@@ -35,6 +35,12 @@ List<RouteBase> get $appRoutes => [
       $takePhotoPageRoute,
       $markerDetailPageRoute,
       $editMarkerPageRoute,
+      $addFavoriteExperienceIntroducePageRoute,
+      $addFavoriteExperiencePhotoPageRoute,
+      $addFavoriteExperienceNamePageRoute,
+      $addFavoriteExperienceDatePageRoute,
+      $addFavoriteExperienceLivePageRoute,
+      $addFavoriteExperienceAllPageRoute,
     ];
 
 RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
@@ -970,6 +976,186 @@ extension $EditMarkerPageRouteExtension on EditMarkerPageRoute {
 
   void replace(BuildContext context) =>
       context.replace(location, extra: $extra);
+}
+
+RouteBase get $addFavoriteExperienceIntroducePageRoute => GoRouteData.$route(
+      path: '/addFavoriteExperienceIntroduce',
+      factory: $AddFavoriteExperienceIntroducePageRouteExtension._fromState,
+    );
+
+extension $AddFavoriteExperienceIntroducePageRouteExtension
+    on AddFavoriteExperienceIntroducePageRoute {
+  static AddFavoriteExperienceIntroducePageRoute _fromState(
+          GoRouterState state) =>
+      const AddFavoriteExperienceIntroducePageRoute();
+
+  String get location => GoRouteData.$location(
+        '/addFavoriteExperienceIntroduce',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addFavoriteExperiencePhotoPageRoute => GoRouteData.$route(
+      path: '/addFavoriteExperiencePhoto',
+      factory: $AddFavoriteExperiencePhotoPageRouteExtension._fromState,
+    );
+
+extension $AddFavoriteExperiencePhotoPageRouteExtension
+    on AddFavoriteExperiencePhotoPageRoute {
+  static AddFavoriteExperiencePhotoPageRoute _fromState(GoRouterState state) =>
+      const AddFavoriteExperiencePhotoPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/addFavoriteExperiencePhoto',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addFavoriteExperienceNamePageRoute => GoRouteData.$route(
+      path: '/addFavoriteExperienceName',
+      factory: $AddFavoriteExperienceNamePageRouteExtension._fromState,
+    );
+
+extension $AddFavoriteExperienceNamePageRouteExtension
+    on AddFavoriteExperienceNamePageRoute {
+  static AddFavoriteExperienceNamePageRoute _fromState(GoRouterState state) =>
+      AddFavoriteExperienceNamePageRoute(
+        imageUrl: state.uri.queryParameters['image-url']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/addFavoriteExperienceName',
+        queryParams: {
+          'image-url': imageUrl,
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addFavoriteExperienceDatePageRoute => GoRouteData.$route(
+      path: '/addFavoriteExperienceDate',
+      factory: $AddFavoriteExperienceDatePageRouteExtension._fromState,
+    );
+
+extension $AddFavoriteExperienceDatePageRouteExtension
+    on AddFavoriteExperienceDatePageRoute {
+  static AddFavoriteExperienceDatePageRoute _fromState(GoRouterState state) =>
+      AddFavoriteExperienceDatePageRoute(
+        imageUrl: state.uri.queryParameters['image-url']!,
+        name: state.uri.queryParameters['name']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/addFavoriteExperienceDate',
+        queryParams: {
+          'image-url': imageUrl,
+          'name': name,
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addFavoriteExperienceLivePageRoute => GoRouteData.$route(
+      path: '/addFavoriteExperienceLive',
+      factory: $AddFavoriteExperienceLivePageRouteExtension._fromState,
+    );
+
+extension $AddFavoriteExperienceLivePageRouteExtension
+    on AddFavoriteExperienceLivePageRoute {
+  static AddFavoriteExperienceLivePageRoute _fromState(GoRouterState state) =>
+      AddFavoriteExperienceLivePageRoute(
+        imageUrl: state.uri.queryParameters['image-url']!,
+        name: state.uri.queryParameters['name']!,
+        startedLikingDate:
+            DateTime.parse(state.uri.queryParameters['started-liking-date']!),
+      );
+
+  String get location => GoRouteData.$location(
+        '/addFavoriteExperienceLive',
+        queryParams: {
+          'image-url': imageUrl,
+          'name': name,
+          'started-liking-date': startedLikingDate.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addFavoriteExperienceAllPageRoute => GoRouteData.$route(
+      path: '/addFavoriteExperienceAll',
+      factory: $AddFavoriteExperienceAllPageRouteExtension._fromState,
+    );
+
+extension $AddFavoriteExperienceAllPageRouteExtension
+    on AddFavoriteExperienceAllPageRoute {
+  static AddFavoriteExperienceAllPageRoute _fromState(GoRouterState state) =>
+      AddFavoriteExperienceAllPageRoute(
+        imageUrl: state.uri.queryParameters['image-url']!,
+        name: state.uri.queryParameters['name']!,
+        startedLikingDate:
+            DateTime.parse(state.uri.queryParameters['started-liking-date']!),
+        numberOfLiveParticipation: int.parse(
+            state.uri.queryParameters['number-of-live-participation']!),
+      );
+
+  String get location => GoRouteData.$location(
+        '/addFavoriteExperienceAll',
+        queryParams: {
+          'image-url': imageUrl,
+          'name': name,
+          'started-liking-date': startedLikingDate.toString(),
+          'number-of-live-participation': numberOfLiveParticipation.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 // **************************************************************************

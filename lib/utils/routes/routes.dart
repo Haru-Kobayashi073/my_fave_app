@@ -33,6 +33,12 @@ import 'package:my_fave_app/pages/map/edit_marker_page.dart';
 import 'package:my_fave_app/pages/map/map_page.dart';
 import 'package:my_fave_app/pages/map/marker_detail_page.dart';
 import 'package:my_fave_app/pages/map/take_photo_page.dart';
+import 'package:my_fave_app/pages/on_boarding/add_favorite_experience/add_favorite_experience_all_page.dart';
+import 'package:my_fave_app/pages/on_boarding/add_favorite_experience/add_favorite_experience_date_page.dart';
+import 'package:my_fave_app/pages/on_boarding/add_favorite_experience/add_favorite_experience_introduce_page.dart';
+import 'package:my_fave_app/pages/on_boarding/add_favorite_experience/add_favorite_experience_live_page.dart';
+import 'package:my_fave_app/pages/on_boarding/add_favorite_experience/add_favorite_experience_name_page.dart';
+import 'package:my_fave_app/pages/on_boarding/add_favorite_experience/add_favorite_experience_photo_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_introduction_page.dart';
 import 'package:my_fave_app/pages/on_boarding/on_boarding_page.dart';
 import 'package:my_fave_app/pages/register_user_information/complete_registration_page.dart';
@@ -86,6 +92,13 @@ class AppRoutes {
   static const takePhoto = '/takePhoto';
   static const markerDetail = '/markerDetail';
   static const editMarker = '/editMarker';
+  static const addFavoriteExperienceIntroduce =
+      '/addFavoriteExperienceIntroduce';
+  static const addFavoriteExperiencePhoto = '/addFavoriteExperiencePhoto';
+  static const addFavoriteExperienceName = '/addFavoriteExperienceName';
+  static const addFavoriteExperienceDate = '/addFavoriteExperienceDate';
+  static const addFavoriteExperienceLive = '/addFavoriteExperienceLive';
+  static const addFavoriteExperienceAll = '/addFavoriteExperienceAll';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -666,5 +679,107 @@ class EditMarkerPageRoute extends GoRouteData {
         child: EditMarkerPage(
           marker: $extra,
         ),
+      );
+}
+
+@TypedGoRoute<AddFavoriteExperienceIntroducePageRoute>(
+  path: AppRoutes.addFavoriteExperienceIntroduce,
+)
+class AddFavoriteExperienceIntroducePageRoute extends GoRouteData {
+  const AddFavoriteExperienceIntroducePageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const AddFavoriteExperienceIntroducePage();
+}
+
+@TypedGoRoute<AddFavoriteExperiencePhotoPageRoute>(
+  path: AppRoutes.addFavoriteExperiencePhoto,
+)
+class AddFavoriteExperiencePhotoPageRoute extends GoRouteData {
+  const AddFavoriteExperiencePhotoPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const AddFavoriteExperiencePhotoPage();
+}
+
+@TypedGoRoute<AddFavoriteExperienceNamePageRoute>(
+  path: AppRoutes.addFavoriteExperienceName,
+)
+class AddFavoriteExperienceNamePageRoute extends GoRouteData {
+  AddFavoriteExperienceNamePageRoute({required this.imageUrl});
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      AddFavoriteExperienceNamePage(
+        imageUrl: imageUrl,
+      );
+}
+
+@TypedGoRoute<AddFavoriteExperienceDatePageRoute>(
+  path: AppRoutes.addFavoriteExperienceDate,
+)
+class AddFavoriteExperienceDatePageRoute extends GoRouteData {
+  AddFavoriteExperienceDatePageRoute({
+    required this.imageUrl,
+    required this.name,
+  });
+  final String imageUrl;
+  final String name;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      AddFavoriteExperienceDatePage(
+        imageUrl: imageUrl,
+        name: name,
+      );
+}
+
+@TypedGoRoute<AddFavoriteExperienceLivePageRoute>(
+  path: AppRoutes.addFavoriteExperienceLive,
+)
+class AddFavoriteExperienceLivePageRoute extends GoRouteData {
+  AddFavoriteExperienceLivePageRoute({
+    required this.imageUrl,
+    required this.name,
+    required this.startedLikingDate,
+  });
+  final String imageUrl;
+  final String name;
+  final DateTime startedLikingDate;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      AddFavoriteExperienceLivePage(
+        imageUrl: imageUrl,
+        name: name,
+        startedLikingDate: startedLikingDate,
+      );
+}
+
+@TypedGoRoute<AddFavoriteExperienceAllPageRoute>(
+  path: AppRoutes.addFavoriteExperienceAll,
+)
+class AddFavoriteExperienceAllPageRoute extends GoRouteData {
+  AddFavoriteExperienceAllPageRoute({
+    required this.imageUrl,
+    required this.name,
+    required this.startedLikingDate,
+    required this.numberOfLiveParticipation,
+  });
+  final String imageUrl;
+  final String name;
+  final DateTime startedLikingDate;
+  final int numberOfLiveParticipation;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      AddFavoriteExperienceAllPage(
+        imageUrl: imageUrl,
+        name: name,
+        startedLikingDate: startedLikingDate,
+        numberOfLiveParticipation: numberOfLiveParticipation,
       );
 }

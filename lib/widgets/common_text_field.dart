@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_fave_app/utils/utils.dart';
 
 class CommonTextField extends StatelessWidget {
@@ -15,6 +16,7 @@ class CommonTextField extends StatelessWidget {
     this.focusNode,
     this.onFieldSubmitted,
     this.autovalidateMode,
+    this.inputFormatters,
     this.icon = const SizedBox(),
   });
   final String labelText;
@@ -28,6 +30,7 @@ class CommonTextField extends StatelessWidget {
   final FocusNode? focusNode;
   final void Function(String)? onFieldSubmitted;
   final AutovalidateMode? autovalidateMode;
+  final List<TextInputFormatter>? inputFormatters;
   final Widget icon;
 
   @override
@@ -55,6 +58,7 @@ class CommonTextField extends StatelessWidget {
             onFieldSubmitted: onFieldSubmitted,
             cursorColor: AppColor.white,
             autovalidateMode: autovalidateMode,
+            inputFormatters: inputFormatters,
             style: const TextStyle(
               fontSize: 16,
             ),
