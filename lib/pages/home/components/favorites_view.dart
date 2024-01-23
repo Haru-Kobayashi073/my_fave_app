@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/favorite_leveling/favorite_leveling.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -15,6 +16,9 @@ class FavoritesView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteLevelingNotifier =
+        ref.watch(favoriteLevelingProvider.notifier);
+
     return favoriteDataList != <FavoriteData>[] || favoriteDataList.isNotEmpty
         ? SliverMainAxisGroup(
             slivers: [
@@ -58,9 +62,8 @@ class FavoritesView extends HookConsumerWidget {
                 ),
                 itemCount: favoriteDataList.length,
                 itemBuilder: (_, index) => InkWell(
-                  onTap: () =>
-                      FavoriteDetailPageRoute(favoriteIndex: index)
-                          .push<void>(context),
+                  onTap: () => FavoriteDetailPageRoute(favoriteIndex: index)
+                      .push<void>(context),
                   borderRadius: BorderRadius.circular(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,19 +98,9 @@ class FavoritesView extends HookConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 14),
-                      Row(
-                        children: List.generate(
-                          4,
-                          (index) => Container(
-                            width: 25,
-                            height: 4,
-                            margin: const EdgeInsets.only(right: 6),
-                            decoration: BoxDecoration(
-                              color:
-                                  index == 0 ? AppColor.green : AppColor.grey88,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
+                      FavoriteLevel(
+                        favoriteLevel: favoriteLevelingNotifier.calculateLevel(
+                          favoriteDataList[index].likingLevel,
                         ),
                       ),
                     ],

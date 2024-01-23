@@ -4,15 +4,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/favorite_leveling/favorite_leveling.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/utils/utils.dart';
+import 'package:my_fave_app/widgets/widget.dart';
 
-class FavoriteMainDetailCard extends StatelessWidget {
+class FavoriteMainDetailCard extends HookConsumerWidget {
   const FavoriteMainDetailCard({super.key, required this.favoriteData});
   final FavoriteData favoriteData;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteLevelingNotifier =
+        ref.watch(favoriteLevelingProvider.notifier);
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -81,22 +87,10 @@ class FavoriteMainDetailCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Row(
-                          children: List.generate(
-                            4,
-                            (index) => Container(
-                              width: 25,
-                              height: 4,
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 3,
-                              ),
-                              decoration: BoxDecoration(
-                                color: index == 0
-                                    ? AppColor.green
-                                    : AppColor.white,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
+                        FavoriteLevel(
+                          favoriteLevel:
+                              favoriteLevelingNotifier.calculateLevel(
+                            favoriteData.likingLevel,
                           ),
                         ),
                       ],
