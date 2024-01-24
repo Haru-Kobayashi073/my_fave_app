@@ -31,6 +31,24 @@ class Favorite extends _$Favorite {
     }
   }
 
+  Future<List<FavoriteData>> fetchAsFuture() async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      final response =
+          ref.read(favoriteRepositoryImplProvider).fetchFavoriteListAsFuture();
+      return response;
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        throw appException;
+      }
+      debugPrint('推し取得エラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('推しの取得に失敗しました');
+      return [];
+    }
+  }
+
   @override
   FutureOr<void> build() {
     return null;
