@@ -5,6 +5,7 @@ export 'common_text_field.dart';
 export 'favorite_level.dart';
 export 'loading.dart';
 export 'no_animation_route.dart';
+export 'select_favorite_dialog.dart';
 export 'select_image.dart';
 export 'status_bar.dart';
 export 'vertical_text.dart';
