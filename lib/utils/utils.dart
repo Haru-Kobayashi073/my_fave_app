@@ -1,5 +1,6 @@
 export 'connectivity.dart';
 export 'constants/constants.dart';
+export 'enums.dart';
 export 'exceptions/exceptions.dart';
 export 'extensions/extensions.dart';
 export 'firebase/firebase.dart';
