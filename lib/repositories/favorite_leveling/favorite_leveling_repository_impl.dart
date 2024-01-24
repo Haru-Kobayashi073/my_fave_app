@@ -14,34 +14,6 @@ FavoriteLevelingRepositoryImpl favoriteLevelingRepositoryImpl(
   return FavoriteLevelingRepositoryImpl(ref);
 }
 
-enum LevelAlgorithm {
-  addMarker(point: 10),
-  addActivity(point: 3),
-  noActivitiesForAWeek(point: -10);
-
-  const LevelAlgorithm({
-    required this.point,
-  });
-
-  final double point;
-}
-
-enum LevelStage {
-  level0(level: 0, point: 0),
-  level1(level: 1, point: 100),
-  level2(level: 2, point: 300),
-  level3(level: 3, point: 600),
-  level4(level: 4, point: 1000);
-
-  const LevelStage({
-    required this.level,
-    required this.point,
-  });
-
-  final int level;
-  final double point;
-}
-
 class FavoriteLevelingRepositoryImpl implements FavoriteLevelingRepository {
   FavoriteLevelingRepositoryImpl(ProviderRef<FavoriteLevelingRepository> ref)
       : _auth = ref.read(getFirebaseAuthProvider),
@@ -70,5 +42,23 @@ class FavoriteLevelingRepositoryImpl implements FavoriteLevelingRepository {
         .toList();
     final favoriteLevelList = favoriteList.map((e) => e.likingLevel).toList();
     return favoriteLevelList;
+  }
+
+  @override
+  Future<void> increaseFavoriteLevel(
+    String favoriteId,
+    LevelAlgorithm levelAlgorithm,
+  ) async {
+    final uid = _auth.currentUser!.uid;
+    await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('favorites')
+        .doc(favoriteId)
+        .update(
+      {
+        'likingLevel': FieldValue.increment(levelAlgorithm.point),
+      },
+    );
   }
 }
