@@ -60,4 +60,24 @@ class FavoriteLeveling extends _$FavoriteLeveling {
     );
     return levelStage.level;
   }
+
+  Future<void> increaseFavoriteLevel(
+    String favoriteId,
+    LevelAlgorithm levelAlgorithm,
+  ) async {
+    final isNetWorkCheck = await isNetworkConnected();
+    try {
+      await ref
+          .read(favoriteLevelingRepositoryImplProvider)
+          .increaseFavoriteLevel(favoriteId, levelAlgorithm);
+    } on Exception catch (e) {
+      if (!isNetWorkCheck) {
+        throw appException;
+      }
+      debugPrint('推しレベルアップエラー: $e');
+      ref
+          .read(scaffoldMessengerServiceProvider)
+          .showExceptionSnackBar('推しのレベルアップに失敗しました');
+    }
+  }
 }
