@@ -43,6 +43,24 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
+  Future<List<FavoriteData>> fetchFavoriteListAsFuture() async {
+    final uid = _auth.currentUser!.uid;
+    final snapshot = await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('favorites')
+        .get();
+    final favoriteList = snapshot.docs
+        .map(
+          (e) => FavoriteData.fromJson(
+            e.data(),
+          ),
+        )
+        .toList();
+    return favoriteList;
+  }
+
+  @override
   Stream<QuerySnapshot> fetchFavoriteList() {
     final uid = _auth.currentUser!.uid;
     final snapshot = _firestore

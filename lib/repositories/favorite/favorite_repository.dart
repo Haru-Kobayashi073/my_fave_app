@@ -9,6 +9,8 @@ abstract class FavoriteRepository {
 
   Stream<QuerySnapshot> fetchFavoriteList();
 
+  Future<List<FavoriteData>> fetchFavoriteListAsFuture();
+
   Future<void> editFavorite(FavoriteData favoriteData);
 
   Future<void> addFavoritePhoto(String id, String imageUrl);
