@@ -150,7 +150,7 @@ class AddMarkerInformationPage extends HookConsumerWidget {
                                 ),
                                 () {
                                   favoriteLevelingNotifier
-                                      .increaseFavoriteLevel(
+                                      .updateFavoriteLevel(
                                     favoriteId,
                                     LevelAlgorithm.addMarker,
                                   );

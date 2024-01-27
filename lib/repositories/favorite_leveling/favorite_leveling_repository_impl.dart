@@ -45,7 +45,7 @@ class FavoriteLevelingRepositoryImpl implements FavoriteLevelingRepository {
   }
 
   @override
-  Future<void> increaseFavoriteLevel(
+  Future<void> updateFavoriteLevel(
     String favoriteId,
     LevelAlgorithm levelAlgorithm,
   ) async {

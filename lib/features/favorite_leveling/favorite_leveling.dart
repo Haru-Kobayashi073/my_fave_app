@@ -61,7 +61,7 @@ class FavoriteLeveling extends _$FavoriteLeveling {
     return levelStage.level;
   }
 
-  Future<void> increaseFavoriteLevel(
+  Future<void> updateFavoriteLevel(
     String favoriteId,
     LevelAlgorithm levelAlgorithm,
   ) async {
@@ -69,15 +69,15 @@ class FavoriteLeveling extends _$FavoriteLeveling {
     try {
       await ref
           .read(favoriteLevelingRepositoryImplProvider)
-          .increaseFavoriteLevel(favoriteId, levelAlgorithm);
+          .updateFavoriteLevel(favoriteId, levelAlgorithm);
     } on Exception catch (e) {
       if (!isNetWorkCheck) {
         throw appException;
       }
-      debugPrint('推しレベルアップエラー: $e');
+      debugPrint('推しレベル更新エラー: $e');
       ref
           .read(scaffoldMessengerServiceProvider)
-          .showExceptionSnackBar('推しのレベルアップに失敗しました');
+          .showExceptionSnackBar('推しのレベル更新に失敗しました');
     }
   }
 }

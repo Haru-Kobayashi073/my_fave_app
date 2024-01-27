@@ -75,7 +75,7 @@ class AddActivityPage extends HookConsumerWidget {
                         imageUrl: imageUrl.value!,
                         isLiked: false,
                       ), () {
-                    favoriteLevelingNotifier.increaseFavoriteLevel(
+                    favoriteLevelingNotifier.updateFavoriteLevel(
                       favoriteId,
                       LevelAlgorithm.addActivity,
                     );
