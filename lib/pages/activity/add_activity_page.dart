@@ -5,6 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/features/activity/activity.dart';
+import 'package:my_fave_app/features/favorite/favorite.dart';
+import 'package:my_fave_app/features/favorite_leveling/favorite_leveling.dart';
 import 'package:my_fave_app/features/file/crop_image.dart';
 import 'package:my_fave_app/features/file/pick_image.dart';
 import 'package:my_fave_app/features/file/upload_image.dart';
@@ -18,6 +20,8 @@ class AddActivityPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final imageUrl = useState<String?>(null);
     final selectImagePressed = useState<bool?>(false);
+    final favoriteLevelingNotifier =
+        ref.watch(favoriteLevelingProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -50,6 +54,20 @@ class AddActivityPage extends HookConsumerWidget {
             margin: const EdgeInsets.only(right: 16),
             child: CommonButton(
               onPressed: () async {
+                final favoriteDataList =
+                    await ref.read(favoriteProvider.notifier).fetchAsFuture();
+                if (!context.mounted) {
+                  return;
+                }
+                final favoriteId = await showDialog<String>(
+                  context: context,
+                  builder: (_) => SelectFavoriteDialog(
+                    favoriteDataList: favoriteDataList,
+                  ),
+                );
+                if (favoriteId == null) {
+                  return;
+                }
                 if (imageUrl.value != null) {
                   await ref.read(activityProvider.notifier).create(
                       ActivityData(
@@ -57,6 +75,10 @@ class AddActivityPage extends HookConsumerWidget {
                         imageUrl: imageUrl.value!,
                         isLiked: false,
                       ), () {
+                    favoriteLevelingNotifier.increaseFavoriteLevel(
+                      favoriteId,
+                      LevelAlgorithm.addActivity,
+                    );
                     context.pop();
                   });
                 } else {

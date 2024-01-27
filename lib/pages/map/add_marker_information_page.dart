@@ -6,6 +6,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_fave_app/features/favorite/favorite.dart';
+import 'package:my_fave_app/features/favorite_leveling/favorite_leveling.dart';
 import 'package:my_fave_app/features/file/upload_image.dart';
 import 'package:my_fave_app/features/google_map_marker/google_map_marker.dart';
 import 'package:my_fave_app/models/marker_data.dart';
@@ -24,6 +26,10 @@ class AddMarkerInformationPage extends HookConsumerWidget {
     final locationController = useTextEditingController();
     final memoController = useTextEditingController();
     final locationFocusNode = useFocusNode();
+    final googleMapMarkerNotifier = ref.watch(googleMapMarkerProvider.notifier);
+    final favoriteNotifier = ref.watch(favoriteProvider.notifier);
+    final favoriteLevelingNotifier =
+        ref.watch(favoriteLevelingProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -114,12 +120,26 @@ class AddMarkerInformationPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 32),
                         CommonButton(
-                          onPressed: () {
+                          onPressed: () async {
                             final currentSpot = ref.read(currentSpotProvider);
+                            final favoriteDataList =
+                                await favoriteNotifier.fetchAsFuture();
+                            if (!context.mounted) {
+                              return;
+                            }
+                            final favoriteId = await showDialog<String>(
+                              context: context,
+                              builder: (_) => SelectFavoriteDialog(
+                                favoriteDataList: favoriteDataList,
+                              ),
+                            );
+                            if (favoriteId == null) {
+                              return;
+                            }
                             if (titleController.text.isNotEmpty &&
                                 locationController.text.isNotEmpty &&
                                 currentSpot != null) {
-                              ref.read(googleMapMarkerProvider.notifier).create(
+                              await googleMapMarkerNotifier.create(
                                 MarkerData(
                                   markerId: '',
                                   title: titleController.text,
@@ -129,6 +149,11 @@ class AddMarkerInformationPage extends HookConsumerWidget {
                                   longitude: currentSpot.longitude,
                                 ),
                                 () {
+                                  favoriteLevelingNotifier
+                                      .increaseFavoriteLevel(
+                                    favoriteId,
+                                    LevelAlgorithm.addMarker,
+                                  );
                                   context.pop();
                                 },
                               );
