@@ -9,6 +9,7 @@ part of 'marker_data.dart';
 _$MarkerDataImpl _$$MarkerDataImplFromJson(Map<String, dynamic> json) =>
     _$MarkerDataImpl(
       markerId: json['markerId'] as String,
+      favoriteId: json['favoriteId'] as String,
       createdAt: _$JsonConverterFromJson<String, DateTime>(
           json['createdAt'], const DateTimeConverter().fromJson),
       title: json['title'] as String,
@@ -22,6 +23,7 @@ _$MarkerDataImpl _$$MarkerDataImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$MarkerDataImplToJson(_$MarkerDataImpl instance) =>
     <String, dynamic>{
       'markerId': instance.markerId,
+      'favoriteId': instance.favoriteId,
       'createdAt': _$JsonConverterToJson<String, DateTime>(
           instance.createdAt, const DateTimeConverter().toJson),
       'title': instance.title,

@@ -21,6 +21,7 @@ MarkerData _$MarkerDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MarkerData {
   String get markerId => throw _privateConstructorUsedError;
+  String get favoriteId => throw _privateConstructorUsedError;
   @DateTimeConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
@@ -44,6 +45,7 @@ abstract class $MarkerDataCopyWith<$Res> {
   @useResult
   $Res call(
       {String markerId,
+      String favoriteId,
       @DateTimeConverter() DateTime? createdAt,
       String title,
       String location,
@@ -67,6 +69,7 @@ class _$MarkerDataCopyWithImpl<$Res, $Val extends MarkerData>
   @override
   $Res call({
     Object? markerId = null,
+    Object? favoriteId = null,
     Object? createdAt = freezed,
     Object? title = null,
     Object? location = null,
@@ -79,6 +82,10 @@ class _$MarkerDataCopyWithImpl<$Res, $Val extends MarkerData>
       markerId: null == markerId
           ? _value.markerId
           : markerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      favoriteId: null == favoriteId
+          ? _value.favoriteId
+          : favoriteId // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -122,6 +129,7 @@ abstract class _$$MarkerDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {String markerId,
+      String favoriteId,
       @DateTimeConverter() DateTime? createdAt,
       String title,
       String location,
@@ -143,6 +151,7 @@ class __$$MarkerDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? markerId = null,
+    Object? favoriteId = null,
     Object? createdAt = freezed,
     Object? title = null,
     Object? location = null,
@@ -155,6 +164,10 @@ class __$$MarkerDataImplCopyWithImpl<$Res>
       markerId: null == markerId
           ? _value.markerId
           : markerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      favoriteId: null == favoriteId
+          ? _value.favoriteId
+          : favoriteId // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -193,6 +206,7 @@ class __$$MarkerDataImplCopyWithImpl<$Res>
 class _$MarkerDataImpl implements _MarkerData {
   const _$MarkerDataImpl(
       {required this.markerId,
+      required this.favoriteId,
       @DateTimeConverter() this.createdAt,
       required this.title,
       required this.location,
@@ -206,6 +220,8 @@ class _$MarkerDataImpl implements _MarkerData {
 
   @override
   final String markerId;
+  @override
+  final String favoriteId;
   @override
   @DateTimeConverter()
   final DateTime? createdAt;
@@ -224,7 +240,7 @@ class _$MarkerDataImpl implements _MarkerData {
 
   @override
   String toString() {
-    return 'MarkerData(markerId: $markerId, createdAt: $createdAt, title: $title, location: $location, imageUrl: $imageUrl, latitude: $latitude, longitude: $longitude, memo: $memo)';
+    return 'MarkerData(markerId: $markerId, favoriteId: $favoriteId, createdAt: $createdAt, title: $title, location: $location, imageUrl: $imageUrl, latitude: $latitude, longitude: $longitude, memo: $memo)';
   }
 
   @override
@@ -234,6 +250,8 @@ class _$MarkerDataImpl implements _MarkerData {
             other is _$MarkerDataImpl &&
             (identical(other.markerId, markerId) ||
                 other.markerId == markerId) &&
+            (identical(other.favoriteId, favoriteId) ||
+                other.favoriteId == favoriteId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.title, title) || other.title == title) &&
@@ -250,8 +268,8 @@ class _$MarkerDataImpl implements _MarkerData {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, markerId, createdAt, title,
-      location, imageUrl, latitude, longitude, memo);
+  int get hashCode => Object.hash(runtimeType, markerId, favoriteId, createdAt,
+      title, location, imageUrl, latitude, longitude, memo);
 
   @JsonKey(ignore: true)
   @override
@@ -270,6 +288,7 @@ class _$MarkerDataImpl implements _MarkerData {
 abstract class _MarkerData implements MarkerData {
   const factory _MarkerData(
       {required final String markerId,
+      required final String favoriteId,
       @DateTimeConverter() final DateTime? createdAt,
       required final String title,
       required final String location,
@@ -283,6 +302,8 @@ abstract class _MarkerData implements MarkerData {
 
   @override
   String get markerId;
+  @override
+  String get favoriteId;
   @override
   @DateTimeConverter()
   DateTime? get createdAt;

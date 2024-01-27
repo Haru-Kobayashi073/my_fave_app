@@ -8,6 +8,7 @@ part 'marker_data.g.dart';
 abstract class MarkerData with _$MarkerData {
   const factory MarkerData({
     required String markerId,
+    required String favoriteId,
     @DateTimeConverter() DateTime? createdAt,
     required String title,
     required String location,

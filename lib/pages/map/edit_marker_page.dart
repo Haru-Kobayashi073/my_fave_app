@@ -122,6 +122,7 @@ class EditMarkerPage extends HookConsumerWidget {
                 onPressed: () {
                   final markerComparison = MarkerData(
                     markerId: marker.markerId,
+                    favoriteId: marker.favoriteId,
                     title: titleController.text,
                     location: locationController.text,
                     imageUrl: imageUrl.value!,
