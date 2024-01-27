@@ -1,7 +1,8 @@
 enum LevelAlgorithm {
   addMarker(point: 10),
   addActivity(point: 3),
-  noActivitiesForAWeek(point: -10);
+  noActivitiesForAWeek(point: -10),
+  deleteMarker(point: -10);
 
   const LevelAlgorithm({
     required this.point,
