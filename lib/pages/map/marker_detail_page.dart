@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/favorite_leveling/favorite_leveling.dart';
 import 'package:my_fave_app/features/google_map_marker/google_map_marker.dart';
 import 'package:my_fave_app/models/marker_data.dart';
 import 'package:my_fave_app/pages/map/components/map_components.dart';
@@ -20,6 +21,8 @@ class MarkerDetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final googleMapMarkerNotifier = ref.read(googleMapMarkerProvider.notifier);
+    final favoriteLevelingNotifier =
+        ref.read(favoriteLevelingProvider.notifier);
 
     return Scaffold(
       appBar: CommonAppBar(
@@ -69,7 +72,7 @@ class MarkerDetailPage extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${marker.createdAt!.year}/${marker.createdAt!.month}/${marker.createdAt!.day} ${'${'日月火水木金土'[marker.createdAt!.weekday]}曜日'}',
+                              formatDateTimeForWeekDay(marker.createdAt!),
                               style: const TextStyle(
                                 fontSize: 16,
                               ),
@@ -80,6 +83,7 @@ class MarkerDetailPage extends HookConsumerWidget {
                                     .push<void>(context);
                               },
                               onPressedDelete: () async {
+                                /// モーダルが開いている時は閉じる
                                 if (ref.read(
                                   isOpenedTouchedMarkerModalProvider,
                                 )) {
@@ -92,7 +96,15 @@ class MarkerDetailPage extends HookConsumerWidget {
                                 }
                                 await googleMapMarkerNotifier.delete(
                                   marker,
-                                  () {
+                                  () async {
+                                    await favoriteLevelingNotifier
+                                        .updateFavoriteLevel(
+                                      marker.favoriteId,
+                                      LevelAlgorithm.deleteMarker,
+                                    );
+                                    if (!context.mounted) {
+                                      return;
+                                    }
                                     context.pop();
                                   },
                                 );
@@ -124,8 +136,7 @@ class MarkerDetailPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          marker.memo ??
-                              'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                          marker.memo ?? '',
                           style: const TextStyle(
                             fontSize: 14,
                           ),
