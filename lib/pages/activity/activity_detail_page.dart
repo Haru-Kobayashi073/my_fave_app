@@ -55,7 +55,7 @@ class AcctivityDetailPage extends HookConsumerWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        '${selectedDay.month}/${selectedDay.day} (${'日月火水木金土'[selectedDay.weekday]})',
+                        formatDateTimeForBracesWeekDay(selectedDay),
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

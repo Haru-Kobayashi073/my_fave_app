@@ -44,7 +44,7 @@ class MarkerModal extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${markerData.createdAt!.year}/${markerData.createdAt!.month}/${markerData.createdAt!.day} ${'${'日月火水木金土'[markerData.createdAt!.weekday]}曜日'}',
+                    formatDateTimeForWeekDay(markerData.createdAt!),
                     style: const TextStyle(
                       fontSize: 16,
                     ),

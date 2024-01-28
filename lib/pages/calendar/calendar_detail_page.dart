@@ -191,7 +191,7 @@ class CalendarDetailPage extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            '${startDate.year}/${startDate.month}/${startDate.day} ${'${'日月火水木金土'[startDate.weekday]}曜日'} ${startDate.hour}:${startDate.minute}~${endDate.hour}:${endDate.minute}',
+                            '${formatDateTimeForWeekDay(startDate)} ${startDate.hour}:${startDate.minute}~${endDate.hour}:${endDate.minute}',
                             style: const TextStyle(
                               fontSize: 16,
                             ),
