@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_fave_app/features/favorite/favorite.dart';
 import 'package:my_fave_app/repositories/favorite_leveling/favorite_leveling_repository_impl.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -67,6 +68,17 @@ class FavoriteLeveling extends _$FavoriteLeveling {
   ) async {
     final isNetWorkCheck = await isNetworkConnected();
     try {
+      if (levelAlgorithm == LevelAlgorithm.deleteMarker ||
+          levelAlgorithm == LevelAlgorithm.noActivitiesForAWeek) {
+        final likingLevel =
+            await ref.read(favoriteProvider.notifier).fetchFromId(favoriteId);
+        if (isWorthTheDecrease(likingLevel.likingLevel ?? 0, levelAlgorithm)) {
+          await ref
+              .read(favoriteLevelingRepositoryImplProvider)
+              .updateFavoriteLevel(favoriteId, levelAlgorithm);
+        }
+        return;
+      }
       await ref
           .read(favoriteLevelingRepositoryImplProvider)
           .updateFavoriteLevel(favoriteId, levelAlgorithm);
@@ -80,4 +92,27 @@ class FavoriteLeveling extends _$FavoriteLeveling {
           .showExceptionSnackBar('推しのレベル更新に失敗しました');
     }
   }
+}
+
+bool isWorthTheDecrease(int likingLevel, LevelAlgorithm levelAlgorithm) {
+  final levelStage = LevelStage.values.lastWhere(
+    (element) => element.point <= likingLevel,
+  );
+  if (levelStage.level >= 5) {
+    if (likingLevel == 1500) {
+    } else if (levelAlgorithm == LevelAlgorithm.deleteMarker) {
+      if (likingLevel >= 1510) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (levelAlgorithm == LevelAlgorithm.noActivitiesForAWeek) {
+      if (likingLevel >= 1510) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+  return false;
 }
