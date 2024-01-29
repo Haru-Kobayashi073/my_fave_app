@@ -142,6 +142,7 @@ class AddMarkerInformationPage extends HookConsumerWidget {
                               await googleMapMarkerNotifier.create(
                                 MarkerData(
                                   markerId: '',
+                                  favoriteId: favoriteId,
                                   title: titleController.text,
                                   location: locationController.text,
                                   imageUrl: imageUrl.value!,
@@ -150,7 +151,7 @@ class AddMarkerInformationPage extends HookConsumerWidget {
                                 ),
                                 () {
                                   favoriteLevelingNotifier
-                                      .increaseFavoriteLevel(
+                                      .updateFavoriteLevel(
                                     favoriteId,
                                     LevelAlgorithm.addMarker,
                                   );

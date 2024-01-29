@@ -18,3 +18,14 @@ int calculateDaysSince(DateTime pastDate) {
   final formattedEnd = DateTime(end.year, end.month, end.day);
   return (formattedStart, formattedEnd);
 }
+
+String formatDateTimeForWeekDay(DateTime dateTime) {
+  final formattedDate =
+      '${dateTime.year}/${dateTime.month}/${dateTime.day} ${'${'日月火水木金土日'[dateTime.weekday]}曜日'}';
+  return formattedDate;
+}
+
+String formatDateTimeForBracesWeekDay(DateTime dateTime) {
+  final formattedDate = '${dateTime.month}/${dateTime.day} (${'日月火水木金土日'[dateTime.weekday]})';
+  return formattedDate;
+}

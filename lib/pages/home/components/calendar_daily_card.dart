@@ -41,7 +41,7 @@ class CalendarDailyCard extends HookConsumerWidget {
                   ),
                 ),
                 VerticalText(
-                  '${'日月火水木金土'[schedule.start.weekday]}曜日',
+                  '${'日月火水木金土日'[schedule.start.weekday]}曜日',
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,

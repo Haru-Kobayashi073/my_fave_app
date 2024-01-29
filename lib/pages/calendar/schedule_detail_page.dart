@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -60,7 +62,7 @@ class ScheduleDetailPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '${schedule.start.year}/${schedule.start.month}/${schedule.start.day} ${'${'日月火水木金土'[schedule.start.weekday]}曜日'} ${schedule.start.hour}:${schedule.start.minute}~${schedule.end?.hour}:${schedule.end?.minute}',
+                    '${formatDateTimeForWeekDay(schedule.start)} ${schedule.start.hour}:${schedule.start.minute}~${schedule.end?.hour}:${schedule.end?.minute}',
                   ),
                   const SizedBox(height: 8),
                   Row(

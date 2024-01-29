@@ -6,7 +6,7 @@ abstract class FavoriteLevelingRepository {
 
   Future<List<int?>> fetchFavoriteLevelList();
 
-  Future<void> increaseFavoriteLevel(
+  Future<void> updateFavoriteLevel(
     String favoriteId,
     LevelAlgorithm levelAlgorithm,
   );
