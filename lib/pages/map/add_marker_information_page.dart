@@ -31,147 +31,217 @@ class AddMarkerInformationPage extends HookConsumerWidget {
     final favoriteLevelingNotifier =
         ref.watch(favoriteLevelingProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.black00,
-        elevation: 0,
-        title: const Text(
-          '聖地を追加',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leadingWidth: 100,
-        leading: TextButton(
-          onPressed: () {
-            context.pop();
-          },
-          child: Text(
-            'キャンセル',
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
+        final willPop = await showDialog<bool>(
+          context: context,
+          builder: (_) => const CancelModal(),
+        );
+        if (willPop != null && willPop) {
+          if (!context.mounted) {
+            return;
+          }
+          context.pop();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColor.black00,
+          elevation: 0,
+          title: const Text(
+            '聖地を追加',
             style: TextStyle(
-              fontSize: 14,
-              color: AppColor.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          leadingWidth: 100,
+          leading: TextButton(
+            onPressed: () {
+              context.pop();
+            },
+            child: Text(
+              'キャンセル',
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColor.white,
+              ),
             ),
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              entryMarkerInformation.value
-                  ? Column(
-                      children: [
-                        const SizedBox(height: 16),
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                entryMarkerInformation.value
+                    ? Column(
+                        children: [
+                          const SizedBox(height: 16),
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: imageUrl.value!,
+                              fit: BoxFit.cover,
+                              width: context.deviceWidth,
+                              height: context.deviceWidth - 32,
+                              progressIndicatorBuilder: (_, __, ___) =>
+                                  const Loading(),
+                            ),
                           ),
-                          child: CachedNetworkImage(
-                            imageUrl: imageUrl.value!,
-                            fit: BoxFit.cover,
-                            width: context.deviceWidth,
-                            height: context.deviceWidth - 32,
-                            progressIndicatorBuilder: (_, __, ___) =>
-                                const Loading(),
+                          TextFormField(
+                            controller: titleController,
+                            cursorColor: AppColor.white,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) => FocusScope.of(context)
+                                .requestFocus(locationFocusNode),
+                            decoration: InputDecorationStyles.square('タイトル'),
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          controller: titleController,
-                          cursorColor: AppColor.white,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) => FocusScope.of(context)
-                              .requestFocus(locationFocusNode),
-                          decoration: InputDecorationStyles.square('タイトル'),
-                          style: const TextStyle(
-                            fontSize: 16,
+                          Container(
+                            width: context.deviceWidth - 34,
+                            height: 1,
+                            color: AppColor.black33,
                           ),
-                        ),
-                        Container(
-                          width: context.deviceWidth - 34,
-                          height: 1,
-                          color: AppColor.black33,
-                        ),
-                        TextFormField(
-                          controller: locationController,
-                          cursorColor: AppColor.white,
-                          focusNode: locationFocusNode,
-                          decoration: InputDecorationStyles.square('場所を追加'),
-                          style: const TextStyle(
-                            fontSize: 16,
+                          TextFormField(
+                            controller: locationController,
+                            cursorColor: AppColor.white,
+                            focusNode: locationFocusNode,
+                            decoration: InputDecorationStyles.square('場所を追加'),
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        Container(
-                          width: context.deviceWidth - 34,
-                          height: 1,
-                          color: AppColor.black33,
-                        ),
-                        TextFormField(
-                          controller: memoController,
-                          cursorColor: AppColor.white,
-                          decoration: InputDecorationStyles.square('メモ'),
-                          style: const TextStyle(
-                            fontSize: 16,
+                          Container(
+                            width: context.deviceWidth - 34,
+                            height: 1,
+                            color: AppColor.black33,
                           ),
-                          maxLines: null,
-                        ),
-                        const SizedBox(height: 32),
-                        CommonButton(
-                          onPressed: () async {
-                            final currentSpot = ref.read(currentSpotProvider);
-                            final favoriteDataList =
-                                await favoriteNotifier.fetchAsFuture();
-                            if (!context.mounted) {
-                              return;
-                            }
-                            final favoriteId = await showDialog<String>(
-                              context: context,
-                              builder: (_) => SelectFavoriteDialog(
-                                favoriteDataList: favoriteDataList,
-                              ),
-                            );
-                            if (favoriteId == null) {
-                              return;
-                            }
-                            if (titleController.text.isNotEmpty &&
-                                locationController.text.isNotEmpty &&
-                                currentSpot != null) {
-                              await googleMapMarkerNotifier.create(
-                                MarkerData(
-                                  markerId: '',
-                                  favoriteId: favoriteId,
-                                  title: titleController.text,
-                                  location: locationController.text,
-                                  imageUrl: imageUrl.value!,
-                                  latitude: currentSpot.latitude,
-                                  longitude: currentSpot.longitude,
+                          TextFormField(
+                            controller: memoController,
+                            cursorColor: AppColor.white,
+                            decoration: InputDecorationStyles.square('メモ'),
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                            maxLines: null,
+                          ),
+                          const SizedBox(height: 32),
+                          CommonButton(
+                            onPressed: () async {
+                              final currentSpot = ref.read(currentSpotProvider);
+                              final favoriteDataList =
+                                  await favoriteNotifier.fetchAsFuture();
+                              if (!context.mounted) {
+                                return;
+                              }
+                              final favoriteId = await showDialog<String>(
+                                context: context,
+                                builder: (_) => SelectFavoriteDialog(
+                                  favoriteDataList: favoriteDataList,
                                 ),
-                                () {
-                                  favoriteLevelingNotifier
-                                      .updateFavoriteLevel(
-                                    favoriteId,
-                                    LevelAlgorithm.addMarker,
-                                  );
-                                  context.pop();
-                                },
                               );
-                            } else {
-                              ref
-                                  .read(scaffoldMessengerServiceProvider)
-                                  .showExceptionSnackBar('必須項目を入力してください');
+                              if (favoriteId == null) {
+                                return;
+                              }
+                              if (titleController.text.isNotEmpty &&
+                                  locationController.text.isNotEmpty &&
+                                  currentSpot != null) {
+                                await googleMapMarkerNotifier.create(
+                                  MarkerData(
+                                    markerId: '',
+                                    favoriteId: favoriteId,
+                                    title: titleController.text,
+                                    location: locationController.text,
+                                    imageUrl: imageUrl.value!,
+                                    latitude: currentSpot.latitude,
+                                    longitude: currentSpot.longitude,
+                                  ),
+                                  () {
+                                    favoriteLevelingNotifier
+                                        .updateFavoriteLevel(
+                                      favoriteId,
+                                      LevelAlgorithm.addMarker,
+                                    );
+                                    context.pop();
+                                  },
+                                );
+                              } else {
+                                ref
+                                    .read(scaffoldMessengerServiceProvider)
+                                    .showExceptionSnackBar('必須項目を入力してください');
+                              }
+                            },
+                            text: '追加',
+                          ),
+                        ],
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: GestureDetector(
+                          onTap: () async {
+                            final takedImage = await TakePhotoPageRoute()
+                                .push<XFile?>(context);
+                            if (takedImage != null) {
+                              final imageFile = File(takedImage.path);
+                              imageUrl.value = await ref
+                                  .read(uploadImageProvider)
+                                  .call(imageFile);
                             }
                           },
-                          text: '追加',
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(16),
+                            ),
+                            child: imageUrl.value != null
+                                ? CachedNetworkImage(
+                                    imageUrl: imageUrl.value!,
+                                    fit: BoxFit.cover,
+                                    width: context.deviceWidth,
+                                    height: context.deviceWidth - 32,
+                                    progressIndicatorBuilder: (_, __, ___) =>
+                                        const Loading(),
+                                  )
+                                : Container(
+                                    color: AppColor.black15,
+                                    width: context.deviceWidth,
+                                    height: context.deviceWidth - 32,
+                                    child: Center(
+                                      child: CircleAvatar(
+                                        backgroundColor: AppColor.grey88,
+                                        radius: 20,
+                                        child: Icon(
+                                          Icons.add,
+                                          color: AppColor.white,
+                                          size: 36,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          ),
                         ),
-                      ],
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: GestureDetector(
-                        onTap: () async {
+                      ),
+                if (imageUrl.value != null && !entryMarkerInformation.value)
+                  Column(
+                    children: [
+                      const SizedBox(height: 24),
+                      CommonButton(
+                        onPressed: () {
+                          entryMarkerInformation.value = true;
+                        },
+                        text: '次へ',
+                      ),
+                      CommonButton(
+                        onPressed: () async {
                           final takedImage =
                               await TakePhotoPageRoute().push<XFile?>(context);
                           if (takedImage != null) {
@@ -181,65 +251,13 @@ class AddMarkerInformationPage extends HookConsumerWidget {
                                 .call(imageFile);
                           }
                         },
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(16),
-                          ),
-                          child: imageUrl.value != null
-                              ? CachedNetworkImage(
-                                  imageUrl: imageUrl.value!,
-                                  fit: BoxFit.cover,
-                                  width: context.deviceWidth,
-                                  height: context.deviceWidth - 32,
-                                  progressIndicatorBuilder: (_, __, ___) =>
-                                      const Loading(),
-                                )
-                              : Container(
-                                  color: AppColor.black15,
-                                  width: context.deviceWidth,
-                                  height: context.deviceWidth - 32,
-                                  child: Center(
-                                    child: CircleAvatar(
-                                      backgroundColor: AppColor.grey88,
-                                      radius: 20,
-                                      child: Icon(
-                                        Icons.add,
-                                        color: AppColor.white,
-                                        size: 36,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                        ),
+                        text: '再撮影',
+                        isWhite: false,
                       ),
-                    ),
-              if (imageUrl.value != null && !entryMarkerInformation.value)
-                Column(
-                  children: [
-                    const SizedBox(height: 24),
-                    CommonButton(
-                      onPressed: () {
-                        entryMarkerInformation.value = true;
-                      },
-                      text: '次へ',
-                    ),
-                    CommonButton(
-                      onPressed: () async {
-                        final takedImage =
-                            await TakePhotoPageRoute().push<XFile?>(context);
-                        if (takedImage != null) {
-                          final imageFile = File(takedImage.path);
-                          imageUrl.value = await ref
-                              .read(uploadImageProvider)
-                              .call(imageFile);
-                        }
-                      },
-                      text: '再撮影',
-                      isWhite: false,
-                    ),
-                  ],
-                ),
-            ],
+                    ],
+                  ),
+              ],
+            ),
           ),
         ),
       ),

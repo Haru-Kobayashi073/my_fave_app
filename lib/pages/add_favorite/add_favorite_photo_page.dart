@@ -20,87 +20,105 @@ class AddFavoritePhotoPage extends HookConsumerWidget {
     final imageUrl = useState<String?>(null);
     final selectImagePressed = useState<bool?>(false);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.black00,
-        elevation: 0,
-        title: const Text(
-          'フォト',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leadingWidth: 100,
-        leading: TextButton(
-          onPressed: () {
-            context.pop();
-          },
-          child: Text(
-            'キャンセル',
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
+        final willPop = await showDialog<bool>(
+          context: context,
+          builder: (_) => const CancelModal(),
+        );
+        if (willPop != null && willPop) {
+          if (!context.mounted) {
+            return;
+          }
+          context.pop();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColor.black00,
+          elevation: 0,
+          title: const Text(
+            'フォト',
             style: TextStyle(
-              fontSize: 14,
-              color: AppColor.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
+          leadingWidth: 100,
+          leading: TextButton(
+            onPressed: () {
+              context.pop();
+            },
+            child: Text(
+              'キャンセル',
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColor.white,
+              ),
+            ),
+          ),
+          actions: [
+            Container(
+              width: 112,
+              height: 56,
+              margin: const EdgeInsets.only(right: 16),
+              child: CommonButton(
+                onPressed: () async {
+                  if (imageUrl.value != null) {
+                    await ref.read(favoriteProvider.notifier).addPhoto(
+                      id,
+                      imageUrl.value!,
+                      () {
+                        context.pop();
+                      },
+                    );
+                  } else {
+                    selectImagePressed.value = null;
+                    ref
+                        .read(scaffoldMessengerServiceProvider)
+                        .showExceptionSnackBar('画像を選択してください');
+                  }
+                },
+                text: '追加',
+              ),
+            ),
+          ],
         ),
-        actions: [
-          Container(
-            width: 112,
-            height: 56,
-            margin: const EdgeInsets.only(right: 16),
-            child: CommonButton(
-              onPressed: () async {
-                if (imageUrl.value != null) {
-                  await ref.read(favoriteProvider.notifier).addPhoto(
-                    id,
-                    imageUrl.value!,
-                    () {
-                      context.pop();
-                    },
-                  );
-                } else {
-                  selectImagePressed.value = null;
-                  ref
-                      .read(scaffoldMessengerServiceProvider)
-                      .showExceptionSnackBar('画像を選択してください');
-                }
-              },
-              text: '追加',
-            ),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            SelectImage(
-              onTap: () async {
-                final pickedImage = await ref.read(pickImageProvider).call();
-                final croppedImage =
-                    await ref.read(cropImageProvider).call(pickedImage);
-                final imageFile = File(croppedImage?.path ?? '');
-                if (imageFile.path != '') {
-                  imageUrl.value =
-                      await ref.read(uploadImageProvider).call(imageFile);
-                }
-              },
-              imageUrl: imageUrl.value,
-            ),
-            if (selectImagePressed.value ?? imageUrl.value == null)
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left: 16),
-                child: const Text(
-                  '選択してください',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 12,
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              SelectImage(
+                onTap: () async {
+                  final pickedImage = await ref.read(pickImageProvider).call();
+                  final croppedImage =
+                      await ref.read(cropImageProvider).call(pickedImage);
+                  final imageFile = File(croppedImage?.path ?? '');
+                  if (imageFile.path != '') {
+                    imageUrl.value =
+                        await ref.read(uploadImageProvider).call(imageFile);
+                  }
+                },
+                imageUrl: imageUrl.value,
+              ),
+              if (selectImagePressed.value ?? imageUrl.value == null)
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 16),
+                  child: const Text(
+                    '選択してください',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

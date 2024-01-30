@@ -26,138 +26,156 @@ class EditMarkerPage extends HookConsumerWidget {
     final locationController = useTextEditingController(text: marker.location);
     final memoController = useTextEditingController(text: marker.memo);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.black00,
-        elevation: 0,
-        title: const Text(
-          '聖地を編集',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leadingWidth: 100,
-        leading: TextButton(
-          onPressed: () {
-            context.pop();
-          },
-          child: Text(
-            'キャンセル',
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
+        final willPop = await showDialog<bool>(
+          context: context,
+          builder: (_) => const CancelModal(),
+        );
+        if (willPop != null && willPop) {
+          if (!context.mounted) {
+            return;
+          }
+          context.pop();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColor.black00,
+          elevation: 0,
+          title: const Text(
+            '聖地を編集',
             style: TextStyle(
-              fontSize: 14,
-              color: AppColor.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          leadingWidth: 100,
+          leading: TextButton(
+            onPressed: () {
+              context.pop();
+            },
+            child: Text(
+              'キャンセル',
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColor.white,
+              ),
             ),
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-              GestureDetector(
-                onTap: () async {
-                  final takedImage =
-                      await TakePhotoPageRoute().push<XFile?>(context);
-                  if (takedImage != null) {
-                    final imageFile = File(takedImage.path);
-                    imageUrl.value =
-                        await ref.read(uploadImageProvider).call(imageFile);
-                  }
-                },
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                GestureDetector(
+                  onTap: () async {
+                    final takedImage =
+                        await TakePhotoPageRoute().push<XFile?>(context);
+                    if (takedImage != null) {
+                      final imageFile = File(takedImage.path);
+                      imageUrl.value =
+                          await ref.read(uploadImageProvider).call(imageFile);
+                    }
+                  },
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl.value!,
+                      fit: BoxFit.cover,
+                      width: context.deviceWidth,
+                      height: context.deviceWidth - 32,
+                      progressIndicatorBuilder: (_, __, ___) => const Loading(),
+                    ),
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl: imageUrl.value!,
-                    fit: BoxFit.cover,
-                    width: context.deviceWidth,
-                    height: context.deviceWidth - 32,
-                    progressIndicatorBuilder: (_, __, ___) => const Loading(),
+                ),
+                TextFormField(
+                  controller: titleController,
+                  cursorColor: AppColor.white,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecorationStyles.square('タイトル'),
+                  style: const TextStyle(
+                    fontSize: 16,
                   ),
                 ),
-              ),
-              TextFormField(
-                controller: titleController,
-                cursorColor: AppColor.white,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecorationStyles.square('タイトル'),
-                style: const TextStyle(
-                  fontSize: 16,
+                Container(
+                  width: context.deviceWidth - 34,
+                  height: 1,
+                  color: AppColor.black33,
                 ),
-              ),
-              Container(
-                width: context.deviceWidth - 34,
-                height: 1,
-                color: AppColor.black33,
-              ),
-              TextFormField(
-                controller: locationController,
-                cursorColor: AppColor.white,
-                decoration: InputDecorationStyles.square('場所を追加'),
-                style: const TextStyle(
-                  fontSize: 16,
+                TextFormField(
+                  controller: locationController,
+                  cursorColor: AppColor.white,
+                  decoration: InputDecorationStyles.square('場所を追加'),
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              Container(
-                width: context.deviceWidth - 34,
-                height: 1,
-                color: AppColor.black33,
-              ),
-              TextFormField(
-                controller: memoController,
-                cursorColor: AppColor.white,
-                decoration: InputDecorationStyles.square('メモ'),
-                style: const TextStyle(
-                  fontSize: 16,
+                Container(
+                  width: context.deviceWidth - 34,
+                  height: 1,
+                  color: AppColor.black33,
                 ),
-                maxLines: null,
-              ),
-              const SizedBox(height: 32),
-              CommonButton(
-                onPressed: () {
-                  final markerComparison = MarkerData(
-                    markerId: marker.markerId,
-                    favoriteId: marker.favoriteId,
-                    title: titleController.text,
-                    location: locationController.text,
-                    imageUrl: imageUrl.value!,
-                    latitude: marker.latitude,
-                    longitude: marker.longitude,
-                    memo: memoController.text.isNotEmpty
-                        ? memoController.text
-                        : null,
-                    createdAt: marker.createdAt,
-                  );
-                  if (titleController.text.isNotEmpty &&
-                      locationController.text.isNotEmpty) {
-                    if (marker != markerComparison) {
-                      ref.read(googleMapMarkerProvider.notifier).edit(
-                        markerComparison,
-                        () {
-                          context
-                            ..pop()
-                            ..pop();
-                        },
-                      );
+                TextFormField(
+                  controller: memoController,
+                  cursorColor: AppColor.white,
+                  decoration: InputDecorationStyles.square('メモ'),
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                  maxLines: null,
+                ),
+                const SizedBox(height: 32),
+                CommonButton(
+                  onPressed: () {
+                    final markerComparison = MarkerData(
+                      markerId: marker.markerId,
+                      favoriteId: marker.favoriteId,
+                      title: titleController.text,
+                      location: locationController.text,
+                      imageUrl: imageUrl.value!,
+                      latitude: marker.latitude,
+                      longitude: marker.longitude,
+                      memo: memoController.text.isNotEmpty
+                          ? memoController.text
+                          : null,
+                      createdAt: marker.createdAt,
+                    );
+                    if (titleController.text.isNotEmpty &&
+                        locationController.text.isNotEmpty) {
+                      if (marker != markerComparison) {
+                        ref.read(googleMapMarkerProvider.notifier).edit(
+                          markerComparison,
+                          () {
+                            context
+                              ..pop()
+                              ..pop();
+                          },
+                        );
+                      } else {
+                        ref
+                            .read(scaffoldMessengerServiceProvider)
+                            .showExceptionSnackBar('変更がありません');
+                      }
                     } else {
                       ref
                           .read(scaffoldMessengerServiceProvider)
-                          .showExceptionSnackBar('変更がありません');
+                          .showExceptionSnackBar('必須項目を入力してください');
                     }
-                  } else {
-                    ref
-                        .read(scaffoldMessengerServiceProvider)
-                        .showExceptionSnackBar('必須項目を入力してください');
-                  }
-                },
-                text: '変更',
-              ),
-            ],
+                  },
+                  text: '変更',
+                ),
+              ],
+            ),
           ),
         ),
       ),
