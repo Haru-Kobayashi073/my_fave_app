@@ -44,12 +44,29 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/first_view_app.png
+  AssetGenImage get firstViewApp =>
+      const AssetGenImage('assets/images/first_view_app.png');
+
+  /// File path: assets/images/fourth_view_app.png
+  AssetGenImage get fourthViewApp =>
+      const AssetGenImage('assets/images/fourth_view_app.png');
+
   /// File path: assets/images/map_view_image.png
   AssetGenImage get mapViewImage =>
       const AssetGenImage('assets/images/map_view_image.png');
 
+  /// File path: assets/images/second_view_app.png
+  AssetGenImage get secondViewApp =>
+      const AssetGenImage('assets/images/second_view_app.png');
+
+  /// File path: assets/images/third_view_app.png
+  AssetGenImage get thirdViewApp =>
+      const AssetGenImage('assets/images/third_view_app.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [mapViewImage];
+  List<AssetGenImage> get values =>
+      [firstViewApp, fourthViewApp, mapViewImage, secondViewApp, thirdViewApp];
 }
 
 class Assets {

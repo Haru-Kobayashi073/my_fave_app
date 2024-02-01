@@ -6,7 +6,7 @@ part of 'favorite_leveling.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$favoriteLevelingHash() => r'0cfe51aba4d95a55d11368f8cedf1ef7a2f16bbf';
+String _$favoriteLevelingHash() => r'9965706aeade3463b21c0498822a573436167f11';
 
 /// See also [FavoriteLeveling].
 @ProviderFor(FavoriteLeveling)

@@ -38,7 +38,7 @@ class OnBoardingPage extends HookConsumerWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 40),
+            padding: const EdgeInsets.only(top: 16, bottom: 32),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: ref.watch(buildPageIndicatorProvider).call(

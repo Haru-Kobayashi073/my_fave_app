@@ -13,12 +13,28 @@ class SecondBoardView extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            height: 320,
-            color: AppColor.black33,
+          SizedBox(
+            width: context.deviceWidth * 0.8,
+            child: Image(
+              image: AssetImage(Assets.images.secondViewApp.path),
+            ),
           ),
-          const Text('Description Text 2'),
+          const Text(
+            '機能紹介',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Text(
+            'LIVEの予定管理や推しの詳細で推しの情報を整理！',
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           CommonButton(
             onPressed: () {
               pageController.nextPage(
