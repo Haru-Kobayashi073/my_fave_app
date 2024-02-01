@@ -17,7 +17,7 @@ class FourthBoardView extends HookConsumerWidget {
           SizedBox(
             width: context.deviceWidth * 0.8,
             child: Image(
-              image: AssetImage(Assets.images.firstViewApp.path),
+              image: AssetImage(Assets.images.fourthViewApp.path),
             ),
           ),
           const Text(
