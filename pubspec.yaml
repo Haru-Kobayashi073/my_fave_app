@@ -26,6 +26,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.3.10
   flutter_svg: ^2.0.9
   font_awesome_flutter: ^10.6.0
   freezed: ^2.4.5
@@ -61,7 +62,6 @@ dev_dependencies:
   pedantic_mono: any
   riverpod_generator: ^2.3.9
 
-
 flutter:
   uses-material-design: true
 
@@ -80,3 +80,11 @@ flutter_launcher_icons:
   remove_alpha_ios: false
   adaptive_icon_background: "#000000"
   adaptive_icon_foreground: "assets/icons/my-fave-android-icon.png"
+
+flutter_native_splash:
+  color: '#000000'
+  image: 'assets/icons/my-fave-app-text.png'
+  fullscreen: true
+  android_12:
+    icon_background_color: '#000000'
+    image: 'assets/icons/my-fave-app-text.png'
