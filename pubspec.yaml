@@ -23,6 +23,7 @@ dependencies:
   flutter_config: ^2.0.2
   flutter_hooks: ^0.20.3
 
+  flutter_launcher_icons: ^0.13.1
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.9
@@ -70,3 +71,12 @@ flutter:
 
 flutter_gen:
   output: lib/utils/gen/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/my-fave-app-icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: false
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/icons/my-fave-android-icon.png"
