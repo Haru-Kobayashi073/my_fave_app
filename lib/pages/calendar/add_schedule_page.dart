@@ -90,7 +90,9 @@ class AddSchedulePage extends HookConsumerWidget {
                     if (isAllDay.value) {
                       formattedDateTimeForAllDay.value =
                           formatDateTimeForAllDay(
-                              startDate.value, endDate.value);
+                        startDate.value,
+                        endDate.value,
+                      );
                     }
                     ref.read(scheduleProvider.notifier).create(
                       DailySchedule(
