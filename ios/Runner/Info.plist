@@ -23,13 +23,13 @@
 		<key>CFBundleSignature</key>
 		<string>????</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string></string>
+		<string>App requires access to photo library to post selected images to the app</string>
 		<key>NSCameraUsageDescription</key>
-		<string>Your own description</string>
+		<string>Requests are made for the purpose of taking photos and videos for display and use in the application.</string>
 		<key>NSMicrophoneUsageDescription</key>
-		<string>To enable microphone access when recording video</string>
+		<string>Request for the purpose of permission to use the microphone to record video for display and use in the application.</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>To enable GPS location access for Exif data</string>
+		<string>Request permission to use GPS for the application.GPS information will be used securely</string>
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
