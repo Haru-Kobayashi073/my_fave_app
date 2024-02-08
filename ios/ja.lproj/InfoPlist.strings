@@ -1,0 +1,13 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by 小林春 on 2024/02/08.
+  
+*/
+NSPhotoLibraryUsageDescription = "アプリは選択した画像をアプリに投稿するためフォトライブラリへのアクセスが必要です";
+NSCameraUsageDescription = "アプリに表示・使用するための写真や動画を撮影する目的でリクエストします。";
+
+NSMicrophoneUsageDescription = "アプリに表示・使用するための動画を撮影する際のマイクの利用許可目的でリクエストします。";
+
+NSLocationWhenInUseUsageDescription = "アプリに使用するため、GPSの利用許可をリクエストします。GPS情報の利用は、安全に利用されます";
