@@ -63,10 +63,15 @@ class RegisterUserNamePage extends HookConsumerWidget {
                   text: '次へ',
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      context.push(
-                        RegisterBirthdayPageRoute(
+                      ref.read(
+                        createUserProvider(
                           userName: userNameController.text,
-                        ).location,
+                          onSuccess: () {
+                            context.go(
+                              const CompleteRegistrationPageRoute().location,
+                            );
+                          },
+                        ),
                       );
                     } else {
                       validateMode.value = AutovalidateMode.onUserInteraction;

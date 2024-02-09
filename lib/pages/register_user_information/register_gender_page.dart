@@ -29,7 +29,6 @@ class RegisterGenderPage extends HookConsumerWidget {
             ref.read(
               createUserProvider(
                 userName: userName,
-                birthDay: birthDay,
                 onSuccess: () {
                   pressed.value = false;
                   context.go(
@@ -101,8 +100,6 @@ class RegisterGenderPage extends HookConsumerWidget {
                   ref.read(
                     createUserProvider(
                       userName: userName,
-                      birthDay: birthDay,
-                      gender: selectGender.value,
                       onSuccess: () {
                         pressed.value = false;
                         context.go(

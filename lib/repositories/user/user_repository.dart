@@ -5,8 +5,6 @@ abstract class UserRepository {
 
   Future<void> createUser({
     String? userName,
-    DateTime? birthDay,
-    String? gender,
   });
 
   Future<void> deleteUser();

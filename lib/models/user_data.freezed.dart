@@ -22,8 +22,6 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) {
 mixin _$UserData {
   String get uid => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
-  dynamic get birthDay => throw _privateConstructorUsedError;
-  String? get gender => throw _privateConstructorUsedError;
   dynamic get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,12 +35,7 @@ abstract class $UserDataCopyWith<$Res> {
   factory $UserDataCopyWith(UserData value, $Res Function(UserData) then) =
       _$UserDataCopyWithImpl<$Res, UserData>;
   @useResult
-  $Res call(
-      {String uid,
-      String? userName,
-      dynamic birthDay,
-      String? gender,
-      dynamic createdAt});
+  $Res call({String uid, String? userName, dynamic createdAt});
 }
 
 /// @nodoc
@@ -60,8 +53,6 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
   $Res call({
     Object? uid = null,
     Object? userName = freezed,
-    Object? birthDay = freezed,
-    Object? gender = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -72,14 +63,6 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      birthDay: freezed == birthDay
-          ? _value.birthDay
-          : birthDay // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -97,12 +80,7 @@ abstract class _$$UserDataImplCopyWith<$Res>
       __$$UserDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String uid,
-      String? userName,
-      dynamic birthDay,
-      String? gender,
-      dynamic createdAt});
+  $Res call({String uid, String? userName, dynamic createdAt});
 }
 
 /// @nodoc
@@ -118,8 +96,6 @@ class __$$UserDataImplCopyWithImpl<$Res>
   $Res call({
     Object? uid = null,
     Object? userName = freezed,
-    Object? birthDay = freezed,
-    Object? gender = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_$UserDataImpl(
@@ -130,14 +106,6 @@ class __$$UserDataImplCopyWithImpl<$Res>
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      birthDay: freezed == birthDay
-          ? _value.birthDay
-          : birthDay // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -151,11 +119,7 @@ class __$$UserDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserDataImpl implements _UserData {
   const _$UserDataImpl(
-      {required this.uid,
-      this.userName,
-      this.birthDay,
-      this.gender,
-      required this.createdAt});
+      {required this.uid, this.userName, required this.createdAt});
 
   factory _$UserDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserDataImplFromJson(json);
@@ -165,15 +129,11 @@ class _$UserDataImpl implements _UserData {
   @override
   final String? userName;
   @override
-  final dynamic birthDay;
-  @override
-  final String? gender;
-  @override
   final dynamic createdAt;
 
   @override
   String toString() {
-    return 'UserData(uid: $uid, userName: $userName, birthDay: $birthDay, gender: $gender, createdAt: $createdAt)';
+    return 'UserData(uid: $uid, userName: $userName, createdAt: $createdAt)';
   }
 
   @override
@@ -184,19 +144,12 @@ class _$UserDataImpl implements _UserData {
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
-            const DeepCollectionEquality().equals(other.birthDay, birthDay) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      uid,
-      userName,
-      const DeepCollectionEquality().hash(birthDay),
-      gender,
+  int get hashCode => Object.hash(runtimeType, uid, userName,
       const DeepCollectionEquality().hash(createdAt));
 
   @JsonKey(ignore: true)
@@ -217,8 +170,6 @@ abstract class _UserData implements UserData {
   const factory _UserData(
       {required final String uid,
       final String? userName,
-      final dynamic birthDay,
-      final String? gender,
       required final dynamic createdAt}) = _$UserDataImpl;
 
   factory _UserData.fromJson(Map<String, dynamic> json) =
@@ -228,10 +179,6 @@ abstract class _UserData implements UserData {
   String get uid;
   @override
   String? get userName;
-  @override
-  dynamic get birthDay;
-  @override
-  String? get gender;
   @override
   dynamic get createdAt;
   @override

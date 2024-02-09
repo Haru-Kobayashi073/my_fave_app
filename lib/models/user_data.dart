@@ -8,8 +8,6 @@ abstract class UserData with _$UserData {
   const factory UserData({
     required String uid,
     String? userName,
-    dynamic birthDay,
-    String? gender,
     required dynamic createdAt,
 }) = _UserData;
 

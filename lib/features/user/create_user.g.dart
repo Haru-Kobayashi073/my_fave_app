@@ -6,7 +6,7 @@ part of 'create_user.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$createUserHash() => r'bac6e2eb9cd353f63c9c19aa97bf069a9ec6c6cd';
+String _$createUserHash() => r'50e6290820efb1458ef1c6c026186d449467442c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -41,14 +41,10 @@ class CreateUserFamily extends Family<AsyncValue<void>> {
   /// See also [createUser].
   CreateUserProvider call({
     String? userName,
-    DateTime? birthDay,
-    String? gender,
     required void Function() onSuccess,
   }) {
     return CreateUserProvider(
       userName: userName,
-      birthDay: birthDay,
-      gender: gender,
       onSuccess: onSuccess,
     );
   }
@@ -59,8 +55,6 @@ class CreateUserFamily extends Family<AsyncValue<void>> {
   ) {
     return call(
       userName: provider.userName,
-      birthDay: provider.birthDay,
-      gender: provider.gender,
       onSuccess: provider.onSuccess,
     );
   }
@@ -85,15 +79,11 @@ class CreateUserProvider extends AutoDisposeFutureProvider<void> {
   /// See also [createUser].
   CreateUserProvider({
     String? userName,
-    DateTime? birthDay,
-    String? gender,
     required void Function() onSuccess,
   }) : this._internal(
           (ref) => createUser(
             ref as CreateUserRef,
             userName: userName,
-            birthDay: birthDay,
-            gender: gender,
             onSuccess: onSuccess,
           ),
           from: createUserProvider,
@@ -106,8 +96,6 @@ class CreateUserProvider extends AutoDisposeFutureProvider<void> {
           allTransitiveDependencies:
               CreateUserFamily._allTransitiveDependencies,
           userName: userName,
-          birthDay: birthDay,
-          gender: gender,
           onSuccess: onSuccess,
         );
 
@@ -119,14 +107,10 @@ class CreateUserProvider extends AutoDisposeFutureProvider<void> {
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.userName,
-    required this.birthDay,
-    required this.gender,
     required this.onSuccess,
   }) : super.internal();
 
   final String? userName;
-  final DateTime? birthDay;
-  final String? gender;
   final void Function() onSuccess;
 
   @override
@@ -143,8 +127,6 @@ class CreateUserProvider extends AutoDisposeFutureProvider<void> {
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         userName: userName,
-        birthDay: birthDay,
-        gender: gender,
         onSuccess: onSuccess,
       ),
     );
@@ -159,8 +141,6 @@ class CreateUserProvider extends AutoDisposeFutureProvider<void> {
   bool operator ==(Object other) {
     return other is CreateUserProvider &&
         other.userName == userName &&
-        other.birthDay == birthDay &&
-        other.gender == gender &&
         other.onSuccess == onSuccess;
   }
 
@@ -168,8 +148,6 @@ class CreateUserProvider extends AutoDisposeFutureProvider<void> {
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, userName.hashCode);
-    hash = _SystemHash.combine(hash, birthDay.hashCode);
-    hash = _SystemHash.combine(hash, gender.hashCode);
     hash = _SystemHash.combine(hash, onSuccess.hashCode);
 
     return _SystemHash.finish(hash);
@@ -179,12 +157,6 @@ class CreateUserProvider extends AutoDisposeFutureProvider<void> {
 mixin CreateUserRef on AutoDisposeFutureProviderRef<void> {
   /// The parameter `userName` of this provider.
   String? get userName;
-
-  /// The parameter `birthDay` of this provider.
-  DateTime? get birthDay;
-
-  /// The parameter `gender` of this provider.
-  String? get gender;
 
   /// The parameter `onSuccess` of this provider.
   void Function() get onSuccess;
@@ -196,10 +168,6 @@ class _CreateUserProviderElement extends AutoDisposeFutureProviderElement<void>
 
   @override
   String? get userName => (origin as CreateUserProvider).userName;
-  @override
-  DateTime? get birthDay => (origin as CreateUserProvider).birthDay;
-  @override
-  String? get gender => (origin as CreateUserProvider).gender;
   @override
   void Function() get onSuccess => (origin as CreateUserProvider).onSuccess;
 }
