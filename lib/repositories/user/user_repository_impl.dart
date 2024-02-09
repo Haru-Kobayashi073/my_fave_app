@@ -26,8 +26,6 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<void> createUser({
     String? userName,
-    DateTime? birthDay,
-    String? gender,
   }) async {
     final uid = _auth.currentUser!.uid;
     final createdAt = Timestamp.fromDate(DateTime.now());
@@ -35,8 +33,6 @@ class UserRepositoryImpl implements UserRepository {
           UserData(
             uid: uid,
             userName: userName,
-            birthDay: birthDay,
-            gender: gender,
             createdAt: createdAt,
           ).toJson(),
         );

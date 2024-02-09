@@ -10,19 +10,13 @@ part 'create_user.g.dart';
 Future<void> createUser(
   CreateUserRef ref, {
   String? userName,
-  DateTime? birthDay,
-  String? gender,
   required VoidCallback onSuccess,
 }) async {
   final read = ref.read;
   final isNetworkCheck = await isNetworkConnected();
   try {
     read(overlayLoadingWidgetProvider.notifier).update((state) => true);
-    await read(userRepositoryImplProvider).createUser(
-      userName: userName,
-      birthDay: birthDay,
-      gender: gender,
-    );
+    await read(userRepositoryImplProvider).createUser(userName: userName);
     onSuccess();
     debugPrint('ユーザーを作成しました');
   } on Exception catch (e) {

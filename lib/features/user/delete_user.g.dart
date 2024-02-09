@@ -6,7 +6,7 @@ part of 'delete_user.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$delteUserHash() => r'2c55818fdd22f33152637902ddbc6b26c6685a88';
+String _$delteUserHash() => r'6cdbd8fe8bf92f9c76b9caae30de2e81902cbf46';
 
 /// Copied from Dart SDK
 class _SystemHash {
