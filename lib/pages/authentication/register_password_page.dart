@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/authentication/convert_anonymously_to_permanent.dart';
+import 'package:my_fave_app/features/authentication/get_auth_credential.dart';
 import 'package:my_fave_app/features/authentication/sign_up.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -21,6 +23,7 @@ class RegisterPasswordPage extends HookConsumerWidget {
     final obscureText = useToggle(true);
     final formKey = useFormStateKey();
     final validateMode = useState<AutovalidateMode>(AutovalidateMode.disabled);
+    final user = ref.read(getFirebaseAuthProvider).currentUser!;
 
     return Scaffold(
       appBar: const CommonAppBar(),
@@ -104,8 +107,26 @@ class RegisterPasswordPage extends HookConsumerWidget {
                 const SizedBox(height: 24),
                 CommonButton(
                   text: '次へ',
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
+                      if (user.isAnonymous) {
+                        final authCredential =
+                            await ref.read(getAuthCredentialProvider).call(
+                                  email,
+                                  passwordController.text,
+                                );
+                        ref.read(
+                          convertAnonymouslyToPermanentProvider(
+                            authCredential!,
+                            () {
+                              context.go(
+                                const RegisterUserNamePageRoute().location,
+                              );
+                            },
+                          ),
+                        );
+                        return;
+                      }
                       ref.read(
                         signUpProvider(
                           email,
