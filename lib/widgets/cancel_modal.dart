@@ -5,7 +5,9 @@ import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
 
 class CancelModal extends HookConsumerWidget {
-  const CancelModal({super.key});
+  const CancelModal({super.key, this.title});
+  final String? title;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
@@ -20,9 +22,9 @@ class CancelModal extends HookConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              '前の画面に戻ると、情報は削除されます。本当に削除しますか？',
-              style: TextStyle(
+            Text(
+              title ?? '前の画面に戻ると、情報は削除されます。本当に削除しますか？',
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
               ),
@@ -31,7 +33,7 @@ class CancelModal extends HookConsumerWidget {
               onPressed: () {
                 context.pop(true);
               },
-              text: '削除する',
+              text: 'はい',
             ),
             CommonButton(
               onPressed: () {
