@@ -18,7 +18,7 @@ class CompleteRegistrationPage extends HookConsumerWidget {
             const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StatusBar(phaseIndex: 6),
+                StatusBar(phaseIndex: 4),
                 SizedBox(height: 8),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
