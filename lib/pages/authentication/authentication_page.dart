@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_fave_app/features/authentication/sign_in_with_anonymously.dart';
 import 'package:my_fave_app/features/authentication/sign_in_with_apple.dart';
 import 'package:my_fave_app/features/authentication/sign_in_with_google.dart';
 import 'package:my_fave_app/pages/authentication/components/authetication_components.dart';
@@ -33,6 +34,19 @@ class AuthenticationPage extends HookConsumerWidget {
                   onPressed: () =>
                       context.push(const RegisterMailPageRoute().location),
                   text: 'メールアドレスで登録',
+                  isWhite: false,
+                ),
+                CommonButton(
+                  onPressed: () {
+                    ref.read(
+                      signInWithAnonymouslyProvider(
+                        () {
+                          context.go(const HomePageRoute().location);
+                        },
+                      ),
+                    );
+                  },
+                  text: 'ログインせずに利用',
                   isWhite: false,
                 ),
                 Padding(
