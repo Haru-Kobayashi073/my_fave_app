@@ -8,4 +8,6 @@ abstract class UserRepository {
     DateTime? birthDay,
     String? gender,
   });
+
+  Future<void> deleteUser();
 }

@@ -18,6 +18,18 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google_icon.svg
   String get googleIcon => 'assets/icons/google_icon.svg';
 
+  /// File path: assets/icons/my-fave-android-icon.png
+  AssetGenImage get myFaveAndroidIcon =>
+      const AssetGenImage('assets/icons/my-fave-android-icon.png');
+
+  /// File path: assets/icons/my-fave-app-icon.png
+  AssetGenImage get myFaveAppIcon =>
+      const AssetGenImage('assets/icons/my-fave-app-icon.png');
+
+  /// File path: assets/icons/my-fave-app-text.png
+  AssetGenImage get myFaveAppText =>
+      const AssetGenImage('assets/icons/my-fave-app-text.png');
+
   /// File path: assets/icons/my_fave_logo.svg
   String get myFaveLogo => 'assets/icons/my_fave_logo.svg';
 
@@ -31,9 +43,12 @@ class $AssetsIconsGen {
   String get xTwitterIcon => 'assets/icons/x_twitter_icon.svg';
 
   /// List of all assets
-  List<String> get values => [
+  List<dynamic> get values => [
         appleIcon,
         googleIcon,
+        myFaveAndroidIcon,
+        myFaveAppIcon,
+        myFaveAppText,
         myFaveLogo,
         touchedLocation,
         untouchedLocation,
