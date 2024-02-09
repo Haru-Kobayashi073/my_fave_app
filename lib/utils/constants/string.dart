@@ -12,10 +12,10 @@ const genderList = <String>[
 ];
 
 enum OnBoardingSteps {
-  introductionFeatures(
-    title: '機能紹介',
-    description: 'My Faveの基本機能を紹介するよ！',
-  ),
+  // introductionFeatures(
+  //   title: '機能紹介',
+  //   description: 'My Faveの基本機能を紹介するよ！',
+  // ),
   addFavorites(
     title: '推しを追加',
     description: 'カバーになる写真だから一番良い写真を選んであげよう！',
