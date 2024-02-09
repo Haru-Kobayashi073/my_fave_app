@@ -18,7 +18,7 @@ class StartUpPage extends HookConsumerWidget {
           if (user != null) {
             context.go(const HomePageRoute().location);
           } else {
-            context.go(AuthenticationPageRoute().location);
+            context.go(const OnBoardingPageRoute().location);
           }
         },
         error: (e, s) => const SizedBox(),

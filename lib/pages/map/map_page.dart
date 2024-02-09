@@ -5,7 +5,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -107,11 +106,7 @@ class MapPage extends HookConsumerWidget {
     final isOpenedPanel = useState(false);
 
     return Scaffold(
-      appBar: CommonAppBar(
-        icon: IconButton(
-          onPressed: () {},
-          icon: const FaIcon(FontAwesomeIcons.circleQuestion),
-        ),
+      appBar: const CommonAppBar(
         automaticallyImplyLeading: false,
       ),
       body: Stack(

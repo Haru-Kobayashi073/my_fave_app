@@ -13,6 +13,7 @@ class App extends HookConsumerWidget {
     final router = ref.watch(goRouterProvider);
 
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
       routeInformationParser: router.routeInformationParser,

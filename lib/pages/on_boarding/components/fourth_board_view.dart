@@ -50,8 +50,8 @@ class FourthBoardView extends HookConsumerWidget {
           ),
           CommonButton(
             onPressed: () {
-              context.push(
-                const AddFavoriteExperienceIntroducePageRoute().location,
+              context.go(
+                AuthenticationPageRoute().location,
               );
             },
             text: '次へ',

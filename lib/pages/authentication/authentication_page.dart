@@ -78,11 +78,6 @@ class AuthenticationPage extends HookConsumerWidget {
                   icon: Assets.icons.googleIcon,
                   text: 'Googleでログイン',
                 ),
-                SocialLoginButton(
-                  onPressed: () {},
-                  icon: Assets.icons.xTwitterIcon,
-                  text: 'Xでログイン',
-                ),
               ],
             ),
           ],

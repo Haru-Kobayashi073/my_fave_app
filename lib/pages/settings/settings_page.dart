@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/features/authentication/sign_out.dart';
@@ -12,11 +11,7 @@ class SettingsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: CommonAppBar(
-        icon: IconButton(
-          onPressed: () {},
-          icon: const FaIcon(FontAwesomeIcons.circleQuestion),
-        ),
+      appBar: const CommonAppBar(
         automaticallyImplyLeading: false,
       ),
       body: Padding(

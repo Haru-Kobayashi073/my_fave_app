@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/features/activity/activity.dart';
 import 'package:my_fave_app/features/calendar/event_loader.dart';
@@ -20,12 +19,7 @@ class HomePage extends HookConsumerWidget {
     final googleMapMarkerNotifier = ref.watch(googleMapMarkerProvider.notifier);
 
     return Scaffold(
-      appBar: CommonAppBar(
-        icon: IconButton(
-          onPressed: () {},
-          icon: const FaIcon(FontAwesomeIcons.circleQuestion),
-        ),
-      ),
+      appBar: const CommonAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: CustomScrollView(

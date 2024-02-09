@@ -2,7 +2,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/features/favorite_leveling/favorite_leveling.dart';
@@ -25,11 +24,7 @@ class MarkerDetailPage extends HookConsumerWidget {
         ref.read(favoriteLevelingProvider.notifier);
 
     return Scaffold(
-      appBar: CommonAppBar(
-        icon: IconButton(
-          onPressed: () {},
-          icon: const FaIcon(FontAwesomeIcons.circleQuestion),
-        ),
+      appBar: const CommonAppBar(
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(

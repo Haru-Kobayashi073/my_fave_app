@@ -21,7 +21,7 @@ class OnBoardingIntroductionPage extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(top: 32, bottom: 8),
                   child: Text(
-                    '初めての方には操作方法や機能について教えるよ！',
+                    '初めての方には機能について教えるよ！',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -43,7 +43,9 @@ class OnBoardingIntroductionPage extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 40),
               child: CommonButton(
                 onPressed: () {
-                  context.go(const OnBoardingPageRoute().location);
+                  context.go(
+                    const AddFavoriteExperienceIntroducePageRoute().location,
+                  );
                 },
                 text: '次へ',
               ),

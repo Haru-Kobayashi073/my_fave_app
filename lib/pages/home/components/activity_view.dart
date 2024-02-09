@@ -35,7 +35,9 @@ class ActivityView extends HookConsumerWidget {
                     width: 120,
                     height: 56,
                     child: CommonButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        AddActivityPageRoute().push<void>(context);
+                      },
                       text: '追加',
                       isWhite: false,
                     ),

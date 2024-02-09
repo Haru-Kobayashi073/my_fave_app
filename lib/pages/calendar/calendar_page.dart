@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:my_fave_app/features/calendar/calendar.dart';
@@ -20,11 +19,7 @@ class CalendarPage extends HookConsumerWidget {
     final eventLoaderNotifer = ref.watch(eventLoaderProvider.notifier);
 
     return Scaffold(
-      appBar: CommonAppBar(
-        icon: IconButton(
-          onPressed: () {},
-          icon: const FaIcon(FontAwesomeIcons.circleQuestion),
-        ),
+      appBar: const CommonAppBar(
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
