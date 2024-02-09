@@ -24,4 +24,15 @@ abstract class AuthRepository {
   Future<UserCredential> signInWithGoogle();
 
   Future<UserCredential> signInWithApple();
+
+  Future<UserCredential> signInWithAnonymously();
+
+  Future<UserCredential?> convertAnonymouslyToPermanent(
+    OAuthCredential credential,
+  );
+
+  AuthCredential getAuthCredential({
+    required String email,
+    required String password,
+  });
 }

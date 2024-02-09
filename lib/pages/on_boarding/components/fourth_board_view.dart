@@ -42,7 +42,7 @@ class FourthBoardView extends HookConsumerWidget {
             ),
           ),
           Text(
-            '※聖地巡礼機能のは推し度レベル３で解放されます。',
+            '※聖地巡礼機能のは推し度レベル1で解放されます。',
             style: TextStyle(
               fontSize: 14,
               color: AppColor.grey88,

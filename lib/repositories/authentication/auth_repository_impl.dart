@@ -71,16 +71,36 @@ class AuthRepositoryImpl implements AuthRepository {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    return FirebaseAuth.instance.signInWithCredential(credential);
+    return _auth.signInWithCredential(credential);
   }
 
   @override
   Future<UserCredential> signInWithApple() async {
     final appleProvider = AppleAuthProvider();
     if (kIsWeb) {
-      return FirebaseAuth.instance.signInWithPopup(appleProvider);
+      return _auth.signInWithPopup(appleProvider);
     } else {
-      return FirebaseAuth.instance.signInWithProvider(appleProvider);
+      return _auth.signInWithProvider(appleProvider);
     }
+  }
+
+  @override
+  Future<UserCredential> signInWithAnonymously() async {
+    return _auth.signInAnonymously();
+  }
+
+  @override
+  Future<UserCredential?> convertAnonymouslyToPermanent(
+    AuthCredential credential,
+  ) async {
+    return await _auth.currentUser?.linkWithCredential(credential);
+  }
+
+  @override
+  AuthCredential getAuthCredential({
+    required String email,
+    required String password,
+  }) {
+    return EmailAuthProvider.credential(email: email, password: password);
   }
 }
