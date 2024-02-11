@@ -23,7 +23,7 @@ class RegisterPasswordPage extends HookConsumerWidget {
     final obscureText = useToggle(true);
     final formKey = useFormStateKey();
     final validateMode = useState<AutovalidateMode>(AutovalidateMode.disabled);
-    final user = ref.read(getFirebaseAuthProvider).currentUser!;
+    final user = ref.read(getFirebaseAuthProvider).currentUser;
 
     return Scaffold(
       appBar: const CommonAppBar(),
@@ -109,7 +109,7 @@ class RegisterPasswordPage extends HookConsumerWidget {
                   text: '次へ',
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      if (user.isAnonymous) {
+                      if (user != null && user.isAnonymous) {
                         final authCredential =
                             await ref.read(getAuthCredentialProvider).call(
                                   email,
