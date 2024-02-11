@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_fave_app/features/favorite_leveling/favorite_leveling.dart';
-import 'package:my_fave_app/features/url_launcher/url_launcher.dart';
 import 'package:my_fave_app/models/favorite_data.dart';
 import 'package:my_fave_app/utils/utils.dart';
 import 'package:my_fave_app/widgets/widget.dart';
@@ -288,11 +287,7 @@ class FavoriteMainDetailCard extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 4),
                     GestureDetector(
-                      onTap: () {
-                        ref.read(urlLauncherProvider).call(
-                              favoriteData.instagramLink ?? '',
-                            );
-                      },
+                      onTap: () {},
                       child: Row(
                         children: [
                           FaIcon(
@@ -313,11 +308,7 @@ class FavoriteMainDetailCard extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 16),
                     GestureDetector(
-                      onTap: () {
-                        ref.read(urlLauncherProvider).call(
-                              favoriteData.xLink ?? '',
-                            );
-                      },
+                      onTap: () {},
                       child: Row(
                         children: [
                           SvgPicture.asset(
@@ -337,11 +328,7 @@ class FavoriteMainDetailCard extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 16),
                     GestureDetector(
-                      onTap: () {
-                        ref.read(urlLauncherProvider).call(
-                              favoriteData.youtubeLink ?? '',
-                            );
-                      },
+                      onTap: () {},
                       child: Row(
                         children: [
                           FaIcon(
@@ -361,6 +348,27 @@ class FavoriteMainDetailCard extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Row(
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.spotify,
+                            size: 26,
+                            color: AppColor.white,
+                          ),
+                          const SizedBox(width: 14),
+                          const Text(
+                            'Spotify',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
