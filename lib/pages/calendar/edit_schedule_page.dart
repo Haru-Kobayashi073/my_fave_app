@@ -110,7 +110,8 @@ class EditSchedulePage extends HookConsumerWidget {
                       ref.read(scheduleProvider.notifier).edit(
                         scheduleComparison,
                         () {
-                          context.go(const CalendarPageRoute().location);
+                          context..pop()
+                          ..go(const CalendarPageRoute().location);
                         },
                       );
                     } else {
